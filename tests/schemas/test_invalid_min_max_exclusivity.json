@@ -1,0 +1,61 @@
+{
+    "mime_type": "application/json/ons/eq",
+    "schema_version": "0.0.1",
+    "data_version": "0.0.1",
+    "survey_id": "0",
+    "title": "Minimum and maximum exclusivity",
+    "theme": "default",
+    "legal_basis": "StatisticsOfTradeAct",
+    "description": "A questionnaire to test currency input type",
+    "groups": [{
+        "blocks": [{
+                "type": "Questionnaire",
+                "id": "block-1",
+                "questions": [{
+                    "type": "General",
+                    "id": "question-1",
+                    "title": "Enter a value 1",
+                    "answers": [{
+                            "id": "answer-1",
+                            "label": "How much did you spend?",
+                            "mandatory": false,
+                            "q_code": "0",
+                            "type": "Currency",
+                            "currency": "GBP",
+                            "decimal_places": 2
+                        }
+                    ]
+                }]
+            },
+            {
+                "type": "Questionnaire",
+                "id": "block-2",
+                "questions": [{
+                    "type": "General",
+                    "id": "question-2",
+                    "title": "Enter a value 2",
+                    "answers": [{
+                            "id": "answer-2",
+                            "label": "How much did you spend?",
+                            "mandatory": false,
+                            "q_code": "0",
+                            "type": "Currency",
+                            "currency": "GBP",
+                            "decimal_places": 2,
+                            "max_value": {
+                                "answer_id": "answer-1",
+                                "exclusive": true
+                            }
+                        }
+                    ]
+                }]
+            },
+            {
+                "type": "Summary",
+                "id": "summary"
+            }
+        ],
+        "id": "group",
+        "title": ""
+    }]
+}

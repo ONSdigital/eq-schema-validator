@@ -39,6 +39,8 @@ class Validator:
 
         errors.extend(self.validate_child_answers_define_parent(json_to_validate))
 
+        errors.extend(self._validate_min_max_exclusivity(json_to_validate))
+
         return errors
 
     def _validate_json_against_schema(self, json_to_validate):
@@ -148,6 +150,24 @@ class Validator:
                 for used_answer_id in used_answers:
                     errors.extend(self._validate_range_type(
                         json_to_validate, used_answer_id, answer_id, answer_decimals))
+
+        return errors
+
+    def _validate_min_max_exclusivity(self, json_to_validate):
+        errors = []
+        for block in self._get_blocks(json_to_validate):
+            for answer in self._get_answers_for_block(block):
+                max_value = answer.get('max_value')
+                if max_value and max_value.get('answer_id'):
+                    if max_value.get('exclusive') and max_value.get('exclusive') is True:
+                        for block_a in self._get_blocks(json_to_validate):
+                            for answer_a in self._get_answers_for_block(block_a):
+                                if answer_a.get('id') == max_value.get('answer_id'):
+                                    if not answer_a.get('exclusive'):
+                                        error_message = '{} has exclusive set to true, {} must be exclusive also' \
+                                            .format(answer.get('id'), answer_a.get('id'))
+
+                                        errors.append(self._error_message(error_message))
 
         return errors
 
