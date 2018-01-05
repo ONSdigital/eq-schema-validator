@@ -176,53 +176,86 @@ class Validator:
 
         if maximum:
             if max_exclusive is True:
-                if max_value:
-                    max_range = max_value - (1 / 10 ** answer_decimals)
-                elif maximum.get('answer_id'):
-                    max_value_answer_id = answers_by_id.get(maximum.get('answer_id'))
-                    range_for_answer = self._get_range_for_answer(max_value_answer_id, answers_by_id)
-                    max_range = range_for_answer[1]
+                max_range = self._get_exclusive_range(max_value, maximum, answers_by_id, answer_decimals)
+                # if max_value:
+                #     max_range = max_value - (1 / 10 ** answer_decimals)
+                # elif maximum.get('answer_id'):
+                #     max_value_answer_id = answers_by_id.get(maximum.get('answer_id'))
+                #     range_for_answer = self._get_range_for_answer(max_value_answer_id, answers_by_id)
+                #     max_range = range_for_answer[1]
 
-                elif not max_exclusive:
-                    if max_value:
-                        max_range = max_value
-                    elif maximum.get('answer_id'):
-                        max_value_answer_id = answers_by_id.get(maximum.get('answer_id'))
-                        range_for_answer = self._get_range_for_answer(max_value_answer_id, answers_by_id)
-                        max_range = range_for_answer[1]
+            elif not max_exclusive:
+                max_range = self._get_exclusive_range(max_value, maximum, answers_by_id, answer_decimals)
+                # if max_value:
+                #     max_range = max_value
+                # elif maximum.get('answer_id'):
+                #     max_value_answer_id = answers_by_id.get(maximum.get('answer_id'))
+                #     range_for_answer = self._get_range_for_answer(max_value_answer_id, answers_by_id)
+                #     max_range = range_for_answer[1]
         elif minimum:
             if min_exclusive is True:
-                if min_value:
-                    min_range = min_value + (1 / 10 ** answer_decimals)
-                elif minimum.get('answer_id'):
-                    min_value_answer_id = answers_by_id.get(minimum.get('answer_id'))
-                    range_for_answer = self._get_range_for_answer(min_value_answer_id, answers_by_id)
-                    min_range = range_for_answer[1]
+                min_range = self._get_exclusive_range(min_value, minimum, answers_by_id, answer_decimals)
+                # if min_value:
+                #     min_range = min_value + (1 / 10 ** answer_decimals)
+                # elif minimum.get('answer_id'):
+                #     min_value_answer_id = answers_by_id.get(minimum.get('answer_id'))
+                #     range_for_answer = self._get_range_for_answer(min_value_answer_id, answers_by_id)
+                #     min_range = range_for_answer[1]
 
             elif not min_exclusive:
-                if min_value:
-                    min_range = min_value
-                elif minimum.get('answer_id'):
-                    min_value_answer_id = answers_by_id.get(minimum.get('answer_id'))
-                    range_for_answer = self._get_range_for_answer(min_value_answer_id, answers_by_id)
-                    min_range = range_for_answer[1]
+                min_range = self._get_exclusive_range(min_value, minimum, answers_by_id, answer_decimals)
+                # if min_value:
+                #     min_range = min_value
+                # elif minimum.get('answer_id'):
+                #     min_value_answer_id = answers_by_id.get(minimum.get('answer_id'))
+                #     range_for_answer = self._get_range_for_answer(min_value_answer_id, answers_by_id)
+                #     min_range = range_for_answer[1]
 
         else:
             max_range = MAX_NUMBER
             min_range = MIN_NUMBER
 
-            return answer, range(min_range, max_range)
+        return answer, range(min_range, max_range)
 
-    def _get_exclusivity_for_range(self, answer, answers_by_id):
+    def _get_exclusive_range(self, value, maximum, minimum, used_answer_id, answer_decimals):
+        value_range = []
 
-        if exclusive is True:
-            if value:
-                range = value
-            elif answer_id:
-                min_value_answer_id = answers_by_id.get(minimum.get('answer_id'))
-                range_for_answer = self._get_range_for_answer(min_value_answer_id, answers_by_id)
-                min_range = range_for_answer[1]
+        if value:
+            if maximum:
+                value_range = value - (1 / 10 ** answer_decimals)
+            elif minimum:
+                value_range = value + (1 / 10 ** answer_decimals)
+        elif used_answer_id:
+            value_range.append(self._get_min_max_range_for_used_answer(answers_by_id, maximum, minimum))
 
+        return value_range
+
+    def _get_non_exclusive_range(self, value, maximum, minimum, used_answer_id):
+        value_range = []
+
+        if value:
+            value_range = value
+        elif used_answer_id:
+            value_range.append(self._get_min_max_range_for_used_answer(answers_by_id, maximum, minimum))
+
+        return value_range
+
+    def _get_min_max_range_for_used_answer(self, answers_by_id, maximum, minimum):
+        value_range = []
+
+        if maximum:
+            max_value_answer_id = answers_by_id.get(maximum.get('answer_id'))
+            range_for_answer = self._get_range_for_answer(max_value_answer_id, answers_by_id)
+            max_range = range_for_answer[1]
+            value_range.append(max_range)
+
+        elif minimum:
+            min_value_answer_id = answers_by_id.get(minimum.get('answer_id'))
+            range_for_answer = self._get_range_for_answer(min_value_answer_id, answers_by_id)
+            min_range = range_for_answer[1]
+            value_range.append(min_range)
+
+        return value_range
     def _validate_min_max_exclusivity(self, json_to_validate, used_answer_id):
         # exclusivity_errors = []
         #
