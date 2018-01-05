@@ -48,8 +48,8 @@ class TestSchemaValidation(unittest.TestCase):
 
         errors = self.validator.validate_schema(json_to_validate)
         self.assertEqual(len(errors), 1)
-        self.assertEqual(errors[0]['message'], 'Schema Integrity Error. answer-2 has exclusive set to true, '
-                                               'answer-1 must be exclusive also')
+        self.assertEqual(errors[0]['message'], 'Schema Integrity Error. The minimum value 0 used in {} should '
+                                               'be exclusive')
 
     def test_schemas(self):
 

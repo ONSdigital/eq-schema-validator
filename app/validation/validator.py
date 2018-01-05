@@ -39,8 +39,6 @@ class Validator:
 
         errors.extend(self.validate_child_answers_define_parent(json_to_validate))
 
-        errors.extend(self._validate_min_max_exclusivity(json_to_validate))
-
         return errors
 
     def _validate_json_against_schema(self, json_to_validate):
@@ -150,26 +148,140 @@ class Validator:
                 for used_answer_id in used_answers:
                     errors.extend(self._validate_range_type(
                         json_to_validate, used_answer_id, answer_id, answer_decimals))
+                    # errors.extend(self._validate_min_max_exclusivity(
+                    #     json_to_validate, used_answer_id))
 
         return errors
 
-    def _validate_min_max_exclusivity(self, json_to_validate):
-        errors = []
+    def _validate_min_max_answer_range(self, json_to_validate, used_answers):
+        list_of_answer_ranges = []
+
+        answers_by_id = {}
+        for answer in used_answers:
+            answers_by_id[answer.get('answer_id')] = answer
+
         for block in self._get_blocks(json_to_validate):
             for answer in self._get_answers_for_block(block):
-                max_value = answer.get('max_value')
-                if max_value and max_value.get('answer_id'):
-                    if max_value.get('exclusive') and max_value.get('exclusive') is True:
-                        for block_a in self._get_blocks(json_to_validate):
-                            for answer_a in self._get_answers_for_block(block_a):
-                                if answer_a.get('id') == max_value.get('answer_id'):
-                                    if not answer_a.get('exclusive'):
-                                        error_message = '{} has exclusive set to true, {} must be exclusive also' \
-                                            .format(answer.get('id'), answer_a.get('id'))
 
-                                        errors.append(self._error_message(error_message))
+                list_of_answer_ranges.append(self._get_range_for_answer(answer, answers_by_id))
 
-        return errors
+    def _get_range_for_answer(self, answer, answers_by_id):
+        answer_decimals = answer.get('decimal_places', 0)
+        maximum = answer.get('max_value')
+        minimum = answer.get('min_value')
+        max_value = maximum.get('value')
+        min_value = minimum.get('value')
+        max_exclusive = maximum.get('exclusive')
+        min_exclusive = minimum.get('exclusive')
+
+        if maximum:
+            if max_exclusive is True:
+                if max_value:
+                    max_range = max_value - (1 / 10 ** answer_decimals)
+                elif maximum.get('answer_id'):
+                    max_value_answer_id = answers_by_id.get(maximum.get('answer_id'))
+                    range_for_answer = self._get_range_for_answer(max_value_answer_id, answers_by_id)
+                    max_range = range_for_answer[1]
+
+                elif not max_exclusive:
+                    if max_value:
+                        max_range = max_value
+                    elif maximum.get('answer_id'):
+                        max_value_answer_id = answers_by_id.get(maximum.get('answer_id'))
+                        range_for_answer = self._get_range_for_answer(max_value_answer_id, answers_by_id)
+                        max_range = range_for_answer[1]
+        elif minimum:
+            if min_exclusive is True:
+                if min_value:
+                    min_range = min_value + (1 / 10 ** answer_decimals)
+                elif minimum.get('answer_id'):
+                    min_value_answer_id = answers_by_id.get(minimum.get('answer_id'))
+                    range_for_answer = self._get_range_for_answer(min_value_answer_id, answers_by_id)
+                    min_range = range_for_answer[1]
+
+            elif not min_exclusive:
+                if min_value:
+                    min_range = min_value
+                elif minimum.get('answer_id'):
+                    min_value_answer_id = answers_by_id.get(minimum.get('answer_id'))
+                    range_for_answer = self._get_range_for_answer(min_value_answer_id, answers_by_id)
+                    min_range = range_for_answer[1]
+
+        else:
+            max_range = MAX_NUMBER
+            min_range = MIN_NUMBER
+
+            return answer, range(min_range, max_range)
+
+    def _get_exclusivity_for_range(self, answer, answers_by_id):
+
+        if exclusive is True:
+            if value:
+                range = value
+            elif answer_id:
+                min_value_answer_id = answers_by_id.get(minimum.get('answer_id'))
+                range_for_answer = self._get_range_for_answer(min_value_answer_id, answers_by_id)
+                min_range = range_for_answer[1]
+
+    def _validate_min_max_exclusivity(self, json_to_validate, used_answer_id):
+        # exclusivity_errors = []
+        #
+        # for block in self._get_blocks(json_to_validate):
+        #     for answer in self._get_answers_for_block(block):
+        #         if answer.get('id') == used_answer_id:
+        #             used_answer_minimum = answer.get('min_value')
+        #             used_answer_maximum = answer.get('max_value')
+        #             used_answer_decimals = int(answer.get('decimal_places', 0))
+        #
+        #             if used_answer_minimum:
+        #                 used_answer_minimum_value = used_answer_minimum.get('value')
+        #                 if used_answer_minimum.get('exclusive') is True:
+        #                     minimum = used_answer_minimum_value + 1/10 ** used_answer_decimals
+        #                 elif not used_answer_minimum.get('exclusive'):
+        #                     minimum = used_answer_minimum_value
+        #             else:
+        #                 minimum = MIN_NUMBER
+        #
+        #             if used_answer_maximum:
+        #                 used_answer_maximum_value = used_answer_maximum.get('value')
+        #                 if used_answer_maximum.get('exclusive') is True:
+        #                     maximum = used_answer_maximum_value - 1/10 ** used_answer_decimals
+        #                 elif not used_answer_maximum.get('exclusive'):
+        #                     maximum = used_answer_maximum_value
+        #             else:
+        #                 maximum = MAX_NUMBER
+        #
+        #         answer_minimum = answer.get('min_value')
+        #         answer_maximum = answer.get('max_value')
+        #         answer_decimals = int(answer.get('decimal_places', 0))
+        #
+        #         if answer_minimum:
+        #
+        #             if answer_minimum.get('answer_id') == used_answer_id:
+        #                 if answer_minimum.get('exclusive') is True:
+        #                     minimum_new = minimum + 1/10 ** answer_decimals
+        #                 elif not answer_minimum.get('exclusive'):
+        #                     minimum_new = minimum
+        #             else:
+        #                 minimum_new = MIN_NUMBER
+        #
+        #         elif answer_maximum:
+        #
+        #             if answer_maximum.get('answer_id') == used_answer_id:
+        #                 if answer_maximum.get('exclusive') is True:
+        #                     maximum_new = maximum - 1/10 ** answer_decimals
+        #                 elif not answer_maximum.get('exclusive'):
+        #                     maximum_new = maximum
+        #             else:
+        #                 maximum_new = MAX_NUMBER
+        #
+        #         error_message = 'The minimum value 0 used in {} should be exclusive'
+        #         if maximum_new == minimum:
+        #             return [self._error_message(error_message)]
+        #
+        #         exclusivity_errors.append(self._error_message(error_message))
+        #
+        # return exclusivity_errors
 
     def _validate_range_type(self, json_to_validate, used_answer_id, answer_id, answer_decimals):
         range_errors = []

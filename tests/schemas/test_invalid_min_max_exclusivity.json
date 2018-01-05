@@ -22,7 +22,11 @@
                             "q_code": "0",
                             "type": "Currency",
                             "currency": "GBP",
-                            "decimal_places": 2
+                            "decimal_places": 2,
+                            "min_value": {
+                                "value": 0,
+                                "exclusive": true
+                            }
                         }
                     ]
                 }]
