@@ -200,27 +200,18 @@ class Validator:
         if value:
             value_range.append(self._calculate_min_max(value, answer_decimals))
         elif used_answer_id:
-            value_range.append(self._get_min_max_range_for_used_answer(answers_by_id, maximum, minimum))
+            value_range.append(self._get_min_max_range_for_used_answer(used_answer_id))
 
         return value_range
-
-    def _calculate_min_max(self, minimum, maximum):
-        calc_value = []
-
-        if maximum:
-            calc_value = [lambda value, answer_decimals: value - (1 / 10 ** answer_decimals)]
-        elif minimum:
-            calc_value = [lambda value, answer_decimals: value + (1 / 10 ** answer_decimals)]
-
-        return calc_value
 
     def _get_non_exclusive_range(self, value, used_answer_id):
         value_range = []
 
+
         if value:
             value_range = [value]
         elif used_answer_id:
-            value_range.append(self._get_min_max_range_for_used_answer(answers_by_id, maximum, minimum))
+            value_range.append(self._get_min_max_range_for_used_answer(used_answer_id))
 
         return value_range
 
@@ -233,7 +224,7 @@ class Validator:
             max_range = range_for_answer[1]
             value_range.append(max_range)
 
-        elif minimum:
+        if minimum:
             min_value_answer_id = answers_by_id.get(minimum.get('answer_id'))
             range_for_answer = self._get_range_for_answer(min_value_answer_id, answers_by_id)
             min_range = range_for_answer[1]
@@ -241,16 +232,17 @@ class Validator:
 
         return value_range
 
-    def _validate_min_max_exclusivity(self, list_of_answer_ranges):
+    def _validate_min_max_ranges(self, list_of_answer_ranges):
         exclusivity_errors = []
-        #
-        #         error_message = 'The minimum value 0 used in {} should be exclusive'
-        #         if maximum_new == minimum:
-        #             return [self._error_message(error_message)]
-        #
-        #         exclusivity_errors.append(self._error_message(error_message))
-        #
-        # return exclusivity_errors
+
+        error_message = 'The range of {} is outside the range of {}'.format(answer_id, used_answer_id)
+
+        if :
+            return [self._error_message(error_message)]
+
+        exclusivity_errors.append(self._error_message(error_message))
+
+        return exclusivity_errors
 
     def _validate_range_type(self, json_to_validate, used_answer_id, answer_id, answer_decimals):
         range_errors = []
@@ -398,3 +390,14 @@ class Validator:
                 for schema_item in value:
                     if isinstance(schema_item, dict):
                         yield from self._parse_values(schema_item, ignored_keys, parsed_key)
+
+    @staticmethod
+    def _calculate_min_max(minimum, maximum):
+        calc_value = []
+
+        if maximum:
+            calc_value = [lambda value, answer_decimals: value - (1 / 10 ** answer_decimals)]
+        elif minimum:
+            calc_value = [lambda value, answer_decimals: value + (1 / 10 ** answer_decimals)]
+
+        return calc_value
