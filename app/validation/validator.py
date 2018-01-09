@@ -39,6 +39,8 @@ class Validator:
 
         errors.extend(self.validate_child_answers_define_parent(json_to_validate))
 
+        errors.extend(self.validate_min_max_ranges(json_to_validate, list_of_answer_ranges, answer_id, used_answer_id))
+
         return errors
 
     def _validate_json_against_schema(self, json_to_validate):
@@ -154,7 +156,7 @@ class Validator:
         return errors
 
     def _get_min_max_answer_range(self, json_to_validate, used_answers):
-        list_of_answer_ranges = []
+        list_of_answer_ranges = {}
 
         answers_by_id = {}
         for answer in used_answers:
@@ -167,7 +169,7 @@ class Validator:
 
         return list_of_answer_ranges
 
-    def _get_range_for_answer(self, answer, answers_by_id):
+    def _get_range_for_answer(self, answer_id, answer, answers_by_id):
         answer_decimals = answer.get('decimal_places', 0)
         maximum = answer.get('max_value')
         minimum = answer.get('min_value')
@@ -192,7 +194,7 @@ class Validator:
             max_range = MAX_NUMBER
             min_range = MIN_NUMBER
 
-        return answer, range(min_range, max_range)
+        return answer_id, answer, range(min_range, max_range)
 
     def _get_exclusive_range(self, value, used_answer_id, answer_decimals):
         value_range = []
@@ -206,7 +208,6 @@ class Validator:
 
     def _get_non_exclusive_range(self, value, used_answer_id):
         value_range = []
-
 
         if value:
             value_range = [value]
@@ -232,13 +233,22 @@ class Validator:
 
         return value_range
 
-    def _validate_min_max_ranges(self, list_of_answer_ranges):
+    def validate_min_max_ranges(self, json_to_validate, list_of_answer_ranges, answer_id, used_answer_id):
         exclusivity_errors = []
 
         error_message = 'The range of {} is outside the range of {}'.format(answer_id, used_answer_id)
 
-        if :
-            return [self._error_message(error_message)]
+        for block in self._get_blocks(json_to_validate):
+            for answer in self._get_answers_for_block(block):
+
+                if used_answer_id in answer:
+                    answer_range = self._get_min_max_answer_range(answer)
+                    used_answer_range = list_of_answer_ranges.get(used_answer_id)
+
+                    if answer_range < used_answer_range:
+                        continue
+                    else:
+                        return [self._error_message(error_message)]
 
         exclusivity_errors.append(self._error_message(error_message))
 

@@ -24,8 +24,7 @@
                             "currency": "GBP",
                             "decimal_places": 2,
                             "min_value": {
-                                "value": 0,
-                                "exclusive": true
+                                "value": 0
                             }
                         }
                     ]
