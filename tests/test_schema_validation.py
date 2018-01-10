@@ -48,8 +48,8 @@ class TestSchemaValidation(unittest.TestCase):
 
         errors = self.validator.validate_schema(json_to_validate)
         self.assertEqual(len(errors), 1)
-        self.assertEqual(errors[0]['message'], 'Schema Integrity Error. The minimum value 0 used in {} should '
-                                               'be exclusive')
+        self.assertEqual(errors[0]['message'], 'Schema Integrity Error. The range of answer-2 is outside the range '
+                                               'of answer-1')
 
     def test_schemas(self):
 

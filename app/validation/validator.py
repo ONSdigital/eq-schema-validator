@@ -178,9 +178,9 @@ class Validator:
         min_range = MIN_NUMBER
 
         if maximum:
-            return self._get_maximum_range(self, maximum, used_answer, answer_decimals, minimum)
+            return self._get_maximum_range(used_answer, answer_decimals, maximum, minimum)
         if minimum:
-            return self._get_minimum_range(self, minimum, used_answer, answer_decimals, maximum)
+            return self._get_minimum_range(used_answer, answer_decimals, maximum, minimum)
 
         if isinstance(max_range, tuple):
             max_range = max_range[1].stop
@@ -213,7 +213,7 @@ class Validator:
         return min_range
 
     def _get_exclusive_range(self, value, used_answer, answer_decimals, maximum, minimum, answer_id):
-        if value  is not None:
+        if value is not None:
             return self._calculate_min_max(maximum, minimum)(value, answer_decimals)
         elif used_answer:
             return self._get_min_max_range_for_used_answer(used_answer, answer_id)
