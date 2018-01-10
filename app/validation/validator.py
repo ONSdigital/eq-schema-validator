@@ -236,11 +236,13 @@ class Validator:
                     answer_range = self._get_min_max_answer_range(answer)
                     used_answer_range = dict_of_answer_ranges.get(used_answer_id)
 
-                    if answer_range < used_answer_range:
+                    if answer_range.get('max_range') < used_answer_range('max_range'):
+                        continue
+                    if answer_range.get('min_range') > used_answer_range('min_range'):
                         continue
                     else:
                         return [self._error_message(error_message)]
-
+                    
         exclusivity_errors.append(self._error_message(error_message))
 
         return exclusivity_errors
