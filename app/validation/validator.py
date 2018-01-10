@@ -182,12 +182,6 @@ class Validator:
         if minimum:
             return self._get_minimum_range(used_answer, answer_decimals, maximum, minimum)
 
-        if isinstance(max_range, tuple):
-            max_range = max_range[1].stop
-
-        if isinstance(min_range, tuple):
-            min_range = min_range[1].start
-
         return answer, range(min_range, max_range)
 
     def _get_maximum_range(self, used_answer, answer_decimals, maximum, minimum):
