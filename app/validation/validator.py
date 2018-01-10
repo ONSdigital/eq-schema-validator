@@ -39,8 +39,6 @@ class Validator:
 
         errors.extend(self.validate_child_answers_define_parent(json_to_validate))
 
-        # errors.extend(self.validate_min_max_ranges(json_to_validate))
-
         return errors
 
     def _validate_json_against_schema(self, json_to_validate):
@@ -187,6 +185,7 @@ class Validator:
     def _get_maximum_range(self, used_answer, answer_decimals, maximum, minimum):
         max_value = maximum.get('value')
         max_exclusive = maximum.get('exclusive', False)
+
         if max_exclusive is True:
             max_range = self._get_exclusive_range(max_value, used_answer, answer_decimals, maximum, minimum,
                                                   maximum.get('answer_id'))
@@ -198,6 +197,7 @@ class Validator:
     def _get_minimum_range(self, used_answer, answer_decimals, maximum, minimum):
         min_value = minimum.get('value')
         min_exclusive = minimum.get('exclusive', False)
+
         if min_exclusive is True:
             min_range = self._get_exclusive_range(min_value, used_answer, answer_decimals, maximum, minimum,
                                                   minimum.get('answer_id'))
@@ -209,8 +209,10 @@ class Validator:
     def _get_exclusive_range(self, value, used_answer, answer_decimals, maximum, minimum, answer_id):
         if value is not None:
             return self._calculate_min_max(maximum, minimum)(value, answer_decimals)
-        elif used_answer:
-            return self._get_min_max_range_for_used_answer(used_answer, answer_id)
+        if used_answer and maximum:
+            return self._get_min_max_range_for_used_answer(used_answer, answer_id) - (1 / 10 ** answer_decimals)
+        if used_answer and minimum:
+            return self._get_min_max_range_for_used_answer(used_answer, answer_id) + (1 / 10 ** answer_decimals)
 
     def _get_non_exclusive_range(self, value, used_answer, answer_id):
         if value is not None:
@@ -223,7 +225,7 @@ class Validator:
 
     def _validate_min_max_ranges(self, json_to_validate, answer_id, used_answers, used_answer_id):
         exclusivity_errors = []
-        list_of_answer_ranges = self._get_min_max_answer_range(json_to_validate, used_answers)
+        dict_of_answer_ranges = self._get_min_max_answer_range(json_to_validate, used_answers)
 
         error_message = 'The range of {} is outside the range of {}'.format(answer_id, used_answer_id)
 
@@ -232,7 +234,7 @@ class Validator:
 
                 if used_answer_id in answer:
                     answer_range = self._get_min_max_answer_range(answer)
-                    used_answer_range = list_of_answer_ranges.get(used_answer_id)
+                    used_answer_range = dict_of_answer_ranges.get(used_answer_id)
 
                     if answer_range < used_answer_range:
                         continue
