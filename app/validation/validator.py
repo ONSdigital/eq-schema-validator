@@ -154,7 +154,7 @@ class Validator:
         return errors
 
     def _get_min_max_answer_range(self, json_to_validate, used_answers):
-        dict_of_answer_ranges = {}
+        answer_ranges = {}
         used_answer = {}
 
         for block in self._get_blocks(json_to_validate):
@@ -163,9 +163,9 @@ class Validator:
                     used_answer[answer.get('id')] = answer
 
                 result = self._get_range_for_answer(answer, used_answer)
-                dict_of_answer_ranges[answer.get('id')] = result
+                answer_ranges[answer.get('id')] = result
 
-        return dict_of_answer_ranges
+        return answer_ranges
 
     def _get_range_for_answer(self, answer, used_answer):
         answer_decimals = answer.get('decimal_places', 0)
@@ -225,7 +225,7 @@ class Validator:
 
     def _validate_min_max_ranges(self, json_to_validate, answer_id, used_answers, used_answer_id):
         exclusivity_errors = []
-        dict_of_answer_ranges = self._get_min_max_answer_range(json_to_validate, used_answers)
+        answer_ranges = self._get_min_max_answer_range(json_to_validate, used_answers)
 
         error_message = 'The range of {} is outside the range of {}'.format(answer_id, used_answer_id)
 
@@ -234,7 +234,7 @@ class Validator:
 
                 if used_answer_id in answer:
                     answer_range = self._get_min_max_answer_range(answer)
-                    used_answer_range = dict_of_answer_ranges.get(used_answer_id)
+                    used_answer_range = answer_ranges.get(used_answer_id)
 
                     if answer_range.get('max_range') < used_answer_range('max_range'):
                         continue
