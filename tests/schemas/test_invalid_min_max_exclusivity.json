@@ -9,7 +9,7 @@
     "description": "A questionnaire to test currency input type",
     "groups": [{
         "id": "group",
-        "title": "group",
+        "title": "Testing range of linked answers, with min/max_values",
         "blocks": [{
                 "type": "Questionnaire",
                 "id": "block-1",
