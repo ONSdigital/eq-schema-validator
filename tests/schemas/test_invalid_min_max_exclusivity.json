@@ -8,6 +8,8 @@
     "legal_basis": "StatisticsOfTradeAct",
     "description": "A questionnaire to test currency input type",
     "groups": [{
+        "id": "group",
+        "title": "",
         "blocks": [{
                 "type": "Questionnaire",
                 "id": "block-1",
@@ -57,8 +59,6 @@
                 "type": "Summary",
                 "id": "summary"
             }
-        ],
-        "id": "group",
-        "title": ""
+        ]
     }]
 }
