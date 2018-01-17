@@ -148,53 +148,71 @@ class Validator:
                 for used_answer_id in used_answers:
                     errors.extend(self._validate_range_type(
                         json_to_validate, used_answer_id, answer_id, answer_decimals))
-                    errors.extend(self._validate_min_max_ranges(
-                        json_to_validate, answer_id, used_answers, used_answer_id))
+                    # errors.extend(self._validate_min_max_ranges(
+                    #     json_to_validate, answer_id, used_answers, used_answer_id))
 
         return errors
 
-    def _get_min_max_answer_range(self, json_to_validate, used_answers):
-        answer_ranges = {}
-        used_answer = {}
+    def _get_referenced_answer_id(self, answer):
+        referenced_answer_id = None
+
+        if answer.get('max_value') and 'answer_id' in answer.get('max_value'):
+            referenced_answer_id = answer['max_value']['answer_id']
+        if answer.get('min_value') and 'answer_id' in answer.get('min_value'):
+            referenced_answer_id = answer['min_value']['answer_id']
+
+        return referenced_answer_id
+
+    def _validate_min_max_ranges(self, json_to_validate, answer_id, used_answer_id):
+        error_message = 'The range of {} is outside the range of {}'.format(answer_id, used_answer_id)
+        answers = {}
 
         for block in self._get_blocks(json_to_validate):
             for answer in self._get_answers_for_block(block):
-                if answer.get('id') in used_answers:
-                    used_answer[answer.get('id')] = answer
+                answer[answer.get('id')] = answer
 
-                result = self._get_range_for_answer(answer, used_answer)
-                answer_ranges[answer.get('id')] = result
+        for answer_id, answer in answers.items():
+            referenced_answer_id = self._get_referenced_answer_id(answer)
 
-        return answer_ranges
+            if referenced_answer_id:
+                answer_range = self._get_range_for_answer(answer)
+                referenced_answer_range = self._get_range_for_answer(answers[referenced_answer_id])
 
-    def _get_range_for_answer(self, answer, used_answer):
-        answer_decimals = answer.get('decimal_places', 0)
+                if answer_range > referenced_answer_range:
+                    return [self._error_message(error_message)]
+
+    def _get_range_for_answer(self, answer, answers):
         maximum = answer.get('max_value')
         minimum = answer.get('min_value')
 
-        max_range = MAX_NUMBER
-        min_range = MIN_NUMBER
+        max_value = MAX_NUMBER
+        min_value = MIN_NUMBER
 
         if maximum:
-            return self._get_maximum_range(used_answer, answer_decimals, maximum, minimum)
+            max_value = self._get_maximum_value(answer, answers)
         if minimum:
-            return self._get_minimum_range(used_answer, answer_decimals, maximum, minimum)
+            min_value = self._get_minimum_value(answer, answers)
 
-        return answer, range(min_range, max_range)
+        return range(min_value, max_value)
 
-    def _get_maximum_range(self, used_answer, answer_decimals, maximum, minimum):
-        max_value = maximum.get('value')
+    def _get_maximum_value(self, answer, answers):
+        answer_decimals = answer.get('decimal_places', 0)
+        maximum = answer.get('max_value')
+        value = maximum.get('value')
         max_exclusive = maximum.get('exclusive', False)
 
-        if max_exclusive is True:
-            max_range = self._get_exclusive_range(max_value, used_answer, answer_decimals, maximum, minimum,
-                                                  maximum.get('answer_id'))
+        if 'answer_id' in maximum:
+            referenced_answer = answers[maximum['answer_id']]
+            value = self._get_maximum_value(referenced_answer, answers)
+
+        if max_exclusive:
+            max_value = value - (1 / 10 ** answer_decimals)
         elif not max_exclusive:
-            max_range = self._get_non_exclusive_range(max_value, used_answer, maximum.get('answer_id'))
+            max_value =  value
 
-        return max_range
+        return max_value
 
-    def _get_minimum_range(self, used_answer, answer_decimals, maximum, minimum):
+    def _get_minimum_range(self, answer, used_answer, answer_decimals, maximum, minimum):
         min_value = minimum.get('value')
         min_exclusive = minimum.get('exclusive', False)
 
@@ -206,46 +224,20 @@ class Validator:
 
         return min_range
 
-    def _get_exclusive_range(self, value, used_answer, answer_decimals, maximum, minimum, answer_id):
-        if value is not None:
-            return self._calculate_min_max(maximum, minimum)(value, answer_decimals)
-        if used_answer and maximum:
-            return self._get_min_max_range_for_used_answer(used_answer, answer_id) - (1 / 10 ** answer_decimals)
-        if used_answer and minimum:
-            return self._get_min_max_range_for_used_answer(used_answer, answer_id) + (1 / 10 ** answer_decimals)
+    # def _get_exclusive_range(self, value, answer, used_answer, answer_decimals, maximum, minimum, answer_id):
+    #     if value is not None:
+    #         return self._calculate_min_max(maximum, minimum)(value, answer_decimals)
+    #     if
+    #     used_answer(used_answer, answer_id)[1] + (1 / 10 ** answer_decimals)
+    #
+    # def _get_non_exclusive_range(self, value, used_answer, answer_id):
+    #     if value is not None:
+    #         return value
+    #     elif used_answer:
+    #         return self._get_min_max_range_for_used_answer(used_answer, answer_id)
 
-    def _get_non_exclusive_range(self, value, used_answer, answer_id):
-        if value is not None:
-            return value
-        elif used_answer:
-            return self._get_min_max_range_for_used_answer(used_answer, answer_id)
-
-    def _get_min_max_range_for_used_answer(self, used_answer, answer_id):
-        return self._get_range_for_answer(used_answer.get(answer_id), used_answer)
-
-    def _validate_min_max_ranges(self, json_to_validate, answer_id, used_answers, used_answer_id):
-        exclusivity_errors = []
-        answer_ranges = self._get_min_max_answer_range(json_to_validate, used_answers)
-
-        error_message = 'The range of {} is outside the range of {}'.format(answer_id, used_answer_id)
-
-        for block in self._get_blocks(json_to_validate):
-            for answer in self._get_answers_for_block(block):
-
-                if used_answer_id in answer:
-                    answer_range = self._get_min_max_answer_range(answer)
-                    used_answer_range = answer_ranges.get(used_answer_id)
-
-                    if answer_range.get('max_range') < used_answer_range('max_range'):
-                        continue
-                    if answer_range.get('min_range') > used_answer_range('min_range'):
-                        continue
-                    else:
-                        return [self._error_message(error_message)]
-                    
-        exclusivity_errors.append(self._error_message(error_message))
-
-        return exclusivity_errors
+    # def _get_min_max_range_for_used_answer(self, used_answer, answer_id):
+    #     return self._get_range_for_answer(used_answer.get(answer_id), used_answer)
 
     def _validate_range_type(self, json_to_validate, used_answer_id, answer_id, answer_decimals):
         range_errors = []
@@ -394,10 +386,10 @@ class Validator:
                     if isinstance(schema_item, dict):
                         yield from self._parse_values(schema_item, ignored_keys, parsed_key)
 
-    @staticmethod
-    def _calculate_min_max(minimum, maximum):
-        if maximum:
-            return lambda value, answer_decimals: value - (1 / 10 ** answer_decimals)
-        elif minimum:
-            return lambda value, answer_decimals: value + (1 / 10 ** answer_decimals)
+    # @staticmethod
+    # def _calculate_min_max(minimum, maximum):
+    #     if maximum:
+    #         return lambda value, answer_decimals: value - (1 / 10 ** answer_decimals)
+    #     elif minimum:
+    #         return lambda value, answer_decimals: value + (1 / 10 ** answer_decimals)
 
