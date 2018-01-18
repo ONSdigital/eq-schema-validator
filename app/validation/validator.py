@@ -159,13 +159,13 @@ class Validator:
 
         for block in self._get_blocks(json_to_validate):
             for answer in self._get_answers_for_block(block):
-                answer[answer.get('id')] = answer
+                answers[answer.get('id')] = answer
 
         for answer_id, answer in answers.items():
             referenced_answer_id = self._get_referenced_answer_id(answer)
 
             if referenced_answer_id:
-                answer_range = self._get_range_for_answer(answer)
+                answer_range = self._get_range_for_answer(answer, answers)
                 referenced_answer_range = self._get_range_for_answer(answers[referenced_answer_id])
 
                 if answer_range > referenced_answer_range:
@@ -191,14 +191,16 @@ class Validator:
     def _get_maximum_value(self, answer, answers):
         answer_decimals = answer.get('decimal_places', 0)
         maximum = answer.get('max_value')
-        value = maximum.get('value')
         max_exclusive = maximum.get('exclusive', False)
+
+        if 'value' in maximum:
+            value = maximum.get('value')
 
         if 'answer_id' in maximum:
             referenced_answer = answers[maximum['answer_id']]
             value = self._get_maximum_value(referenced_answer, answers)
 
-        if max_exclusive:
+        if max_exclusive is True:
             max_value = value - (1 / 10 ** answer_decimals)
         elif not max_exclusive:
             max_value = value
@@ -208,14 +210,16 @@ class Validator:
     def _get_minimum_value(self, answer, answers):
         answer_decimals = answer.get('decimal_places', 0)
         minimum = answer.get('min_value')
-        value = minimum.get('value')
         min_exclusive = minimum.get('exclusive', False)
+
+        if 'value' in minimum:
+            value = minimum.get('value')
 
         if 'answer_id' in minimum:
             referenced_answer = answers[minimum['answer_id']]
             value = self._get_minimum_value(referenced_answer, answers)
 
-        if min_exclusive:
+        if min_exclusive is True:
             min_value = value + (1 / 10 ** answer_decimals)
         elif not min_exclusive:
             min_value = value
