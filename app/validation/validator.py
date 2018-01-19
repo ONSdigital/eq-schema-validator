@@ -165,10 +165,10 @@ class Validator:
             referenced_answer_id = self._get_referenced_answer_id(answer)
 
             if referenced_answer_id:
-                answer_range = self._get_range_for_answer(answer, answers)
-                referenced_answer_range = self._get_range_for_answer(answers[referenced_answer_id], answers)
-
-                if len(answer_range) > len(referenced_answer_range):
+                answer_min_max = self._get_range_for_answer(answer, answers)
+                # referenced_answer_range = self._get_range_for_answer(answers[referenced_answer_id], answers)
+                answer_range = answer_min_max[1] - answer_min_max[0]
+                if answer_range <= 0:
                     error_message = 'The range of {} is outside the range of {}'.format(answer_id, referenced_answer_id)
                     errors.append(self._error_message(error_message))
 
@@ -179,16 +179,16 @@ class Validator:
         minimum = answer.get('min_value')
 
         max_value = MAX_NUMBER
-        min_value = MIN_NUMBER
+        min_value = 0
 
         if maximum:
-            max_value = self._get_maximum_value(answer, answers)
+            max_value = self._get_maximum_value(answer, answers, min_value)
         if minimum:
-            min_value = self._get_minimum_value(answer, answers)
+            min_value = self._get_minimum_value(answer, answers, max_value)
 
-        return range(min_value, max_value)
+        return min_value, max_value
 
-    def _get_maximum_value(self, answer, answers):
+    def _get_maximum_value(self, answer, answers, min_value):
         answer_decimals = answer.get('decimal_places', 0)
         maximum = answer.get('max_value')
 
@@ -196,16 +196,16 @@ class Validator:
             value = maximum.get('value')
         elif 'answer_id' in maximum:
             referenced_answer = answers[maximum['answer_id']]
-            value = self._get_range_for_answer(referenced_answer, answers)
+            value = self._get_range_for_answer(referenced_answer, answers)[0]
 
         if 'exclusive' in maximum and maximum['exclusive'] is True:
-            max_value = value[1] - (1 // 10 ** answer_decimals)
+            max_value = value - (1 / 10 ** answer_decimals)
         else:
             max_value = value
 
         return max_value
 
-    def _get_minimum_value(self, answer, answers):
+    def _get_minimum_value(self, answer, answers, max_value):
         answer_decimals = answer.get('decimal_places', 0)
         minimum = answer.get('min_value')
 
@@ -213,10 +213,10 @@ class Validator:
             value = minimum.get('value')
         elif 'answer_id' in minimum:
             referenced_answer = answers[minimum['answer_id']]
-            value = self._get_range_for_answer(referenced_answer, answers)
+            value = self._get_range_for_answer(referenced_answer, answers)[1]
 
         if 'exclusive' in minimum and minimum['exclusive'] is True:
-            min_value = value[0] + decimal.Decimal((1 // 10 ** answer_decimals))
+            min_value = value + (1 / 10 ** answer_decimals)
         else:
             min_value = value
 
