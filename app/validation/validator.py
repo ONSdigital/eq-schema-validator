@@ -160,18 +160,17 @@ class Validator:
         for block in self._get_blocks(json_to_validate):
             for answer in self._get_answers_for_block(block):
                 answers[answer.get('id')] = answer
+                answer_id = answer.get('id')
+                referenced_answer_id = self._get_referenced_answer_id(answer)
 
-        for answer_id, answer in answers.items():
-            referenced_answer_id = self._get_referenced_answer_id(answer)
+                if referenced_answer_id:
+                    minimum, maximum = self._get_range_for_answer(answer, answers)
+                    answer_range = maximum - minimum
 
-            if referenced_answer_id:
-                minimum, maximum = self._get_range_for_answer(answer, answers)
-                answer_range = maximum - minimum
-
-                if answer_range <= 0:
-                    error_message = 'The range of {} could be outside the range of {}'.format(answer_id,
-                                                                                              referenced_answer_id)
-                    errors.append(self._error_message(error_message))
+                    if answer_range <= 0:
+                        error_message = 'The range of {} could be outside the range of {}'.format(answer_id,
+                                                                                                  referenced_answer_id)
+                        errors.append(self._error_message(error_message))
 
         return errors
 
@@ -197,10 +196,10 @@ class Validator:
             max_value = maximum.get('value')
         elif 'answer_id' in maximum:
             referenced_answer = answers[maximum['answer_id']]
-            max_value = self._get_range_for_answer(referenced_answer, answers)[0]
+            minimum, _ = self._get_range_for_answer(referenced_answer, answers)
 
         if maximum.get('exclusive'):
-            max_value = max_value - (1 / 10 ** answer_decimals)
+            max_value = minimum - (1 / 10 ** answer_decimals)
 
         return max_value
 
@@ -212,10 +211,10 @@ class Validator:
             min_value = minimum.get('value')
         elif 'answer_id' in minimum:
             referenced_answer = answers[minimum['answer_id']]
-            min_value = self._get_range_for_answer(referenced_answer, answers)[1]
+            _, maximum = self._get_range_for_answer(referenced_answer, answers)
 
         if minimum.get('exclusive'):
-            min_value = min_value + (1 / 10 ** answer_decimals)
+            min_value = maximum + (1 / 10 ** answer_decimals)
 
         return min_value
 
