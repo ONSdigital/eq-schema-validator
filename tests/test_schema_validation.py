@@ -39,6 +39,18 @@ class TestSchemaValidation(unittest.TestCase):
 
         self.assertTrue('message' in error, 'This schema should fail with an invalid block')
 
+    def test_invalid_min_max_exclusivity(self):
+
+        file = 'schemas/test_invalid_min_max_exclusivity.json'
+
+        json_file = open(os.path.join(os.path.dirname(os.path.realpath(__file__)), file), encoding='utf8')
+        json_to_validate = load(json_file)
+
+        errors = self.validator.validate_schema(json_to_validate)
+        self.assertEqual(len(errors), 1)
+        self.assertEqual(errors[0]['message'], 'Schema Integrity Error. The range of answer-2 could be outside the '
+                                               'range of answer-1')
+
     def test_schemas(self):
 
         errors = []
