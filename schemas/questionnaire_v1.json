@@ -59,6 +59,24 @@
         "StatisticsOfTradeAct"
       ]
     },
+    "view_submitted_responses": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "description": "Whether or not answers are available after submission.",
+          "type": "boolean"
+        },
+        "timeout": {
+          "description": "The amount of time in seconds submitted answers are available for.",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "enabled",
+        "timeout"
+      ],
+      "additionalProperties": false
+    },
     "variables": {
       "type": "object",
       "properties": {
@@ -142,7 +160,7 @@
                   "$ref": "blocks/introduction.json#/block"
                 },
                 {
-                  "$ref": "blocks/questionnaire.json#/block"
+                  "$ref": "blocks/question.json#/block"
                 },
                 {
                   "$ref": "blocks/interstitial.json#/block"

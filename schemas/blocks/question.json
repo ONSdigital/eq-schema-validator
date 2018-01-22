@@ -20,7 +20,7 @@
       },
       "type": {
         "type": "string",
-        "enum": ["Questionnaire"]
+        "enum": ["Question"]
       },
       "questions": {
         "type": "array",
@@ -42,7 +42,7 @@
         }
       },
       "routing_rules": {
-        "ref": "../common_definitions.json#/routing_rules"
+        "$ref": "../common_definitions.json#/routing_rules"
       },
       "skip_conditions": {
         "$ref": "../common_definitions.json#/skip_conditions"

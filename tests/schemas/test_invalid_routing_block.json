@@ -9,7 +9,7 @@
     "legal_basis": "StatisticsOfTradeAct",
     "groups": [{
         "blocks": [{
-            "type": "Questionnaire",
+            "type": "Question",
             "id": "conditional-routing-block",
                 "title": "Conditional Routing Test",
                 "description": "",
@@ -41,7 +41,7 @@
             "routing_rules":[
                 {
                     "goto": {
-                        "id" : "response-yes",
+                        "block" : "response-yes",
                         "when": [
                             {
                                 "id" : "conditional-routing-answer",
@@ -54,7 +54,7 @@
                 },
                 {
                     "goto": {
-                        "id": "invalid-location",
+                        "block": "invalid-location",
                         "when": [
                             {
                                 "id" : "conditional-routing-answer",
@@ -68,7 +68,7 @@
             ]
         },
         {
-            "type": "Questionnaire",
+            "type": "Question",
             "id": "response-yes",
                 "title": "Yes, I do drink coffee",
                 "description": "",
@@ -89,7 +89,7 @@
             "routing_rules":[
                 {
                     "goto": {
-                        "id" : "Summary"
+                        "block" : "Summary"
                     }
 
                 }
