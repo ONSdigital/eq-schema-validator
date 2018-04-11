@@ -9,7 +9,8 @@
     "title",
     "sections",
     "theme",
-    "legal_basis"
+    "legal_basis",
+    "required_metadata"
   ],
   "properties": {
     "eq_id": {
@@ -58,6 +59,9 @@
         "Voluntary",
         "StatisticsOfTradeAct"
       ]
+    },
+    "required_metadata": {
+      "type": "object"
     },
     "view_submitted_response": {
       "type": "object",
