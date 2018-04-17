@@ -61,7 +61,8 @@
       ]
     },
     "required_metadata": {
-      "type": "object"
+      "type": "object",
+      "required": ["period_id", "user_id"]
     },
     "view_submitted_response": {
       "type": "object",

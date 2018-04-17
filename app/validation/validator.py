@@ -1,3 +1,4 @@
+import re
 from json import load
 import os
 import pathlib
@@ -22,6 +23,8 @@ class Validator:
             return schema_errors
 
         errors = []
+
+        errors.extend(self._validate_schema_contain_required_metadata(json_to_validate))
 
         numeric_answer_ranges = {}
 
@@ -73,6 +76,33 @@ class Validator:
             }
         except SchemaError as e:
             return '{}'.format(e)
+
+    def _validate_schema_contain_required_metadata(self, schema):
+        # Ensure that metadata used within the schema are implicitly defined in required_metadata field
+
+        errors = []
+        default_metadata = ['user_id', 'period_id']
+
+        required_metadata = schema['required_metadata']
+
+        # This regex will find all words that precede with "metadata" then a "[" or "." following by an optional "'"
+        parsed_metadata = re.findall(r"(?<=metadata\[\')\w+", str(schema))
+
+        parsed_metadata1 = re.findall(r"(?<=metadata\.)\w+", str(schema))
+        if parsed_metadata1:
+            int('t')
+        # (?<=[\|\{\,\ \(]metadata)\.(\w+)(?=[\ \|\}\)\,])
+
+        print('\033[93m', set(parsed_metadata), '\x1b[0m')
+
+        for metadata in set(parsed_metadata):
+            if metadata not in required_metadata:
+                errors.append(self._error_message('Metadata - {} not specified in required_metadata field'.format(metadata)))
+
+        for metadata in required_metadata:
+            if metadata not in set(parsed_metadata) and metadata not in default_metadata:
+                errors.append(self._error_message('Unused metadata defined in required_metadata - {}'.format(metadata)))
+        return errors
 
     def validate_calculated_ids_in_answers_to_calculate_exists(self, question):
         # Validates that any answer ids within the 'answer_to_group'
