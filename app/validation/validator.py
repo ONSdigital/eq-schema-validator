@@ -24,7 +24,7 @@ class Validator:
 
         errors = []
 
-        errors.extend(self._validate_schema_contain_required_metadata(json_to_validate))
+        errors.extend(self._validate_schema_contain_metadata(json_to_validate))
 
         numeric_answer_ranges = {}
 
@@ -77,24 +77,24 @@ class Validator:
         except SchemaError as e:
             return '{}'.format(e)
 
-    def _validate_schema_contain_required_metadata(self, schema):
+    def _validate_schema_contain_metadata(self, schema):
         # Ensure that metadata used within the schema are explicitly defined.
 
         errors = []
 
         default_metadata = ['user_id', 'period_id']  # Metadata that must be present in all schemas
-        required_metadata = schema['required_metadata']  # Metadata required within the schema.
+        schema_metadata = schema['metadata']  # Metadata required within the schema.
 
         # Find all words that precede with "metadata['"
         parsed_metadata = re.findall(r"(?<=metadata\[\')\w+", str(schema))
 
         for metadata in set(parsed_metadata):
-            if metadata not in required_metadata:
-                errors.append(self._error_message('Metadata - {} not specified in required_metadata field'.format(metadata)))
+            if metadata not in schema_metadata:
+                errors.append(self._error_message('Metadata - {} not specified in metadata field'.format(metadata)))
 
-        for metadata in required_metadata:
+        for metadata in schema_metadata:
             if metadata not in set(parsed_metadata) and metadata not in default_metadata:
-                errors.append(self._error_message('Unused metadata defined in required_metadata - {}'.format(metadata)))
+                errors.append(self._error_message('Unused metadata defined in metadata field - {}'.format(metadata)))
 
         return errors
 

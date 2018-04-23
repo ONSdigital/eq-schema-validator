@@ -10,7 +10,7 @@
     "sections",
     "theme",
     "legal_basis",
-    "required_metadata"
+    "metadata"
   ],
   "properties": {
     "eq_id": {
@@ -60,7 +60,7 @@
         "StatisticsOfTradeAct"
       ]
     },
-    "required_metadata": {
+    "metadata": {
       "type": "object",
       "required": ["period_id", "user_id"]
     },
