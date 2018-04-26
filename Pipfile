@@ -10,7 +10,7 @@ name = "pypi"
 Flask = "*"
 jsonschema = "*"
 structlog = "*"
-
+simplejson = "*"
 
 [dev-packages]
 

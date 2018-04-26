@@ -1,7 +1,6 @@
 import urllib
 
-import json
-from json import JSONDecodeError
+import simplejson as json
 
 from flask import Blueprint, request, jsonify, Response
 from structlog import get_logger
@@ -36,7 +35,7 @@ def validate_schema_from_url():
 def validate_schema(data):
     try:
         json_to_validate = json.loads(data)
-    except JSONDecodeError:
+    except json.JSONDecodeError:
         logger.info('Could not parse JSON', status=400)
         return Response(status=400, response='Could not parse JSON')
 
