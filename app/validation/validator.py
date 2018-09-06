@@ -201,16 +201,6 @@ class Validator:
 
         return errors
 
-    def validate_repeat_group_rule(self, rule, all_groups):
-        errors = []
-
-        for group_id in rule['repeat']['group_ids']:
-            if not self._is_contained_in_list(all_groups, group_id):
-                invalid_block_error = 'Group repeat rule repeats over invalid group [{}]'.format(group_id)
-                errors.append(self._error_message(invalid_block_error))
-
-        return errors
-
     @staticmethod
     def validate_repeat_when_rule_restricted(rule, answer_ids_with_group_id, group):
         errors = []
