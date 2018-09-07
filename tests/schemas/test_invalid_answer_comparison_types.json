@@ -206,7 +206,6 @@
                         "id": "comparison-1-answer",
                         "condition": "not equals",
                         "comparison_id": "comparison-2-answer",
-                        "value": "1"
                     }]
                 }]
             }, {
@@ -219,14 +218,12 @@
                         "id": "comparison-1-answer",
                         "condition": "greater than",
                         "comparison_id": "comparison-2-answer",
-                        "value": "1"
                     }]
                 }, {
                     "when": [{
                         "id": "comparison-1-answer",
                         "condition": "equals",
                         "comparison_id": "comparison-2-answer",
-                        "value": "1"
                     }]
                 }]
             }, {
