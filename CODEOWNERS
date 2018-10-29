@@ -1,0 +1,6 @@
+# These owners will be the default owners for everything in
+# the repo. Unless a later match takes precedence,
+# We include people on the author team as code owners to ensure
+# that they're aware of any breaking changes
+
+*       @samiwel @SamGodwin2
