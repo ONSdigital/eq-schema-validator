@@ -58,7 +58,7 @@
                     "id": "answer3",
                     "mandatory": false,
                     "type": "TextField",
-                    "label": "Text",
+                    "label": "Two values from answer store via transform",
                     "description": "test {date_range}",
                     "description_values": [{
                         "placeholder": "date_range",

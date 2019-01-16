@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "string_values": {
+    "type": "object",
+    "properties": {
+      "placeholder": {
+        "type": "string"
+      },
+      "value": {
+        "$ref": "string_interpolation.json#/value_source"
+      },
+      "transforms": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "anyOf": [
+            {
+              "$ref": "format_number.json#/transform"
+            },
+            {
+              "$ref": "format_date_range.json#/transform"
+            }
+          ]
+        }
+      }
+    },
+    "additionalProperties": false,
+    "required": [
+      "placeholder"
+    ],
+    "oneOf": [
+      {
+        "required": [ "value" ]
+      },
+      {
+        "required": [ "transforms" ]
+      }
+    ]
+  },
+  "value_source": {
+    "type": "object",
+    "properties": {
+      "source": {
+        "type": "string",
+        "enum": [
+          "answers",
+          "metadata",
+          "collection_metadata"
+        ]
+      },
+      "identifier": {
+        "type": "string"
+      }
+    }
+  }
+}
+

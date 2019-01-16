@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "transform": {
+    "type": "object",
+    "properties": {
+      "filter": {
+        "type": "string",
+        "enum": ["format_number"]
+      },
+      "filter_args": {
+        "type": "object",
+        "properties": {
+          "number": {
+            "$ref": "string_interpolation.json#/value_source"
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "number"
+        ]    
+      }
+    }
+  }
+}
