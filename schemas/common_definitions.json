@@ -470,6 +470,70 @@
         "value"
       ]
     }
+  },
+  "string_values": {
+      "type": "object",
+      "properties": {
+        "placeholder": {
+          "type": "string"
+        },
+        "filters": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "anyOf": [
+              {
+                "$ref": "common_definitions.json#/format_date_range_filter"
+              }
+            ]
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "placeholder",
+        "filters"
+      ]
+  },
+  "format_date_range_filter": {
+    "type": "object",
+    "properties": {
+      "filter": {
+        "type": "string",
+        "enum": ["format_date_range"]
+      },
+      "filter_args": {
+        "type": "object",
+        "properties": {
+          "start_date": {
+            "$ref": "common_definitions.json#/string_value_source"
+          },
+          "end_date": {
+            "$ref": "common_definitions.json#/string_value_source"
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "start_date"
+        ]    
+      }
+    }
+  },
+  "string_value_source": {
+    "type": "object",
+    "properties": {
+      "source": {
+        "type": "string",
+        "enum": [
+          "answers",
+          "metadata",
+          "collection_metadata"
+        ]
+      },
+      "value": {
+        "type": "string"
+      }
+    }
   }
 }
 

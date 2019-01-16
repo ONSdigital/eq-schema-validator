@@ -15,6 +15,12 @@
       "description": {
         "type": "string"
       },
+      "description_values":  {
+        "type": "array", 
+        "items": {
+          "$ref": "../common_definitions.json#/string_values"
+        }
+      },
       "number": {
         "type": "string"
       },

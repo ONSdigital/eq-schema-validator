@@ -1,0 +1,84 @@
+{
+    "eq_id": "3",
+    "form_type": "3",
+    "mime_type": "application/json/ons/eq",
+    "schema_version": "0.0.1",
+    "data_version": "0.0.2",
+    "survey_id": "3",
+    "title": "String Transforms",
+    "sections": [{
+      "id": "section1",
+      "groups": [{
+          "id": "group1",
+          "title": "",
+          "blocks": [{
+            "id": "block1",
+            "title": "",
+            "description": "test {date_range}",
+            "description_values": [
+                {
+                    "placeholder": "date_range",
+                    "filters": [ 
+                        {
+                        "filter": "format_date_range",
+                        "filter_args": {
+                            "start_date": {
+                            "source": "answers",
+                            "value": "answer6"
+                            },
+                            "end_date": {
+                            "source": "answers",
+                            "value": "answer6"
+                            }
+                        }
+                        }
+                    ]
+                }
+            ],
+            "type": "Question",
+            "questions": [{
+              "id": "question1",
+              "title": "",
+              "description": "",
+              "type": "General",
+              "answers": [{
+                "id": "answer1",
+                "mandatory": false,
+                "type": "TextField",
+                "label": "Text",
+                "description": ""
+              }]
+            }]
+          },
+          {
+            "id": "confirmation",
+            "type": "Confirmation",
+            "description": "",
+            "title": ""
+          }]
+        }
+      ]
+    }],
+    "theme": "default",
+    "legal_basis": "StatisticsOfTradeAct",
+    "navigation": {
+      "visible": false
+    },
+    "metadata": [{
+        "name": "user_id",
+        "validator": "string"
+      },
+      {
+        "name": "period_id",
+        "validator": "string"
+      },
+      {
+        "name": "ru_name",
+        "validator": "string"
+      },
+      {
+        "name": "test_metadata",
+        "validator": "string"
+      }
+    ]
+  }

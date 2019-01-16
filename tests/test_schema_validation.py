@@ -328,6 +328,16 @@ class TestSchemaValidation(unittest.TestCase):
 
         self.assertEqual(0, len(errors))
 
+    def test_string_transforms(self):
+        file_name = 'schemas/test_string_transforms.json'
+        json_to_validate = self._open_and_load_schema_file(file_name)
+
+        errors = self.validator.validate_schema(json_to_validate)
+
+        print(errors)
+
+        self.assertEqual(0, len(errors))
+
     @staticmethod
     def _open_and_load_schema_file(file):
         json_file = open(os.path.join(os.path.dirname(os.path.realpath(__file__)), file), encoding='utf8')
