@@ -477,13 +477,19 @@
         "placeholder": {
           "type": "string"
         },
-        "filters": {
+        "value": {
+          "$ref": "common_definitions.json#/string_value_source"
+        },
+        "transforms": {
           "type": "array",
           "items": {
             "type": "object",
             "anyOf": [
               {
                 "$ref": "common_definitions.json#/format_date_range_filter"
+              },
+              {
+                "$ref": "common_definitions.json#/format_number_filter"
               }
             ]
           }
@@ -491,18 +497,25 @@
       },
       "additionalProperties": false,
       "required": [
-        "placeholder",
-        "filters"
+        "placeholder"
+      ],
+      "oneOf": [
+        {
+          "required": [ "value" ]
+        },
+        {
+          "required": [ "transforms" ]
+        }
       ]
   },
   "format_date_range_filter": {
     "type": "object",
     "properties": {
-      "filter": {
+      "transform": {
         "type": "string",
         "enum": ["format_date_range"]
       },
-      "filter_args": {
+      "transform_args": {
         "type": "object",
         "properties": {
           "start_date": {
@@ -519,6 +532,27 @@
       }
     }
   },
+  "format_number_filter": {
+    "type": "object",
+    "properties": {
+      "filter": {
+        "type": "string",
+        "enum": ["format_number"]
+      },
+      "filter_args": {
+        "type": "object",
+        "properties": {
+          "number": {
+            "$ref": "common_definitions.json#/string_value_source"
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "number"
+        ]    
+      }
+    }
+  },
   "string_value_source": {
     "type": "object",
     "properties": {
@@ -530,7 +564,7 @@
           "collection_metadata"
         ]
       },
-      "value": {
+      "identifier": {
         "type": "string"
       }
     }

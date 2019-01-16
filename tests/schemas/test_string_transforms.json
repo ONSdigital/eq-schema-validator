@@ -25,20 +25,53 @@
                     "id": "answer1",
                     "mandatory": false,
                     "type": "TextField",
+                    "label": "Simple value from answer store",
+                    "description": "test {simple_answer}",
+                    "description_values": [{
+                        "placeholder": "simple_answer",
+                        "value": {
+                            "source": "answers",
+                            "identifier": "answer1"
+                        }
+                    }]
+                  },
+                  {
+                    "id": "answer2",
+                    "mandatory": false,
+                    "type": "TextField",
+                    "label": "Simple value from answer store via transform",
+                    "description": "test {simple_answer_with_transform}",
+                    "description_values": [{
+                        "placeholder": "simple_answer_with_transform",
+                        "transforms": [{
+                            "transform": "format_number",
+                            "transform_args": {
+                                "number": {
+                                    "source": "answers",
+                                    "identifier": "answer1"
+                                }
+                            }
+                        }]
+                    }]
+                  },
+                  {
+                    "id": "answer3",
+                    "mandatory": false,
+                    "type": "TextField",
                     "label": "Text",
                     "description": "test {date_range}",
                     "description_values": [{
                         "placeholder": "date_range",
-                        "filters": [{
-                            "filter": "format_date_range",
-                            "filter_args": {
+                        "transforms": [{
+                            "transform": "format_date_range",
+                            "transform_args": {
                                 "start_date": {
                                     "source": "answers",
-                                    "value": "answer1"
+                                    "identifier": "answer1"
                                 },
                                 "end_date": {
                                     "source": "answers",
-                                    "value": "answer2"
+                                    "identifier": "answer2"
                                 }
                             }
                         }]
