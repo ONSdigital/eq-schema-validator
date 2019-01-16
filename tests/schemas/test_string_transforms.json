@@ -14,40 +14,37 @@
           "blocks": [{
             "id": "block1",
             "title": "",
-            "description": "test {date_range}",
-            "description_values": [
-                {
-                    "placeholder": "date_range",
-                    "filters": [ 
-                        {
-                        "filter": "format_date_range",
-                        "filter_args": {
-                            "start_date": {
-                            "source": "answers",
-                            "value": "answer6"
-                            },
-                            "end_date": {
-                            "source": "answers",
-                            "value": "answer6"
-                            }
-                        }
-                        }
-                    ]
-                }
-            ],
             "type": "Question",
             "questions": [{
               "id": "question1",
               "title": "",
               "description": "",
               "type": "General",
-              "answers": [{
-                "id": "answer1",
-                "mandatory": false,
-                "type": "TextField",
-                "label": "Text",
-                "description": ""
-              }]
+              "answers": [
+                  {
+                    "id": "answer1",
+                    "mandatory": false,
+                    "type": "TextField",
+                    "label": "Text",
+                    "description": "test {date_range}",
+                    "description_values": [{
+                        "placeholder": "date_range",
+                        "filters": [{
+                            "filter": "format_date_range",
+                            "filter_args": {
+                                "start_date": {
+                                    "source": "answers",
+                                    "value": "answer1"
+                                },
+                                "end_date": {
+                                    "source": "answers",
+                                    "value": "answer2"
+                                }
+                            }
+                        }]
+                    }]
+                  }
+                ]
             }]
           },
           {
