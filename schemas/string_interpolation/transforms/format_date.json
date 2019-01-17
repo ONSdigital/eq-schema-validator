@@ -1,22 +1,28 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema",
-  "format_number": {
+  "format_date": {
     "type": "object",
     "properties": {
       "transform": {
         "type": "string",
-        "enum": ["format_number"]
+        "enum": ["format_date"]
       },
       "arguments": {
         "type": "object",
         "properties": {
-          "number": {
+          "date": {
             "$ref": "../definitions.json#/value_sources" 
+          },
+          "format": {
+            "type": "string",
+            "enum": [
+              "EEEE d MMMM YYYY"
+            ]
           }
         },
         "additionalProperties": false,
         "required": [
-          "number"
+          "date"
         ]    
       }
     },

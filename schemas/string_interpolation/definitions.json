@@ -18,6 +18,9 @@
               "$ref": "transforms/format_number.json#/format_number"
             },
             {
+              "$ref": "transforms/format_date.json#/format_date"
+            },
+            {
               "$ref": "transforms/format_date_range.json#/format_date_range"
             }
           ]
