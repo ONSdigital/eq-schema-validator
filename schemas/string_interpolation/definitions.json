@@ -7,7 +7,7 @@
         "type": "string"
       },
       "value": {
-        "$ref": "string_interpolation.json#/value_source"
+        "$ref": "#/value_source"
       },
       "transforms": {
         "type": "array",
@@ -15,10 +15,10 @@
           "type": "object",
           "anyOf": [
             {
-              "$ref": "format_number.json#/format_number"
+              "$ref": "transforms/format_number.json#/format_number"
             },
             {
-              "$ref": "format_date_range.json#/format_date_range"
+              "$ref": "transforms/format_date_range.json#/format_date_range"
             }
           ]
         }
