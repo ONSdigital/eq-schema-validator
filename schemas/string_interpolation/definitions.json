@@ -7,14 +7,7 @@
         "type": "string"
       },
       "value": {
-        "oneOf": [
-          {
-            "$ref": "#/value_source"
-          },
-          {
-            "$ref": "#/lookup_source"
-          }
-        ]
+        "$ref": "#/lookup_source"
       },
       "transforms": {
         "type": "array",
@@ -61,7 +54,7 @@
     "type": "object",
     "properties": {
       "value": {
-        "type": "string"
+        "type": ["string","number","object"]
       }
     },
     "additionalProperties": false,
