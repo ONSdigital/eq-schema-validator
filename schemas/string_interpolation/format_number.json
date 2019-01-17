@@ -1,13 +1,13 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema",
-  "transform": {
+  "format_number": {
     "type": "object",
     "properties": {
-      "filter": {
+      "transform": {
         "type": "string",
         "enum": ["format_number"]
       },
-      "filter_args": {
+      "transform_args": {
         "type": "object",
         "properties": {
           "number": {
@@ -19,6 +19,7 @@
           "number"
         ]    
       }
-    }
+    },
+    "additionalProperties": false
   }
 }

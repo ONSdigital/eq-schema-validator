@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema",
-  "transform": {
+  "format_date_range": {
     "type": "object",
     "properties": {
       "transform": {
@@ -22,6 +22,7 @@
           "start_date"
         ]    
       }
-    }
+    },
+    "additionalProperties": false
   }
 }
