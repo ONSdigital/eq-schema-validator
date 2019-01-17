@@ -105,6 +105,28 @@
                             }
                         ]
                     }]
+                  },
+                  {
+                    "id": "answer5",
+                    "mandatory": false,
+                    "type": "TextField",
+                    "label": "String value passed to transform",
+                    "description": "test {value}",
+                    "description_values": [{
+                        "placeholder": "value",
+                        "transforms": [
+                            {
+                                "transform": "format_date",
+                                "arguments": {
+                                    "date": {
+                                        "source": "answers",
+                                        "identifier": "answer5"
+                                    },
+                                    "format": "EEEE d MMMM"
+                                }
+                            }
+                        ]
+                    }]
                   }
                 ]
             }]
