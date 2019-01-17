@@ -7,7 +7,7 @@
         "type": "string",
         "enum": ["format_number"]
       },
-      "transform_args": {
+      "arguments": {
         "type": "object",
         "properties": {
           "number": {

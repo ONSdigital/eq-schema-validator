@@ -7,7 +7,7 @@
         "type": "string",
         "enum": ["format_date_range"]
       },
-      "transform_args": {
+      "arguments": {
         "type": "object",
         "properties": {
           "start_date": {

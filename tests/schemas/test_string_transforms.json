@@ -45,7 +45,7 @@
                         "placeholder": "simple_answer_with_transform",
                         "transforms": [{
                             "transform": "format_number",
-                            "transform_args": {
+                            "arguments": {
                                 "number": {
                                     "source": "answers",
                                     "identifier": "answer1"
@@ -64,7 +64,7 @@
                         "placeholder": "date_range",
                         "transforms": [{
                             "transform": "format_date_range",
-                            "transform_args": {
+                            "arguments": {
                                 "start_date": {
                                     "source": "answers",
                                     "identifier": "answer1"
