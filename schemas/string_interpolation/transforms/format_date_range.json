@@ -11,10 +11,10 @@
         "type": "object",
         "properties": {
           "start_date": {
-            "$ref": "../definitions.json#/value_source"
+            "$ref": "../definitions.json#/value_sources"
           },
           "end_date": {
-            "$ref": "../definitions.json#/value_source"
+            "$ref": "../definitions.json#/value_sources"
           }
         },
         "additionalProperties": false,

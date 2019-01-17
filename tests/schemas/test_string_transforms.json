@@ -48,7 +48,7 @@
                             "arguments": {
                                 "number": {
                                     "source": "answers",
-                                    "identifier": "answer1"
+                                    "identifier": "answer2"
                                 }
                             }
                         }]
@@ -67,14 +67,43 @@
                             "arguments": {
                                 "start_date": {
                                     "source": "answers",
-                                    "identifier": "answer1"
+                                    "identifier": "answer3"
                                 },
                                 "end_date": {
                                     "source": "answers",
-                                    "identifier": "answer2"
+                                    "identifier": "answer3"
                                 }
                             }
                         }]
+                    }]
+                  },
+                  {
+                    "id": "answer4",
+                    "mandatory": false,
+                    "type": "TextField",
+                    "label": "Two tranforms chained together",
+                    "description": "test {multiple_transforms}",
+                    "description_values": [{
+                        "placeholder": "multiple_transforms",
+                        "transforms": [
+                            {
+                                "transform": "format_number",
+                                "arguments": {
+                                    "number": {
+                                        "source": "answers",
+                                        "identifier": "answer4"
+                                    }
+                                }
+                            },
+                            {
+                                "transform": "format_number",
+                                "arguments": {
+                                    "number": {
+                                        "source": "previous_transform"
+                                    }
+                                }
+                            }
+                        ]
                     }]
                   }
                 ]

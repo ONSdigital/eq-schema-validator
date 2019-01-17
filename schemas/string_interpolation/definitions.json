@@ -7,7 +7,14 @@
         "type": "string"
       },
       "value": {
-        "$ref": "#/value_source"
+        "oneOf": [
+          {
+            "$ref": "#/value_source"
+          },
+          {
+            "$ref": "#/lookup_source"
+          }
+        ]
       },
       "transforms": {
         "type": "array",
@@ -37,7 +44,47 @@
       }
     ]
   },
+  "value_sources": {
+    "oneOf": [
+      {
+        "$ref": "#/value_source"
+      },
+      {
+        "$ref": "#/chained_source"
+      },
+      {
+        "$ref": "#/lookup_source"
+      }
+    ]
+  },
   "value_source": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "string"
+      }
+    },
+    "additionalProperties": false,
+    "required": [
+      "value"
+    ]
+  },
+  "chained_source": {
+    "type": "object",
+    "properties": {
+      "source": {
+        "type": "string",
+        "enum": [
+          "previous_transform"
+        ]
+      }
+    },
+    "additionalProperties": false,
+    "required": [
+      "source"
+    ]
+  },
+  "lookup_source": {
     "type": "object",
     "properties": {
       "source": {
@@ -51,7 +98,12 @@
       "identifier": {
         "type": "string"
       }
-    }
+    },
+    "additionalProperties": false,
+    "required": [
+      "source",
+      "identifier"
+    ]
   }
 }
 
