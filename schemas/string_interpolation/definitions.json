@@ -86,7 +86,7 @@
     "type": "object",
     "properties": {
       "source": {
-        "description": "The data source .",
+        "description": "The data source.",
         "type": "string",
         "enum": [
           "answers",

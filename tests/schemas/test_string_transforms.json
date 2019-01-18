@@ -207,6 +207,30 @@
                                 }
                             ]
                         }]
+                    },
+                    {
+                        "id": "q2-answer-4",
+                        "mandatory": false,
+                        "type": "TextField",
+                        "label": "Calculate years difference to current date",
+                        "description": "test {difference_to_current_date}",
+                        "description_values": [{
+                            "placeholder": "difference_to_current_date",
+                            "transforms": [
+                                {
+                                    "transform": "calculate_years_difference",
+                                    "arguments": {
+                                        "first_date": {
+                                            "source": "answers",
+                                            "identifier": "q2-answer-1"
+                                        },
+                                        "second_date": {
+                                            "value": "now"
+                                        }
+                                    }
+                                }
+                            ]
+                        }]
                     }
                 ]
             }]
