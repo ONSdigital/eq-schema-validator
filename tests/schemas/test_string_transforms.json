@@ -285,6 +285,65 @@
                         }]
                     }
                 ]
+            },
+            {
+                "id": "question4",
+                "title": "",
+                "description": "Format possessive tests",
+                "type": "General",
+                "answers": [
+                    {
+                        "id": "q4-answer-1",
+                        "mandatory": false,
+                        "type": "TextField",
+                        "label": "Simple format possessive of answer",
+                        "description": "test {possessive_string}",
+                        "description_values": [{
+                            "placeholder": "possessive_string",
+                            "transforms": [
+                                {
+                                    "transform": "format_possessive",
+                                    "arguments": {
+                                        "string": {
+                                            "source": "answers",
+                                            "identifier": "q3-answer-1"
+                                        }
+                                    }
+                                }
+                            ]
+                        }]
+                    },
+                    {
+                        "id": "q4-answer-2",
+                        "mandatory": false,
+                        "type": "TextField",
+                        "label": "Simple format possessive of answer",
+                        "description": "test {possessive_string}",
+                        "description_values": [{
+                            "placeholder": "possessive_string",
+                            "transforms": [
+                                {
+                                    "transform": "concatenate_list",
+                                    "arguments": {
+                                        "list": {
+                                            "source": "answers",
+                                            "identifier": ["q2-answer-1","q2-answer-1"]
+                                        },
+                                        "delimiter": " "
+                                    }
+                                },
+                                {
+                                    "transform": "format_possessive",
+                                    "arguments": {
+                                        "string": {
+                                            "source": "previous_transform"
+                                        }
+                                    }
+                                }
+                            ]
+                        }]
+                    }
+                ]
             }]
           },
           {
