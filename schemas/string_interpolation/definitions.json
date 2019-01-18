@@ -42,6 +42,9 @@
               "$ref": "transforms/concatenate_list.json#/concatenate_list"
             },
             {
+              "$ref": "transforms/format_list.json#/format_list"
+            },
+            {
               "$ref": "transforms/format_possessive.json#/format_possessive"
             }
           ]

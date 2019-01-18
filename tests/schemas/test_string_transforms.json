@@ -276,7 +276,7 @@
                                     "arguments": {
                                         "list": {
                                             "source": "answers",
-                                            "identifier": ["q2-answer-1","q2-answer-1"]
+                                            "identifier": ["q2-answer-1","q2-answer-2"]
                                         },
                                         "delimiter": ", "
                                     }
@@ -317,7 +317,7 @@
                         "id": "q4-answer-2",
                         "mandatory": false,
                         "type": "TextField",
-                        "label": "Simple format possessive of answer",
+                        "label": "Format possessive of an answer from another transform",
                         "description": "test {possessive_string}",
                         "description_values": [{
                             "placeholder": "possessive_string",
@@ -327,7 +327,7 @@
                                     "arguments": {
                                         "list": {
                                             "source": "answers",
-                                            "identifier": ["q2-answer-1","q2-answer-1"]
+                                            "identifier": ["q2-answer-1","q2-answer-2"]
                                         },
                                         "delimiter": " "
                                     }
@@ -337,6 +337,35 @@
                                     "arguments": {
                                         "string": {
                                             "source": "previous_transform"
+                                        }
+                                    }
+                                }
+                            ]
+                        }]
+                    }
+                ]
+            },
+            {
+                "id": "question5",
+                "title": "",
+                "description": "Format list tests",
+                "type": "General",
+                "answers": [
+                    {
+                        "id": "q5-answer-1",
+                        "mandatory": false,
+                        "type": "TextField",
+                        "label": "Simple format list",
+                        "description": "{list}",
+                        "description_values": [{
+                            "placeholder": "list",
+                            "transforms": [
+                                {
+                                    "transform": "format_list",
+                                    "arguments": {
+                                        "list": {
+                                            "source": "answers",
+                                            "identifier": ["q2-answer-1","q2-answer-2"]
                                         }
                                     }
                                 }
