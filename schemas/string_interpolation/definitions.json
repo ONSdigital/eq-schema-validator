@@ -1,6 +1,15 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema",
   "string_values": {
+    "description": "A mapping of placeholders to their values.",
+    "type": "array", 
+    "items": {
+      "$ref": "../string_interpolation/definitions.json#/string_value"
+    },
+    "minItems": 1
+  },
+  "string_value": {
+    "description": "A mapping of a string placeholder to it's value. The value can also be transformed.",
     "type": "object",
     "properties": {
       "placeholder": {

@@ -19,10 +19,7 @@
         "type": "string"
       },
       "description_values":  {
-        "type": "array", 
-        "items": {
-          "$ref": "../string_interpolation/definitions.json#/string_values"
-        }
+        "$ref": "../string_interpolation/definitions.json#/string_values"
       },
       "type": {
         "type": "string",
