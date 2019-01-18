@@ -129,6 +129,86 @@
                     }]
                   }
                 ]
+            },
+            {
+                "id": "question2",
+                "title": "",
+                "description": "Calculate years difference tests",
+                "type": "General",
+                "answers": [
+                    {
+                        "id": "q2-answer-1",
+                        "mandatory": false,
+                        "type": "TextField",
+                        "label": "Simple calculate years difference",
+                        "description": "test {simple_difference}",
+                        "description_values": [{
+                            "placeholder": "simple_difference",
+                            "transforms": [
+                                {
+                                    "transform": "calculate_years_difference",
+                                    "arguments": {
+                                        "first_date": {
+                                            "value": "2018-01-01"
+                                        },
+                                        "second_date": {
+                                            "value": "2019-01-20"
+                                        }
+                                    }
+                                }
+                            ]
+                        }]
+                    },
+                    {
+                        "id": "q2-answer-2",
+                        "mandatory": false,
+                        "type": "TextField",
+                        "label": "Calculate years difference with one lookup",
+                        "description": "test {one_lookup}",
+                        "description_values": [{
+                            "placeholder": "one_lookup",
+                            "transforms": [
+                                {
+                                    "transform": "calculate_years_difference",
+                                    "arguments": {
+                                        "first_date": {
+                                            "source": "answers",
+                                            "identifier": "q2-answer-1"
+                                        },
+                                        "second_date": {
+                                            "value": "2019-01-20"
+                                        }
+                                    }
+                                }
+                            ]
+                        }]
+                    },
+                    {
+                        "id": "q2-answer-3",
+                        "mandatory": false,
+                        "type": "TextField",
+                        "label": "Calculate years difference with two lookups",
+                        "description": "test {two_lookups}",
+                        "description_values": [{
+                            "placeholder": "two_lookups",
+                            "transforms": [
+                                {
+                                    "transform": "calculate_years_difference",
+                                    "arguments": {
+                                        "first_date": {
+                                            "source": "answers",
+                                            "identifier": "q2-answer-1"
+                                        },
+                                        "second_date": {
+                                            "source": "answers",
+                                            "identifier": "q2-answer-2"
+                                        }
+                                    }
+                                }
+                            ]
+                        }]
+                    }
+                ]
             }]
           },
           {

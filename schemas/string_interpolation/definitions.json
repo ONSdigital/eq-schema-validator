@@ -34,6 +34,9 @@
             },
             {
               "$ref": "transforms/format_date_range.json#/format_date_range"
+            },
+            {
+              "$ref": "transforms/calculate_years_difference.json#/calculate_years_difference"
             }
           ]
         }
@@ -55,27 +58,11 @@
   "value_sources": {
     "oneOf": [
       {
-        "$ref": "#/value_source"
-      },
-      {
         "$ref": "#/chained_source"
       },
       {
         "$ref": "#/lookup_source"
       }
-    ]
-  },
-  "value_source": {
-    "description": "A fixed value source. Can be a string, number or object.",
-    "type": "object",
-    "properties": {
-      "value": {
-        "type": ["string","number","object"]
-      }
-    },
-    "additionalProperties": false,
-    "required": [
-      "value"
     ]
   },
   "chained_source": {
