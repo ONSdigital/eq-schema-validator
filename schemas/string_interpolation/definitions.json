@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema",
   "string_values": {
-    "description": "A mapping of placeholders to their values.",
+    "description": "A mapping of string placeholders to their values.",
     "type": "array", 
     "items": {
       "$ref": "../string_interpolation/definitions.json#/string_value"
@@ -13,12 +13,15 @@
     "type": "object",
     "properties": {
       "placeholder": {
+        "description": "The placeholder in the string that will be replaced e.g. 'test' is the placeholder in 'My {test} string'.",
         "type": "string"
       },
       "value": {
+        "description": "A direct lookup with no transforms.",
         "$ref": "#/lookup_source"
       },
       "transforms": {
+        "description": "A list of transforms to resolve the placeholder value.",
         "type": "array",
         "items": {
           "type": "object",
@@ -63,6 +66,7 @@
     ]
   },
   "value_source": {
+    "description": "A fixed value source. Can be a string, number or object.",
     "type": "object",
     "properties": {
       "value": {
@@ -75,6 +79,7 @@
     ]
   },
   "chained_source": {
+    "description": "This will take the value from the previous transform. Can't be used for the first transform.",
     "type": "object",
     "properties": {
       "source": {
@@ -90,9 +95,11 @@
     ]
   },
   "lookup_source": {
+    "description": "Look up the value from a data source.",
     "type": "object",
     "properties": {
       "source": {
+        "description": "The data source .",
         "type": "string",
         "enum": [
           "answers",
@@ -101,6 +108,7 @@
         ]
       },
       "identifier": {
+        "description": "The identifier of the item in the data source. This would be an answer id for answers, and a metadata property name for metadata.",
         "type": "string"
       }
     },
