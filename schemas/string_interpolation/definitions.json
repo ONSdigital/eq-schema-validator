@@ -37,6 +37,9 @@
             },
             {
               "$ref": "transforms/calculate_years_difference.json#/calculate_years_difference"
+            },
+            {
+              "$ref": "transforms/concatenate_list.json#/concatenate_list"
             }
           ]
         }
@@ -95,8 +98,8 @@
         ]
       },
       "identifier": {
-        "description": "The identifier of the item in the data source. This would be an answer id for answers, and a metadata property name for metadata.",
-        "type": "string"
+        "description": "The identifier of the item in the data source. This would be an answer id for answers, and a metadata property name for metadata. The array option allows multiple values to be passed as a list to a transform.",
+        "type": ["string","array"]
       }
     },
     "additionalProperties": false,

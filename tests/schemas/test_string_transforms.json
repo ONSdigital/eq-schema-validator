@@ -233,6 +233,58 @@
                         }]
                     }
                 ]
+            },
+            {
+                "id": "question3",
+                "title": "",
+                "description": "Concatenate list tests",
+                "type": "General",
+                "answers": [
+                    {
+                        "id": "q3-answer-1",
+                        "mandatory": false,
+                        "type": "TextField",
+                        "label": "Concatenate list of answer that is a list",
+                        "description": "test {concatenated_list}",
+                        "description_values": [{
+                            "placeholder": "concatenated_list",
+                            "transforms": [
+                                {
+                                    "transform": "concatenate_list",
+                                    "arguments": {
+                                        "list": {
+                                            "source": "answers",
+                                            "identifier": "q2-answer-1"
+                                        },
+                                        "delimiter": " "
+                                    }
+                                }
+                            ]
+                        }]
+                    },
+                    {
+                        "id": "q3-answer-2",
+                        "mandatory": false,
+                        "type": "TextField",
+                        "label": "Concatenate list of multiple answers",
+                        "description": "test {concatenated_list}",
+                        "description_values": [{
+                            "placeholder": "concatenated_list",
+                            "transforms": [
+                                {
+                                    "transform": "concatenate_list",
+                                    "arguments": {
+                                        "list": {
+                                            "source": "answers",
+                                            "identifier": ["q2-answer-1","q2-answer-1"]
+                                        },
+                                        "delimiter": ", "
+                                    }
+                                }
+                            ]
+                        }]
+                    }
+                ]
             }]
           },
           {
@@ -266,4 +318,4 @@
         "validator": "string"
       }
     ]
-  }
+}
