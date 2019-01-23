@@ -9,37 +9,14 @@ The current way we define piping (string interpolation) in a schema is to includ
 
 To resolve this we need to define an appropriate schema to resolve placeholders in a source string. When resolving placeholder values we need to cater for:
 
-- Previous answer or metadata
-- Previous answer or metadata transformed in some way e.g. formatting a number with a currency symbol
+- Previous answers or metadata
+- Previous answers or metadata transformed in some way e.g. formatting a number with a currency symbol
 - Using multiple answers, metadata or fixed values in a transform e.g. formatting a date answer with a specific format
 - Chaining transforms e.g. concatenate a name and then add a 's
 
-## Questions not being addressed
-
-- What will we do with filters used in variables block e.g. `period` in 1_0005?
-
-## Group instances
-
-No provision has been made in the schema design for group instances. It is assumed that:
-
-- When a placeholder is used in a non-repeating group that any reference to answers resolves to all answers that match the answer id.
-- When a placeholder is used in a repeating group that any reference to answers resolves to the answer that matches within the current repeat.
-
-## Translations done in code
-
-- Date ranges - `"{from_date} to {to_date}"`
-- Duration (including pluralisation) - `"{num} years {num} months"`
-- Calculate years difference - (including pluralisation) - `"{num} years"`
-- Datetime - `"{date} at {time}"`
-
-Actions:
-
-- Date ranges and datetime should not be done the way they are as it will not allow for effective translation. Potential issue will be in the `format_date_range_no_repeated_month_year` filter.
-- Calculate years difference to use `format_duration` filter rather than doing it in the same filter.
-
 ## Current filters to proposed transforms
 
-### format_number
+### Previous answers or metadata e.g. format_number
 
 #### Current
 ```json
@@ -939,3 +916,15 @@ We should rethink how we get the list of people rather than make this work in a 
 
 - The repetition of placeholder resolution in the same block is rare
 - Repetition of person name throughout the census - have one definition that gets re-used?
+
+## Group instances
+
+No provision has been made in the schema design for group instances. It is assumed that:
+
+- When a placeholder is used in a non-repeating group that any reference to answers resolves to all answers that match the answer id.
+- When a placeholder is used in a repeating group that any reference to answers resolves to the answer that matches within the current repeat.
+
+## Other notes
+
+- `format_date_range` and `format_datetime` should be done via two separate placeholders rather than a transform, so that the 'to' and 'at' are in the sentence to be translated.
+- Jinja filters are used to resolve values in the variables schema e.g. `period` in 1_0005. This will no longer work and will require some other design outside of the scope of this proposal.
