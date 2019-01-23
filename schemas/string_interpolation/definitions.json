@@ -1,14 +1,39 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema",
-  "string_values": {
+  "string_with_placeholders": {
+    "oneOf": [
+      {
+        "description": "String with no placeholders.",
+        "type": "string"
+      },
+      {
+        "description": "An object that represents a string with placeholders.",
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string"
+          },
+          "placeholders": {
+            "$ref": "#/placeholders"
+          },
+          "additionalProperties": false,
+          "required": [
+            "text",
+            "placeholders"
+          ]
+        }
+      }
+    ]
+  },
+  "placeholders": {
     "description": "A mapping of string placeholders to their values.",
     "type": "array", 
     "items": {
-      "$ref": "../string_interpolation/definitions.json#/string_value"
+      "$ref": "#/placeholder"
     },
     "minItems": 1
   },
-  "string_value": {
+  "placeholder": {
     "description": "A mapping of a string placeholder to it's value. The value can also be transformed.",
     "type": "object",
     "properties": {

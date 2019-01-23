@@ -26,107 +26,117 @@
                     "mandatory": false,
                     "type": "TextField",
                     "label": "Simple value from answer store",
-                    "description": "test {simple_answer}",
-                    "description_values": [{
-                        "placeholder": "simple_answer",
-                        "value": {
-                            "source": "answers",
-                            "identifier": "answer1"
-                        }
-                    }]
+                    "description": {
+                        "text": "test {simple_answer}",
+                        "placeholders": [{
+                            "placeholder": "simple_answer",
+                            "value": {
+                                "source": "answers",
+                                "identifier": "answer1"
+                            }
+                        }]
+                    }
                   },
                   {
                     "id": "answer2",
                     "mandatory": false,
                     "type": "TextField",
                     "label": "Simple value from answer store via transform",
-                    "description": "test {simple_answer_with_transform}",
-                    "description_values": [{
-                        "placeholder": "simple_answer_with_transform",
-                        "transforms": [{
-                            "transform": "format_number",
-                            "arguments": {
-                                "number": {
-                                    "source": "answers",
-                                    "identifier": "answer2"
+                    "description": {
+                        "text": "test {simple_answer_with_transform}",
+                        "placeholders": [{
+                            "placeholder": "simple_answer_with_transform",
+                            "transforms": [{
+                                "transform": "format_number",
+                                "arguments": {
+                                    "number": {
+                                        "source": "answers",
+                                        "identifier": "answer2"
+                                    }
                                 }
-                            }
+                            }]
                         }]
-                    }]
+                    }
                   },
                   {
                     "id": "answer3",
                     "mandatory": false,
                     "type": "TextField",
                     "label": "Two values from answer store via transform",
-                    "description": "test {date_range}",
-                    "description_values": [{
-                        "placeholder": "date_range",
-                        "transforms": [{
-                            "transform": "format_date_range",
-                            "arguments": {
-                                "start_date": {
-                                    "source": "answers",
-                                    "identifier": "answer3"
-                                },
-                                "end_date": {
-                                    "source": "answers",
-                                    "identifier": "answer3"
+                    "description": {
+                        "text": "test {date_range}",
+                        "placeholders": [{
+                            "placeholder": "date_range",
+                            "transforms": [{
+                                "transform": "format_date_range",
+                                "arguments": {
+                                    "start_date": {
+                                        "source": "answers",
+                                        "identifier": "answer3"
+                                    },
+                                    "end_date": {
+                                        "source": "answers",
+                                        "identifier": "answer3"
+                                    }
                                 }
-                            }
+                            }]
                         }]
-                    }]
+                    }
                   },
                   {
                     "id": "answer4",
                     "mandatory": false,
                     "type": "TextField",
                     "label": "Two tranforms chained together",
-                    "description": "test {multiple_transforms}",
-                    "description_values": [{
-                        "placeholder": "multiple_transforms",
-                        "transforms": [
-                            {
-                                "transform": "format_number",
-                                "arguments": {
-                                    "number": {
-                                        "source": "answers",
-                                        "identifier": "answer4"
+                    "description": {
+                        "text": "test {multiple_transforms}",
+                        "placeholders": [{
+                            "placeholder": "multiple_transforms",
+                            "transforms": [
+                                {
+                                    "transform": "format_number",
+                                    "arguments": {
+                                        "number": {
+                                            "source": "answers",
+                                            "identifier": "answer4"
+                                        }
+                                    }
+                                },
+                                {
+                                    "transform": "format_number",
+                                    "arguments": {
+                                        "number": {
+                                            "source": "previous_transform"
+                                        }
                                     }
                                 }
-                            },
-                            {
-                                "transform": "format_number",
-                                "arguments": {
-                                    "number": {
-                                        "source": "previous_transform"
-                                    }
-                                }
-                            }
-                        ]
-                    }]
+                            ]
+                        }]
+                    }
                   },
                   {
                     "id": "answer5",
                     "mandatory": false,
                     "type": "TextField",
                     "label": "String value passed to transform",
-                    "description": "test {value}",
-                    "description_values": [{
-                        "placeholder": "value",
-                        "transforms": [
-                            {
-                                "transform": "format_date",
-                                "arguments": {
-                                    "date": {
-                                        "source": "answers",
-                                        "identifier": "answer5"
-                                    },
-                                    "format": "EEEE d MMMM"
+                    "description": {
+                        "text": "test {value}",
+                        "placeholders": [{
+                            "placeholder": "value",
+                            "transforms": [
+                                {
+                                    "transform": "format_date",
+                                    "arguments": {
+                                        "date": {
+                                            "source": "answers",
+                                            "identifier": "answer5"
+                                        },
+                                        "format": "EEEE d MMMM"
+                                    }
                                 }
-                            }
-                        ]
-                    }]
+                            ]
+                        }]
+                    }
                   }
                 ]
             },
@@ -141,96 +151,104 @@
                         "mandatory": false,
                         "type": "TextField",
                         "label": "Simple calculate years difference",
-                        "description": "test {simple_difference}",
-                        "description_values": [{
-                            "placeholder": "simple_difference",
-                            "transforms": [
-                                {
-                                    "transform": "calculate_years_difference",
-                                    "arguments": {
-                                        "first_date": {
-                                            "value": "2018-01-01"
-                                        },
-                                        "second_date": {
-                                            "value": "2019-01-20"
+                        "description": {
+                            "text": "test {simple_difference}",
+                            "placeholders": [{
+                                "placeholder": "simple_difference",
+                                "transforms": [
+                                    {
+                                        "transform": "calculate_years_difference",
+                                        "arguments": {
+                                            "first_date": {
+                                                "value": "2018-01-01"
+                                            },
+                                            "second_date": {
+                                                "value": "2019-01-20"
+                                            }
                                         }
                                     }
-                                }
-                            ]
-                        }]
+                                ]
+                            }]
+                        }
                     },
                     {
                         "id": "q2-answer-2",
                         "mandatory": false,
                         "type": "TextField",
                         "label": "Calculate years difference with one lookup",
-                        "description": "test {one_lookup}",
-                        "description_values": [{
-                            "placeholder": "one_lookup",
-                            "transforms": [
-                                {
-                                    "transform": "calculate_years_difference",
-                                    "arguments": {
-                                        "first_date": {
-                                            "source": "answers",
-                                            "identifier": "q2-answer-1"
-                                        },
-                                        "second_date": {
-                                            "value": "2019-01-20"
+                        "description": {
+                            "text": "test {one_lookup}",
+                            "placeholders": [{
+                                "placeholder": "one_lookup",
+                                "transforms": [
+                                    {
+                                        "transform": "calculate_years_difference",
+                                        "arguments": {
+                                            "first_date": {
+                                                "source": "answers",
+                                                "identifier": "q2-answer-1"
+                                            },
+                                            "second_date": {
+                                                "value": "2019-01-20"
+                                            }
                                         }
                                     }
-                                }
-                            ]
-                        }]
+                                ]
+                            }]
+                        }
                     },
                     {
                         "id": "q2-answer-3",
                         "mandatory": false,
                         "type": "TextField",
                         "label": "Calculate years difference with two lookups",
-                        "description": "test {two_lookups}",
-                        "description_values": [{
-                            "placeholder": "two_lookups",
-                            "transforms": [
-                                {
-                                    "transform": "calculate_years_difference",
-                                    "arguments": {
-                                        "first_date": {
-                                            "source": "answers",
-                                            "identifier": "q2-answer-1"
-                                        },
-                                        "second_date": {
-                                            "source": "answers",
-                                            "identifier": "q2-answer-2"
+                        "description": {
+                            "text": "test {two_lookups}",
+                            "placeholders": [{
+                                "placeholder": "two_lookups",
+                                "transforms": [
+                                    {
+                                        "transform": "calculate_years_difference",
+                                        "arguments": {
+                                            "first_date": {
+                                                "source": "answers",
+                                                "identifier": "q2-answer-1"
+                                            },
+                                            "second_date": {
+                                                "source": "answers",
+                                                "identifier": "q2-answer-2"
+                                            }
                                         }
                                     }
-                                }
-                            ]
-                        }]
+                                ]
+                            }]
+                        }
                     },
                     {
                         "id": "q2-answer-4",
                         "mandatory": false,
                         "type": "TextField",
                         "label": "Calculate years difference to current date",
-                        "description": "test {difference_to_current_date}",
-                        "description_values": [{
-                            "placeholder": "difference_to_current_date",
-                            "transforms": [
-                                {
-                                    "transform": "calculate_years_difference",
-                                    "arguments": {
-                                        "first_date": {
-                                            "source": "answers",
-                                            "identifier": "q2-answer-1"
-                                        },
-                                        "second_date": {
-                                            "value": "now"
+                        "description": {
+                            "text": "test {difference_to_current_date}",
+                            "placeholders": [{
+                                "placeholder": "difference_to_current_date",
+                                "transforms": [
+                                    {
+                                        "transform": "calculate_years_difference",
+                                        "arguments": {
+                                            "first_date": {
+                                                "source": "answers",
+                                                "identifier": "q2-answer-1"
+                                            },
+                                            "second_date": {
+                                                "value": "now"
+                                            }
                                         }
                                     }
-                                }
-                            ]
-                        }]
+                                ]
+                            }]
+                        }
                     }
                 ]
             },
@@ -245,44 +263,48 @@
                         "mandatory": false,
                         "type": "TextField",
                         "label": "Concatenate list of answer that is a list",
-                        "description": "test {concatenated_list}",
-                        "description_values": [{
-                            "placeholder": "concatenated_list",
-                            "transforms": [
-                                {
-                                    "transform": "concatenate_list",
-                                    "arguments": {
-                                        "list": {
-                                            "source": "answers",
-                                            "identifier": "q2-answer-1"
-                                        },
-                                        "delimiter": " "
+                        "description": {
+                            "text": "test {concatenated_list}",
+                            "placeholders": [{
+                                "placeholder": "concatenated_list",
+                                "transforms": [
+                                    {
+                                        "transform": "concatenate_list",
+                                        "arguments": {
+                                            "list": {
+                                                "source": "answers",
+                                                "identifier": "q2-answer-1"
+                                            },
+                                            "delimiter": " "
+                                        }
                                     }
-                                }
-                            ]
-                        }]
+                                ]
+                            }]
+                        }
                     },
                     {
                         "id": "q3-answer-2",
                         "mandatory": false,
                         "type": "TextField",
                         "label": "Concatenate list of multiple answers",
-                        "description": "test {concatenated_list}",
-                        "description_values": [{
-                            "placeholder": "concatenated_list",
-                            "transforms": [
-                                {
-                                    "transform": "concatenate_list",
-                                    "arguments": {
-                                        "list": {
-                                            "source": "answers",
-                                            "identifier": ["q2-answer-1","q2-answer-2"]
-                                        },
-                                        "delimiter": ", "
+                        "description": {
+                            "text": "test {concatenated_list}",
+                            "placeholders": [{
+                                "placeholder": "concatenated_list",
+                                "transforms": [
+                                    {
+                                        "transform": "concatenate_list",
+                                        "arguments": {
+                                            "list": {
+                                                "source": "answers",
+                                                "identifier": ["q2-answer-1","q2-answer-2"]
+                                            },
+                                            "delimiter": ", "
+                                        }
                                     }
-                                }
-                            ]
-                        }]
+                                ]
+                            }]
+                        }
                     }
                 ]
             },
@@ -297,51 +319,55 @@
                         "mandatory": false,
                         "type": "TextField",
                         "label": "Simple format possessive of answer",
-                        "description": "test {possessive_string}",
-                        "description_values": [{
-                            "placeholder": "possessive_string",
-                            "transforms": [
-                                {
-                                    "transform": "format_possessive",
-                                    "arguments": {
-                                        "string": {
-                                            "source": "answers",
-                                            "identifier": "q3-answer-1"
+                        "description": {
+                            "text": "test {possessive_string}",
+                            "placeholders": [{
+                                "placeholder": "possessive_string",
+                                "transforms": [
+                                    {
+                                        "transform": "format_possessive",
+                                        "arguments": {
+                                            "string": {
+                                                "source": "answers",
+                                                "identifier": "q3-answer-1"
+                                            }
                                         }
                                     }
-                                }
-                            ]
-                        }]
+                                ]
+                            }]
+                        }
                     },
                     {
                         "id": "q4-answer-2",
                         "mandatory": false,
                         "type": "TextField",
                         "label": "Format possessive of an answer from another transform",
-                        "description": "test {possessive_string}",
-                        "description_values": [{
-                            "placeholder": "possessive_string",
-                            "transforms": [
-                                {
-                                    "transform": "concatenate_list",
-                                    "arguments": {
-                                        "list": {
-                                            "source": "answers",
-                                            "identifier": ["q2-answer-1","q2-answer-2"]
-                                        },
-                                        "delimiter": " "
-                                    }
-                                },
-                                {
-                                    "transform": "format_possessive",
-                                    "arguments": {
-                                        "string": {
-                                            "source": "previous_transform"
+                        "description": {
+                            "text": "test {possessive_string}",
+                            "placeholders": [{
+                                "placeholder": "possessive_string",
+                                "transforms": [
+                                    {
+                                        "transform": "concatenate_list",
+                                        "arguments": {
+                                            "list": {
+                                                "source": "answers",
+                                                "identifier": ["q2-answer-1","q2-answer-2"]
+                                            },
+                                            "delimiter": " "
+                                        }
+                                    },
+                                    {
+                                        "transform": "format_possessive",
+                                        "arguments": {
+                                            "string": {
+                                                "source": "previous_transform"
+                                            }
                                         }
                                     }
-                                }
-                            ]
-                        }]
+                                ]
+                            }]
+                        }
                     }
                 ]
             },
@@ -356,21 +382,23 @@
                         "mandatory": false,
                         "type": "TextField",
                         "label": "Simple format list",
-                        "description": "{list}",
-                        "description_values": [{
-                            "placeholder": "list",
-                            "transforms": [
-                                {
-                                    "transform": "format_list",
-                                    "arguments": {
-                                        "list": {
-                                            "source": "answers",
-                                            "identifier": ["q2-answer-1","q2-answer-2"]
+                        "description": {
+                            "text": "{list}",
+                            "placeholders": [{
+                                "placeholder": "list",
+                                "transforms": [
+                                    {
+                                        "transform": "format_list",
+                                        "arguments": {
+                                            "list": {
+                                                "source": "answers",
+                                                "identifier": ["q2-answer-1","q2-answer-2"]
+                                            }
                                         }
                                     }
-                                }
-                            ]
-                        }]
+                                ]
+                            }]
+                        }
                     }
                 ]
             }]

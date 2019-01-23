@@ -13,13 +13,7 @@
         "type": "string"
       },
       "description": {
-        "type": "string"
-      },
-      "description_values":  {
-        "type": "array", 
-        "items": {
-          "$ref": "../string_interpolation/definitions.json#/string_values"
-        }
+        "$ref": "../string_interpolation/definitions.json#/string_with_placeholders"
       },
       "number": {
         "type": "string"
