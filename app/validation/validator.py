@@ -111,6 +111,7 @@ class Validator:    # pylint: disable=too-many-public-methods
             for answer in question.get('answers', []):
                 errors.extend(self.validate_routing_on_answer_options(block, answer))
                 errors.extend(self.validate_duplicate_options(answer))
+                errors.extend(self.validate_option_values(answer))
                 errors.extend(self.validate_totaliser_defines_decimal_places(answer))
 
                 if answer['type'] == 'Date':
@@ -588,6 +589,20 @@ class Validator:    # pylint: disable=too-many-public-methods
 
             labels.add(option['label'])
             values.add(option['value'])
+
+        return errors
+
+    def validate_option_values(self, answer):
+        errors = []
+
+        for option in answer.get('options', []):
+
+            if re.match('^.*{{.*}}.*$', option['value']):
+                error_message = 'Option "value" cannot contain piping. Found in option with label - "{}" from answer_id - "{}"'.format(
+                    option['label'],
+                    answer['id']
+                )
+                errors.append(self._error_message(error_message))
 
         return errors
 

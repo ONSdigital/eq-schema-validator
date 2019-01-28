@@ -13,7 +13,7 @@ logger = getLogger()
 configure(logger_factory=LoggerFactory())
 
 
-class TestSchemaValidation(unittest.TestCase):
+class TestSchemaValidation(unittest.TestCase):  # pylint: disable=too-many-public-methods
 
     def setUp(self):
         self.validator = Validator()
@@ -327,6 +327,23 @@ class TestSchemaValidation(unittest.TestCase):
         errors = self.validator.validate_schema(json_to_validate)
 
         self.assertEqual(0, len(errors))
+
+    def test_invalid_piping_in_option_values(self):
+        """ Ensures that there is invalid to use piping in a checkbox value """
+        file = 'schemas/test_invalid_option_value.json'
+        json_to_validate = self._open_and_load_schema_file(file)
+
+        errors = self.validator.validate_schema(json_to_validate)
+
+        print(errors)
+
+        self.assertEqual(len(errors), 2)
+        self.assertEqual(errors[0]['message'],
+                         'Schema Integrity Error. Option "value" cannot contain piping. '
+                         'Found in option with label - "option1" from answer_id - "checkboxanswer"')
+        self.assertEqual(errors[1]['message'],
+                         'Schema Integrity Error. Option "value" cannot contain piping. '
+                         'Found in option with label - "option2" from answer_id - "radioanswer"')
 
     @staticmethod
     def _open_and_load_schema_file(file):
