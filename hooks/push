@@ -1,0 +1,10 @@
+#!/bin/bash
+# https://docs.docker.com/docker-hub/builds/advanced/#custom-build-phase-hooks
+
+TAG=`if [ "$SOURCE_BRANCH" == "master" ]; then echo "latest"; else echo $SOURCE_BRANCH; fi`
+
+echo "Tagging [$IMAGE_NAME]"
+docker tag $IMAGE_NAME $DOCKER_REPO:$TAG
+
+echo "Pushing with tag [$TAG] to [$DOCKER_REPO]"
+docker push $DOCKER_REPO:$TAG
