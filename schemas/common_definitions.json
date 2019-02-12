@@ -10,6 +10,10 @@
     "description": "A question code used by downstream systems to identify answers.",
     "pattern": "^[0-9a-z]+$"
   },
+  "populated_string": {
+    "type": "string",
+    "pattern": "\\w+"
+  },
   "definitions": {
     "description": "Allows customisation of question definition title and description.",
     "type": "array",

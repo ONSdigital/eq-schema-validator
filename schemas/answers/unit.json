@@ -10,7 +10,7 @@
         "$ref": "../common_definitions.json#/q_code"
       },
       "label": {
-        "type": "string"
+        "$ref": "../common_definitions.json#/populated_string"
       },
       "guidance": {
         "$ref": "../common_definitions.json#/guidance"

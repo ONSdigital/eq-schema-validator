@@ -11,7 +11,7 @@
       "type": "object",
       "properties": {
         "label": {
-          "type": "string"
+          "$ref": "../common_definitions.json#/populated_string"
         },
         "value": {
           "type": "string"
