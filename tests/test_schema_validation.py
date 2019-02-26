@@ -335,8 +335,6 @@ class TestSchemaValidation(unittest.TestCase):  # pylint: disable=too-many-publi
 
         errors = self.validator.validate_schema(json_to_validate)
 
-        print(errors)
-
         self.assertEqual(len(errors), 2)
         self.assertEqual(errors[0]['message'],
                          'Schema Integrity Error. Option "value" cannot contain piping. '
@@ -344,6 +342,18 @@ class TestSchemaValidation(unittest.TestCase):  # pylint: disable=too-many-publi
         self.assertEqual(errors[1]['message'],
                          'Schema Integrity Error. Option "value" cannot contain piping. '
                          'Found in option with label - "option2" from answer_id - "radioanswer"')
+
+    def test_invalid_navigation(self):
+        """ Ensure that when navigation is enabled sections have title """
+        file = 'schemas/test_invalid_navigation.json'
+        json_to_validate = self._open_and_load_schema_file(file)
+
+        errors = self.validator.validate_schema(json_to_validate)
+        self.assertEqual(len(errors), 2)
+        self.assertEqual(errors[0]['message'],
+                         'Schema Integrity Error. Section (section-1) is missing a title and navigation is enabled')
+        self.assertEqual(errors[1]['message'],
+                         'Schema Integrity Error. Section (section-2) is missing a title and navigation is enabled')
 
     @staticmethod
     def _open_and_load_schema_file(file):

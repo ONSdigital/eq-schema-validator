@@ -1,0 +1,175 @@
+{
+  "data_version": "0.0.1",
+  "description": "A questionnaire to test currency input type",
+  "legal_basis": "StatisticsOfTradeAct",
+  "metadata": [
+    {
+      "name": "user_id",
+      "validator": "string"
+    },
+    {
+      "name": "ru_name",
+      "validator": "string"
+    },
+    {
+      "name": "period_id",
+      "validator": "string"
+    }
+  ],
+  "navigation": {
+    "visible": true
+  },
+  "mime_type": "application/json/ons/eq",
+  "schema_version": "0.0.1",
+  "sections": [
+    {
+      "title": "",
+      "groups": [
+        {
+          "blocks": [
+            {
+              "id": "block-1",
+              "questions": [
+                {
+                  "answers": [
+                    {
+                      "decimal_places": 2,
+                      "id": "answer-1",
+                      "label": "Answer 1",
+                      "mandatory": false,
+                      "type": "Number"
+                    }
+                  ],
+                  "id": "question-1",
+                  "title": "Enter a value 1",
+                  "type": "General"
+                }
+              ],
+              "type": "Question"
+            },
+            {
+              "id": "summary-1",
+              "type": "Summary"
+            }
+          ],
+          "id": "group-1",
+          "title": "Ensure navigation has section titles"
+        }
+      ],
+      "id": "section-1"
+    },
+    {
+      "groups": [
+        {
+          "blocks": [
+            {
+              "id": "block-2",
+              "questions": [
+                {
+                  "answers": [
+                    {
+                      "decimal_places": 2,
+                      "id": "answer-2",
+                      "label": "Answer 1",
+                      "mandatory": false,
+                      "type": "Number"
+                    }
+                  ],
+                  "id": "question-2",
+                  "title": "Enter a value 1",
+                  "type": "General"
+                }
+              ],
+              "type": "Question"
+            },
+            {
+              "id": "summary-2",
+              "type": "Summary"
+            }
+          ],
+          "id": "group-2",
+          "title": "Ensure navigation has section titles"
+        }
+      ],
+      "id": "section-2"
+    },
+    {
+      "groups": [
+        {
+          "blocks": [
+            {
+              "id": "block-3",
+              "questions": [
+                {
+                  "answers": [
+                    {
+                      "decimal_places": 2,
+                      "id": "answer-3",
+                      "label": "Answer 1",
+                      "mandatory": false,
+                      "type": "Number"
+                    }
+                  ],
+                  "id": "question-3",
+                  "title": "Enter a value 1",
+                  "type": "General"
+                }
+              ],
+              "type": "Question"
+            },
+            {
+              "id": "summary-3",
+              "type": "Summary"
+            }
+          ],
+          "id": "group-3",
+          "title": "Ensure navigation has section titles"
+        }
+      ],
+      "title": "Section 3 title",
+      "id": "section-3"
+    },
+    {
+      "groups": [
+        {
+          "blocks": [
+            {
+              "id": "block-4",
+              "questions": [
+                {
+                  "answers": [
+                    {
+                      "decimal_places": 2,
+                      "id": "answer-4",
+                      "label": "Answer 1",
+                      "mandatory": false,
+                      "type": "Number"
+                    }
+                  ],
+                  "id": "question-4",
+                  "title": "Enter a value 1",
+                  "type": "General"
+                }
+              ],
+              "type": "Question"
+            },
+            {
+              "id": "summary-4",
+              "type": "Summary"
+            }
+          ],
+          "id": "group-4",
+          "title": "Ensure navigation has section titles"
+        }
+      ],
+      "title_from_answers": [
+        "answer-1",
+        "answer-2"
+      ],
+      "id": "section-4"
+    }
+  ],
+  "survey_id": "0",
+  "theme": "default",
+  "title": "Minimum and maximum exclusivity"
+}
