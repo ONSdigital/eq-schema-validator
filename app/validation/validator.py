@@ -43,6 +43,7 @@ class Validator:    # pylint: disable=too-many-public-methods
             all_groups.extend(section.get('groups'))
 
         for section in json_to_validate['sections']:
+            errors.extend(self._validate_navigation(json_to_validate, section))
             for group in section['groups']:
 
                 errors.extend(self._validate_routing_rules(group, all_groups, answers_with_parent_ids))
@@ -51,6 +52,26 @@ class Validator:    # pylint: disable=too-many-public-methods
                     errors.extend(self.validate_skip_condition(skip_condition, answers_with_parent_ids, group))
 
                 errors.extend(self._validate_blocks(json_to_validate, section, group, all_groups, answers_with_parent_ids, numeric_answer_ranges))
+
+        return errors
+
+    def _validate_navigation(self, json_to_validate, section):
+        errors = []
+
+        navigation = json_to_validate.get('navigation')
+        if not navigation:
+            return errors
+
+        nav_is_visible = navigation.get('visible')
+        if not nav_is_visible:
+            return errors
+
+        title = section.get('title', '')
+        title_from_answers = len(section.get('title_from_answers', []))
+
+        if not re.match('\\w+', title) and title_from_answers == 0:
+            error_message = 'Section ({}) is missing a title and navigation is enabled'.format(section['id'])
+            errors.append(self._error_message(error_message))
 
         return errors
 
