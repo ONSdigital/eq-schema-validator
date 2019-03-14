@@ -3,7 +3,7 @@
   "id": {
     "type": "string",
     "description": "Used to identify groups, blocks, questions and answers.",
-    "pattern": "^[a-z0-9][a-z0-9\\-]*[a-z0-9]$"
+    "pattern": "^[a-z0-9A-Z\\-_]+$"
   },
   "q_code": {
     "type": "string",

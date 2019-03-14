@@ -75,6 +75,26 @@ class TestSchemaIdRegEx(unittest.TestCase):
         # Then
         self.assertEqual(len(errors), 0, errors)
 
+    def test_id_with_capital_letters_should_pass_validation(self):
+        # Given
+        json_to_validate = create_schema_with_id('A-VALID-ID')
+
+        # When
+        errors = self.validator.validate_schema(json_to_validate)
+
+        # Then
+        self.assertEqual(len(errors), 0, errors)
+
+    def test_id_with_underscores_should_pass_validation(self):
+        # Given
+        json_to_validate = create_schema_with_id('a_valid_id')
+
+        # When
+        errors = self.validator.validate_schema(json_to_validate)
+
+        # Then
+        self.assertEqual(len(errors), 0, errors)
+
     def test_id_with_punctuation_should_fail_validation(self):
         # Given
         json_to_validate = create_schema_with_id('!n0t-@-valid-id')
@@ -89,28 +109,6 @@ class TestSchemaIdRegEx(unittest.TestCase):
     def test_id_with_spaces_should_fail_validation(self):
         # Given
         json_to_validate = create_schema_with_id('not a valid id')
-
-        # When
-        error = self.validator.validate_schema(json_to_validate)
-
-        # Then
-        self.assertTrue(isinstance(error, dict))
-        self.assertTrue('is not valid under any of the given schemas' in error['message'])
-
-    def test_id_with_capital_letters_should_fail_validation(self):
-        # Given
-        json_to_validate = create_schema_with_id('NOT-A-VALID-ID')
-
-        # When
-        error = self.validator.validate_schema(json_to_validate)
-
-        # Then
-        self.assertTrue(isinstance(error, dict))
-        self.assertTrue('is not valid under any of the given schemas' in error['message'])
-
-    def test_id_with_underscores_should_pass_validation(self):
-        # Given
-        json_to_validate = create_schema_with_id('not_a_valid_id')
 
         # When
         error = self.validator.validate_schema(json_to_validate)
