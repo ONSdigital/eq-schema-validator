@@ -73,6 +73,9 @@
             },
             {
               "$ref": "transforms/format_possessive.json#/format_possessive"
+            },
+            {
+              "$ref": "transforms/first_non_empty_item.json#/first_non_empty_item"
             }
           ]
         }
