@@ -26,6 +26,9 @@
     "schema_version": {
       "type": "string"
     },
+    "survey_guidance_url": {
+      "$ref": "common_definitions.json#/url"
+    },
     "data_version": {
       "enum": [
         "0.0.1",

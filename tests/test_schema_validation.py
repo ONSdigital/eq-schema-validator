@@ -355,6 +355,14 @@ class TestSchemaValidation(unittest.TestCase):  # pylint: disable=too-many-publi
         self.assertEqual(errors[1]['message'],
                          'Schema Integrity Error. Section (section-2) is missing a title and navigation is enabled')
 
+    def test_invalid_survey_guidance_url(self):
+        """Ensure that survey with a malformed URL results in an error"""
+        file = 'schemas/test_invalid_survey_guidance_url.json'
+        json_to_validate = self._open_and_load_schema_file(file)
+
+        error = self.validator.validate_schema(json_to_validate)
+        self.assertRegex(error['message'], 'does not match')
+
     @staticmethod
     def _open_and_load_schema_file(file):
         json_file = open(os.path.join(os.path.dirname(os.path.realpath(__file__)), file), encoding='utf8')
