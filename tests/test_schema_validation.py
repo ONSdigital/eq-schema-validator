@@ -351,11 +351,32 @@ def test_invalid_list_collector_non_radio():
     check_validation_errors(filename, expected_error_messages)
 
 
+def test_primary_person_invalid_list_collector_non_radio():
+    filename = 'schemas/invalid/test_invalid_primary_person_list_collector_no_radio.json'
+
+    expected_error_messages = [
+        'Schema Integrity Error. The primary person list collector block primary-person-list-collector does not contain a Radio answer type',
+    ]
+
+    check_validation_errors(filename, expected_error_messages)
+
+
 def test_invalid_list_collector_with_routing():
     filename = 'schemas/invalid/test_invalid_list_collector_with_routing.json'
 
     expected_error_messages = [
         'Schema Integrity Error. The list collector block list-collector contains routing rules on the remove-person sub block',
+    ]
+
+    check_validation_errors(filename, expected_error_messages)
+
+
+def test_invalid_primary_person_list_collector_with_routing():
+    filename = 'schemas/invalid/test_invalid_primary_person_list_collector_routing.json'
+
+    expected_error_messages = [
+        'Schema Integrity Error. The primary person list collector block primary-person-list-collector contains routing rules on the '
+        'add-primary-person sub block',
     ]
 
     check_validation_errors(filename, expected_error_messages)
@@ -371,11 +392,33 @@ def test_invalid_list_collector_with_no_add_option():
     check_validation_errors(filename, expected_error_messages)
 
 
+def test_invalid_primary_person_list_collector_with_no_add_option():
+    filename = 'schemas/invalid/test_invalid_primary_person_list_collector_bad_answer_value.json'
+
+    expected_error_messages = [
+        'Schema Integrity Error. The primary person list collector block primary-person-list-collector has an add_or_edit_answer value that is not '
+        'present in the answer values',
+    ]
+
+    check_validation_errors(filename, expected_error_messages)
+
+
 def test_invalid_list_collector_with_different_add_block_answer_ids():
     filename = 'schemas/invalid/test_invalid_list_collector_with_different_add_block_answer_ids.json'
 
     expected_error_messages = [
         'Schema Integrity Error. Multiple list collectors populate the list: people using different answer_ids in the add block',
+    ]
+
+    check_validation_errors(filename, expected_error_messages)
+
+
+def test_invalid_primary_person_list_collector_with_different_add_block_answer_ids():
+    filename = 'schemas/invalid/test_invalid_primary_person_list_collector_different_answer_ids_multi_collectors.json'
+
+    expected_error_messages = [
+        'Schema Integrity Error. Multiple primary person list collectors populate the list: people using different answer ids in the add_or_edit '
+        'block',
     ]
 
     check_validation_errors(filename, expected_error_messages)
@@ -472,10 +515,37 @@ def test_invalid_list_collector_bad_answer_reference_ids():
     check_validation_errors(filename, expected_error_messages)
 
 
+def test_invalid_primary_person_list_collector_bad_answer_reference_ids():
+    filename = 'schemas/invalid/test_invalid_primary_person_list_collector_bad_answer_id.json'
+    expected_error_messages = [
+        'Schema Integrity Error. add_or_edit_answer reference uses id not found in main block question: fake-answer-id',
+    ]
+
+    check_validation_errors(filename, expected_error_messages)
+
+
 def test_invalid_list_name_in_when_rule():
     filename = 'schemas/invalid/test_invalid_when_condition_list_property.json'
     expected_error_messages = [
         'Schema Integrity Error. The list `non-existent-list-name` is not defined in the schema'
+    ]
+
+    check_validation_errors(filename, expected_error_messages)
+
+
+def test_invalid_hub_and_spoke_with_summary_confirmation():
+    filename = 'schemas/invalid/test_invalid_hub_and_spoke_with_summary_confirmation.json'
+    expected_error_messages = [
+        'Schema Integrity Error. Schema can only contain one of [Confirmation page, Summary page, Hub page]'
+    ]
+
+    check_validation_errors(filename, expected_error_messages)
+
+
+def test_invalid_hub_and_spoke_and_summary_confirmation_non_existent():
+    filename = 'schemas/invalid/test_invalid_hub_and_spoke_and_summary_confirmation_non_existent.json'
+    expected_error_messages = [
+        'Schema Integrity Error. Schema must contain one of [Confirmation page, Summary page, Hub page]'
     ]
 
     check_validation_errors(filename, expected_error_messages)
