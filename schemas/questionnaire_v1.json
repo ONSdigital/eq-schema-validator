@@ -202,6 +202,9 @@
                         "$ref": "blocks/question.json#/block"
                       },
                       {
+                        "$ref": "blocks/relationship_collector.json#/block"
+                      },
+                      {
                         "$ref": "blocks/summary.json#/block"
                       }
                     ]
