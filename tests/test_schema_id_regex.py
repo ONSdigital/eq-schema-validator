@@ -16,7 +16,9 @@ def create_schema_with_id(schema_id='answer'):
     with open(schema_path, encoding='utf8') as json_data:
         json_content = json.load(json_data)
 
-        json_content['sections'][0]['groups'][0]['blocks'][0]['question']['answers'][0]['id'] = schema_id
+        json_content['sections'][0]['groups'][0]['blocks'][0]['question']['answers'][0][
+            'id'
+        ] = schema_id
         return json_content
 
 

@@ -23,13 +23,17 @@ def validate_schema(json_to_validate):
 
 
 def _open_and_load_schema_file(file):
-    json_file = open(os.path.join(os.path.dirname(os.path.realpath(__file__)), file), encoding='utf8')
+    json_file = open(
+        os.path.join(os.path.dirname(os.path.realpath(__file__)), file), encoding='utf8'
+    )
     json_to_validate = load(json_file)
 
     return json_to_validate
 
 
-def check_validation_errors(filename, expected_validation_error_messages, expected_number_validation_errors=None):
+def check_validation_errors(
+    filename, expected_validation_error_messages, expected_number_validation_errors=None
+):
     """
     Helper function to automate tests which are just checking validation errors against a known list.
     """
@@ -75,17 +79,13 @@ def test_invalid_schema_block():
         'Schema Integrity Error. The routing rules for group or block: '
         'conditional-routing-block must contain a default routing rule '
         'without a when rule',
-
         'Schema Integrity Error. Routing rule routes to invalid block '
         '[invalid-location]',
-
         'Schema Integrity Error. The answer id - fake-answer in the id key of the '
         '"when" clause for conditional-routing-block does not exist',
-
         'Schema Integrity Error. Routing rule not defined for all answers or '
         'default not defined for answer [conditional-routing-answer] '
         "missing options ['no']",
-
         'Schema Integrity Error. The answer id - AnAnswerThatDoesNotExist in the id '
         'key of the "when" clause for response-yes does not exist',
     ]
@@ -112,7 +112,7 @@ def test_invalid_numeric_answers():
         'of 6',
         'Schema Integrity Error. The referenced answer "answer-1" has a greater number of decimal places than '
         'answer "answer-6"',
-        'Schema Integrity Error. Default is being used with a mandatory answer: answer-7'
+        'Schema Integrity Error. Default is being used with a mandatory answer: answer-7',
     ]
 
     check_validation_errors(filename, expected_error_messages)
@@ -123,7 +123,7 @@ def test_invalid_id_in_answers_to_calculate():
 
     expected_error_messages = [
         'Schema Integrity Error. Answer id - breakdown-3 does not exist within this question - breakdown-question',
-        'Schema Integrity Error. Answer id - breakdown-4 does not exist within this question - breakdown-question'
+        'Schema Integrity Error. Answer id - breakdown-4 does not exist within this question - breakdown-question',
     ]
     check_validation_errors(filename, expected_error_messages)
 
@@ -174,7 +174,7 @@ def test_invalid_metadata():
 
     expected_error_messages = [
         'Schema Integrity Error. Metadata - ru_name not specified in metadata field',
-        'Schema Integrity Error. Metadata - invalid not specified in metadata field'
+        'Schema Integrity Error. Metadata - invalid not specified in metadata field',
     ]
 
     check_validation_errors(filename, expected_error_messages)
@@ -203,14 +203,14 @@ def test_invalid_calculated_summary():
         "Schema Integrity Error. Invalid answer id 'seventh-number-answer' in block total-playback-answer-error's answers_to_calculate",
     ]
 
-    expected_fuzzy_error_messages = [
-        'Schema Integrity Error. Duplicate answers',
-    ]
+    expected_fuzzy_error_messages = ['Schema Integrity Error. Duplicate answers']
 
     validation_errors, schema_errors = validate_schema(json_to_validate)
 
     assert schema_errors == {}
-    assert len(validation_errors) == len(expected_error_messages) + len(expected_fuzzy_error_messages)
+    assert len(validation_errors) == len(expected_error_messages) + len(
+        expected_fuzzy_error_messages
+    )
 
     validation_error_messages = [error['message'] for error in validation_errors]
 
@@ -218,7 +218,10 @@ def test_invalid_calculated_summary():
         assert expected_error in validation_error_messages
 
     for fuzzy_error in expected_fuzzy_error_messages:
-        assert any(fuzzy_error in validation_error_message for validation_error_message in validation_error_messages)
+        assert any(
+            fuzzy_error in validation_error_message
+            for validation_error_message in validation_error_messages
+        )
 
 
 def test_answer_comparisons_different_types():
@@ -228,16 +231,12 @@ def test_answer_comparisons_different_types():
     expected_error_messages = [
         'Schema Integrity Error. The answers used as comparison_id `route-comparison-1-answer` and answer_id `route-comparison-2-answer` '
         'in the `when` clause for `route-comparison-2` have different types',
-
         'Schema Integrity Error. The comparison_id `route-comparison-2-answer` is not of answer type `Checkbox`. '
         'The condition `equals any` can only reference `Checkbox` answers when using `comparison id`',
-
         'Schema Integrity Error. The answers used as comparison_id `comparison-2-answer` and answer_id `comparison-1-answer` in the `when` '
         'clause for `equals-answers` have different types',
-
         'Schema Integrity Error. The answers used as comparison_id `comparison-2-answer` and answer_id `comparison-1-answer` in the `when` '
         'clause for `less-than-answers` have different types',
-
         'Schema Integrity Error. The answers used as comparison_id `comparison-2-answer` and answer_id `comparison-1-answer` in the `when` '
         'clause for `less-than-answers` have different types',
     ]
@@ -272,7 +271,7 @@ def test_invalid_mutually_exclusive_conditions():
 
     expected_error_messages = [
         'Schema Integrity Error. MutuallyExclusive question type cannot contain mandatory answers.',
-        'Schema Integrity Error. mutually-exclusive-date-answer-2 is not of type Checkbox.'
+        'Schema Integrity Error. mutually-exclusive-date-answer-2 is not of type Checkbox.',
     ]
 
     check_validation_errors(filename, expected_error_messages)
@@ -282,7 +281,7 @@ def test_decimal_places_must_be_defined_when_using_totaliser():
     filename = 'schemas/invalid/test_invalid_decimal_places_must_be_defined_when_using_totaliser.json'
     expected_error_messages = [
         "Schema Integrity Error. 'decimal_places' must be defined and set to 2 for the answer_id - total-percentage",
-        "Schema Integrity Error. 'decimal_places' must be defined and set to 2 for the answer_id - total-percentage-2"
+        "Schema Integrity Error. 'decimal_places' must be defined and set to 2 for the answer_id - total-percentage-2",
     ]
 
     check_validation_errors(filename, expected_error_messages)
@@ -296,7 +295,7 @@ def test_invalid_string_transforms():
         "Schema Integrity Error. Placeholders in 'text' doesn't match 'placeholders' definition for block id 'block2'",
         "Schema Integrity Error. Placeholders in 'text' doesn't match 'placeholders' definition for block id 'block3'",
         "Schema Integrity Error. Can't reference `previous_transform` in a first transform in block id 'block4'",
-        "Schema Integrity Error. `previous_transform` not referenced in chained transform in block id 'block5'"
+        "Schema Integrity Error. `previous_transform` not referenced in chained transform in block id 'block5'",
     ]
 
     check_validation_errors(filename, expected_error_messages)
@@ -309,7 +308,7 @@ def test_invalid_placeholder_answer_ids():
         'Schema Integrity Error. Invalid answer id reference `answer4` for placeholder `simple_answer` (self-reference)',
         'Schema Integrity Error. Invalid answer id reference `invalid-answer0` for placeholder `simple_answer`',
         'Schema Integrity Error. Invalid answer id reference `invalid-answer1` for placeholder `answer1`',
-        'Schema Integrity Error. Invalid metadata reference `invalid-metadata-ref` for placeholder `simple_metadata`'
+        'Schema Integrity Error. Invalid metadata reference `invalid-metadata-ref` for placeholder `simple_metadata`',
     ]
 
     check_validation_errors(filename, expected_error_messages)
@@ -338,24 +337,28 @@ def test_duplicate_answer_ids():
         'Schema Integrity Error. Duplicate id found: block-2',
     ]
 
-    check_validation_errors(filename, expected_error_messages, expected_number_validation_errors=5)
+    check_validation_errors(
+        filename, expected_error_messages, expected_number_validation_errors=5
+    )
 
 
 def test_invalid_list_collector_non_radio():
     filename = 'schemas/invalid/test_invalid_list_collector_non_radio.json'
 
     expected_error_messages = [
-        'Schema Integrity Error. The list collector block list-collector does not contain a Radio answer type',
+        'Schema Integrity Error. The list collector block list-collector does not contain a Radio answer type'
     ]
 
     check_validation_errors(filename, expected_error_messages)
 
 
 def test_primary_person_invalid_list_collector_non_radio():
-    filename = 'schemas/invalid/test_invalid_primary_person_list_collector_no_radio.json'
+    filename = (
+        'schemas/invalid/test_invalid_primary_person_list_collector_no_radio.json'
+    )
 
     expected_error_messages = [
-        'Schema Integrity Error. The primary person list collector block primary-person-list-collector does not contain a Radio answer type',
+        'Schema Integrity Error. The primary person list collector block primary-person-list-collector does not contain a Radio answer type'
     ]
 
     check_validation_errors(filename, expected_error_messages)
@@ -365,7 +368,7 @@ def test_invalid_list_collector_with_routing():
     filename = 'schemas/invalid/test_invalid_list_collector_with_routing.json'
 
     expected_error_messages = [
-        'Schema Integrity Error. The list collector block list-collector contains routing rules on the remove-person sub block',
+        'Schema Integrity Error. The list collector block list-collector contains routing rules on the remove-person sub block'
     ]
 
     check_validation_errors(filename, expected_error_messages)
@@ -376,7 +379,7 @@ def test_invalid_primary_person_list_collector_with_routing():
 
     expected_error_messages = [
         'Schema Integrity Error. The primary person list collector block primary-person-list-collector contains routing rules on the '
-        'add-primary-person sub block',
+        'add-primary-person sub block'
     ]
 
     check_validation_errors(filename, expected_error_messages)
@@ -386,7 +389,7 @@ def test_invalid_list_collector_with_no_add_option():
     filename = 'schemas/invalid/test_invalid_list_collector_with_no_add_option.json'
 
     expected_error_messages = [
-        'Schema Integrity Error. The list collector block list-collector has an add_answer_value that is not present in the answer values',
+        'Schema Integrity Error. The list collector block list-collector has an add_answer_value that is not present in the answer values'
     ]
 
     check_validation_errors(filename, expected_error_messages)
@@ -397,7 +400,7 @@ def test_invalid_primary_person_list_collector_with_no_add_option():
 
     expected_error_messages = [
         'Schema Integrity Error. The primary person list collector block primary-person-list-collector has an add_or_edit_answer value that is not '
-        'present in the answer values',
+        'present in the answer values'
     ]
 
     check_validation_errors(filename, expected_error_messages)
@@ -407,7 +410,7 @@ def test_invalid_list_collector_with_different_add_block_answer_ids():
     filename = 'schemas/invalid/test_invalid_list_collector_with_different_add_block_answer_ids.json'
 
     expected_error_messages = [
-        'Schema Integrity Error. Multiple list collectors populate the list: people using different answer_ids in the add block',
+        'Schema Integrity Error. Multiple list collectors populate the list: people using different answer_ids in the add block'
     ]
 
     check_validation_errors(filename, expected_error_messages)
@@ -418,7 +421,7 @@ def test_invalid_primary_person_list_collector_with_different_add_block_answer_i
 
     expected_error_messages = [
         'Schema Integrity Error. Multiple primary person list collectors populate the list: people using different answer ids in the add_or_edit '
-        'block',
+        'block'
     ]
 
     check_validation_errors(filename, expected_error_messages)
@@ -428,7 +431,7 @@ def test_invalid_list_collector_with_different_answer_ids_in_add_and_edit():
     filename = 'schemas/invalid/test_invalid_list_collector_with_different_answer_ids_in_add_and_edit.json'
 
     expected_error_messages = [
-        'Schema Integrity Error. The list collector block list-collector contains an add block and edit block with different answer ids',
+        'Schema Integrity Error. The list collector block list-collector contains an add block and edit block with different answer ids'
     ]
 
     check_validation_errors(filename, expected_error_messages)
@@ -441,15 +444,20 @@ def test_inconsistent_ids_in_variants():
     validation_errors, schema_errors = validate_schema(json_to_validate)
     error_messages = [error['message'] for error in validation_errors]
 
-    fuzzy_error_messages = ['Schema Integrity Error. Variants contain more than one question_id for block: block-2. Found ids',
-                            'question-2',
-                            'question-2-variant',
-                            'Schema Integrity Error. Variants have mismatched answer_ids for block: block-2.']
+    fuzzy_error_messages = [
+        'Schema Integrity Error. Variants contain more than one question_id for block: block-2. Found ids',
+        'question-2',
+        'question-2-variant',
+        'Schema Integrity Error. Variants have mismatched answer_ids for block: block-2.',
+    ]
 
     for fuzzy_error in fuzzy_error_messages:
         assert any(fuzzy_error in error_message for error_message in error_messages)
 
-    assert 'Schema Integrity Error. Variants in block: block-2 contain different numbers of answers' in error_messages
+    assert (
+        'Schema Integrity Error. Variants in block: block-2 contain different numbers of answers'
+        in error_messages
+    )
 
     assert len(validation_errors) == 3
 
@@ -458,9 +466,11 @@ def test_inconsistent_ids_in_variants():
 
 def test_invalid_list_collector_duplicate_ids_between_list_collectors():
     filename = 'schemas/invalid/test_invalid_list_collector_duplicate_ids_multiple_collectors.json'
-    expected_error_messages = ['Schema Integrity Error. Duplicate id found: add-person',
-                               'Schema Integrity Error. Duplicate id found: remove-person',
-                               'Schema Integrity Error. Duplicate id found: edit-person']
+    expected_error_messages = [
+        'Schema Integrity Error. Duplicate id found: add-person',
+        'Schema Integrity Error. Duplicate id found: remove-person',
+        'Schema Integrity Error. Duplicate id found: edit-person',
+    ]
 
     check_validation_errors(filename, expected_error_messages)
 
@@ -493,8 +503,7 @@ def test_invalid_when_condition_property():
     fuzzy_error_messages = [
         'Schema Integrity Error. The comparison_id `country-checkbox-answer2` is not of answer type `Checkbox`. '
         'The condition `contains any` can only reference `Checkbox` answers when using `comparison id`',
-
-        'Schema Integrity Error. The condition `equals any` cannot be used with `Checkbox` answer type.'
+        'Schema Integrity Error. The condition `equals any` cannot be used with `Checkbox` answer type.',
     ]
 
     for fuzzy_error in fuzzy_error_messages:
@@ -506,19 +515,23 @@ def test_invalid_when_condition_property():
 
 
 def test_invalid_list_collector_bad_answer_reference_ids():
-    filename = 'schemas/invalid/test_invalid_list_collector_bad_answer_reference_ids.json'
+    filename = (
+        'schemas/invalid/test_invalid_list_collector_bad_answer_reference_ids.json'
+    )
     expected_error_messages = [
         'Schema Integrity Error. add_answer reference uses id not found in main block question: someone-else',
-        'Schema Integrity Error. remove_answer reference uses id not found in remove_block: delete-confirmation'
+        'Schema Integrity Error. remove_answer reference uses id not found in remove_block: delete-confirmation',
     ]
 
     check_validation_errors(filename, expected_error_messages)
 
 
 def test_invalid_primary_person_list_collector_bad_answer_reference_ids():
-    filename = 'schemas/invalid/test_invalid_primary_person_list_collector_bad_answer_id.json'
+    filename = (
+        'schemas/invalid/test_invalid_primary_person_list_collector_bad_answer_id.json'
+    )
     expected_error_messages = [
-        'Schema Integrity Error. add_or_edit_answer reference uses id not found in main block question: fake-answer-id',
+        'Schema Integrity Error. add_or_edit_answer reference uses id not found in main block question: fake-answer-id'
     ]
 
     check_validation_errors(filename, expected_error_messages)
@@ -536,7 +549,7 @@ def test_invalid_list_name_in_when_rule():
 def test_invalid_relationship_no_list_specified():
     filename = 'schemas/invalid/test_invalid_relationship_list_doesnt_exist.json'
     expected_error_message = [
-        "Schema Integrity Error. for_list 'not-a-list' in RelationshipCollector is not populated by any ListCollector blocks",
+        "Schema Integrity Error. for_list 'not-a-list' in RelationshipCollector is not populated by any ListCollector blocks"
     ]
 
     check_validation_errors(filename, expected_error_message)
@@ -561,7 +574,9 @@ def test_invalid_relationship_wrong_answer_type():
 
 
 def test_invalid_hub_and_spoke_with_summary_confirmation():
-    filename = 'schemas/invalid/test_invalid_hub_and_spoke_with_summary_confirmation.json'
+    filename = (
+        'schemas/invalid/test_invalid_hub_and_spoke_with_summary_confirmation.json'
+    )
     expected_error_messages = [
         'Schema Integrity Error. Schema can only contain one of [Confirmation page, Summary page, Hub page]'
     ]
