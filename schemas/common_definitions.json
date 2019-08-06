@@ -131,6 +131,10 @@
         "condition": {
           "enum": [
             "equals",
+            "all of",
+            "any of",
+            "not all of",
+            "not any of",
             "not equals",
             "contains",
             "not contains",
@@ -148,6 +152,16 @@
             "boolean",
             "integer"
           ]
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": [
+              "string",
+              "boolean",
+              "integer"
+            ]
+          }
         },
         "comparison_id": {
             "type": "string",
