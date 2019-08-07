@@ -46,6 +46,7 @@ class Validator:  # pylint: disable=too-many-lines
             self._list_names = self._get_list_names(json_to_validate)
 
             for section in json_to_validate['sections']:
+                validation_errors.extend(self._validate_section(section))
                 for group in section['groups']:
                     validation_errors.extend(self._validate_routing_rules(group, all_groups, answers_with_parent_ids))
 
@@ -64,6 +65,14 @@ class Validator:  # pylint: disable=too-many-lines
         all_errors['validation_errors'] = validation_errors
 
         return all_errors
+
+    def _validate_section(self, section):
+        errors = []
+
+        if section.get('repeat', {}).get('for_list'):
+            errors.extend(self._validate_list_exists(section['repeat']['for_list']))
+
+        return errors
 
     def _build_groups_list(self, json_to_validate):
         sections = json_to_validate.get('sections', [])
@@ -152,7 +161,7 @@ class Validator:  # pylint: disable=too-many-lines
                 errors.append(f'Block type: {block["type"]} not allowed outside of '
                               'ListCollectors')
             elif block['type'] == 'RelationshipCollector':
-                errors.extend(self._validate_relationship_list_exists(block))
+                errors.extend(self._validate_list_exists(block['for_list']))
                 errors.extend(self._validate_relationship_collector_contains_single_relationship_answer(block))
                 errors.extend(self._validate_relationship_collector_answer_type(block))
 
@@ -1161,11 +1170,9 @@ class Validator:  # pylint: disable=too-many-lines
 
         return errors
 
-    def _validate_relationship_list_exists(self, block):
-        for_list = block['for_list']
-
-        if for_list not in self._list_names:
-            msg = f"for_list '{for_list}' in RelationshipCollector is not populated by any ListCollector blocks"
+    def _validate_list_exists(self, list_name):
+        if list_name not in self._list_names:
+            msg = f"for_list '{list_name}' is not populated by any ListCollector blocks"
             return [self._error_message(msg)]
         return []
 
