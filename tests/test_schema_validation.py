@@ -591,6 +591,7 @@ def test_invalid_hub_and_spoke_and_summary_confirmation_non_existent():
 
     check_validation_errors(filename, expected_error_messages)
 
+
 def test_invalid_repeating_section_list_name():
     filename = 'schemas/invalid/test_invalid_repeating_section_list_name.json'
     expected_error_messages = [
