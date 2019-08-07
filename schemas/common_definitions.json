@@ -131,10 +131,10 @@
         "condition": {
           "enum": [
             "equals",
-            "all of",
-            "any of",
-            "not all of",
-            "not any of",
+            "contains all",
+            "contains any",
+            "not contains all",
+            "not contains any",
             "not equals",
             "contains",
             "not contains",
