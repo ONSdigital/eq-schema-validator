@@ -20,7 +20,10 @@
     }
   ],
   "hub": {
-    "enabled": true
+       "enabled": true,
+       "required_completed_sections": [
+           "employment-section"
+       ]
   },
   "sections": [{
       "id": "employment-section",
