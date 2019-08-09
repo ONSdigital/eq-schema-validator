@@ -77,7 +77,8 @@ class Validator:  # pylint: disable=too-many-lines
 
         for required_section_id in required_section_ids:
             if required_section_id not in section_ids:
-                errors.append(self._error_message("Required hub completed section '{}' defined in hub does not appear in schema".format(required_section_id)))
+                errors.append(self._error_message('Required hub completed section "{}" defined in hub does not '
+                                                  'appear in schema'.format(required_section_id)))
 
         return errors
 
