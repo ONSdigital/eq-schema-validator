@@ -153,6 +153,7 @@
     "sections": {
       "type": "array",
       "items": {
+        "additionalProperties": false,
         "type": "object",
         "properties": {
           "id": {
