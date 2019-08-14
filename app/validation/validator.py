@@ -36,6 +36,8 @@ class Validator:  # pylint: disable=too-many-lines
         validation_errors.extend(self._validate_schema_contain_metadata(json_to_validate))
         validation_errors.extend(self._validate_duplicates(json_to_validate))
 
+        section_ids = []
+
         try:
             all_groups = self._build_groups_list(json_to_validate)
         except self.CoreStructureError as cve:
@@ -47,6 +49,7 @@ class Validator:  # pylint: disable=too-many-lines
 
             for section in json_to_validate['sections']:
                 validation_errors.extend(self._validate_section(section))
+                section_ids.append(section['id'])
                 for group in section['groups']:
                     validation_errors.extend(self._validate_routing_rules(group, all_groups, answers_with_parent_ids))
 
@@ -62,6 +65,10 @@ class Validator:  # pylint: disable=too-many-lines
                                               numeric_answer_ranges)
                     )
 
+        required_hub_section_ids = json_to_validate.get('hub', {}).get('required_completed_sections', [])
+
+        validation_errors.extend(self._validate_required_section_ids(section_ids, required_hub_section_ids))
+
         all_errors['validation_errors'] = validation_errors
 
         return all_errors
@@ -71,6 +78,16 @@ class Validator:  # pylint: disable=too-many-lines
 
         if section.get('repeat', {}).get('for_list'):
             errors.extend(self._validate_list_exists(section['repeat']['for_list']))
+
+        return errors
+
+    def _validate_required_section_ids(self, section_ids, required_section_ids):
+        errors = []
+
+        for required_section_id in required_section_ids:
+            if required_section_id not in section_ids:
+                errors.append(self._error_message('Required hub completed section "{}" defined in hub does not '
+                                                  'appear in schema'.format(required_section_id)))
 
         return errors
 

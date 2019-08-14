@@ -599,3 +599,13 @@ def test_invalid_repeating_section_list_name():
     ]
 
     check_validation_errors(filename, expected_error_messages)
+
+
+def test_invalid_hub_section_non_existent():
+    filename = 'schemas/invalid/test_invalid_hub_section_definition.json'
+    expected_error_messages = [
+        'Schema Integrity Error. Required hub completed section "invalid-section-id" '
+        'defined in hub does not appear in schema'
+    ]
+
+    check_validation_errors(filename, expected_error_messages)
