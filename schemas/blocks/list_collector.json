@@ -36,7 +36,7 @@
     },
     "additionalProperties": false,
     "required": [
-        "item_title", "add_link_text", "empty_list_text", "title"
+        "item_title", "title"
     ]
   },
   "block": {
