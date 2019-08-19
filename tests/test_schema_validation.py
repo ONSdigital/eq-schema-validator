@@ -600,6 +600,15 @@ def test_invalid_repeating_section_list_name():
 
     check_validation_errors(filename, expected_error_messages)
 
+def test_invalid_repeating_section_title_placeholders():
+    filename = 'schemas/invalid/test_invalid_repeating_section_title_placeholders.json'
+    expected_error_messages = [
+        "Schema Integrity Error. Placeholders in 'text' doesn't match 'placeholders' definition for block id 'None'",
+    ]
+
+    check_validation_errors(filename, expected_error_messages)
+
+
 
 def test_invalid_hub_section_non_existent():
     filename = 'schemas/invalid/test_invalid_hub_section_definition.json'

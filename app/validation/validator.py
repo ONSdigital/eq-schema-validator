@@ -48,7 +48,7 @@ class Validator:  # pylint: disable=too-many-lines
             self._list_names = self._get_list_names(json_to_validate)
 
             for section in json_to_validate['sections']:
-                validation_errors.extend(self._validate_section(section))
+                validation_errors.extend(self._validate_section(json_to_validate, section, answers_with_parent_ids))
                 section_ids.append(section['id'])
                 for group in section['groups']:
                     validation_errors.extend(self._validate_routing_rules(group, all_groups, answers_with_parent_ids))
@@ -73,12 +73,19 @@ class Validator:  # pylint: disable=too-many-lines
 
         return all_errors
 
-    def _validate_section(self, section):
+    def _validate_section(self, json_to_validate, section, answers_with_parent_ids):
         errors = []
 
-        if section.get('repeat', {}).get('for_list'):
-            errors.extend(self._validate_list_exists(section['repeat']['for_list']))
 
+        valid_metadata_ids = []
+        if 'metadata' in json_to_validate:
+            valid_metadata_ids = [m['name'] for m in json_to_validate['metadata']]
+
+        section_repeat = section.get('repeat', {})
+
+        if section_repeat:
+            errors.extend(self._validate_list_exists(section['repeat']['for_list']))
+            errors.extend(self._validate_placeholders(section['repeat'], answers_with_parent_ids, valid_metadata_ids, None))
         return errors
 
     def _validate_required_section_ids(self, section_ids, required_section_ids):
@@ -192,7 +199,7 @@ class Validator:  # pylint: disable=too-many-lines
             if 'metadata' in json_to_validate:
                 valid_metadata_ids = [m['name'] for m in json_to_validate['metadata']]
 
-            errors.extend(self._validate_placeholders(block, answers_with_parent_ids, valid_metadata_ids))
+            errors.extend(self._validate_placeholders(block, answers_with_parent_ids, valid_metadata_ids, block['id']))
 
             errors.extend(self._validate_variants(block, answers_with_parent_ids, numeric_answer_ranges))
 
@@ -1168,7 +1175,7 @@ class Validator:  # pylint: disable=too-many-lines
             for item in input_data:
                 yield from self._get_dicts_with_key(item, key_name)
 
-    def _validate_placeholders(self, block_json, answers_with_parent_ids, valid_metadata_ids):
+    def _validate_placeholders(self, block_json, answers_with_parent_ids, valid_metadata_ids, current_block_id):
         errors = []
         strings_with_placeholders = self._get_dicts_with_key(block_json, 'placeholders')
         for string_with_placeholders in strings_with_placeholders or []:
@@ -1181,18 +1188,18 @@ class Validator:  # pylint: disable=too-many-lines
                 transforms = placeholder_definition.get('transforms')
                 answer_ids_to_validate, metadata_ids_to_validate = self._get_placeholder_source_ids(placeholder_definition, transforms)
 
-                errors.extend(self._validate_placeholder_answer_ids(block_json['id'], placeholder_definition,
+                errors.extend(self._validate_placeholder_answer_ids(current_block_id, placeholder_definition,
                                                                     answers_with_parent_ids, answer_ids_to_validate))
                 errors.extend(self._validate_placeholder_metadata_ids(valid_metadata_ids, metadata_ids_to_validate,
                                                                       placeholder_definition['placeholder']))
 
                 if transforms:
-                    errors.extend(self._validate_placeholder_transforms(transforms, block_json['id']))
+                    errors.extend(self._validate_placeholder_transforms(transforms, current_block_id))
 
             if sorted(placeholders_in_string) != sorted(placeholder_definition_names):
                 errors.append(self._error_message(
                     "Placeholders in 'text' doesn't match 'placeholders' definition for block id '{}'".format(
-                        block_json['id'])))
+                        current_block_id)))
 
         return errors
 

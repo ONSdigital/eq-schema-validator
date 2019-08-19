@@ -299,9 +299,9 @@
       "id": "personal-details-section",
       "title": "Personal Details",
       "repeat": {
-        "for_list": "non-existent-list",
+        "for_list": "people",
         "title": {
-          "text": "{person_name}",
+          "text": "{person}",
           "placeholders": [
             {
               "placeholder": "person_name",
