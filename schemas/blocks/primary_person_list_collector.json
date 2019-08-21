@@ -42,9 +42,6 @@
       },
       "add_or_edit_block": {
         "$ref": "question.json#/block"
-      },
-      "hide_on_section_summary": {
-        "type": "boolean"
       }
     },
     "additionalProperties": false,
