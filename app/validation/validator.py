@@ -1464,7 +1464,7 @@ class Validator:  # pylint: disable=too-many-lines
             for group in section['groups']:
                 for block in group['blocks']:
                     block_ids.append(block['id'])
-                    for sub_block in {'add_block', 'edit_block', 'remove_block'}:
+                    for sub_block in {'add_block', 'edit_block', 'remove_block', 'add_or_edit_block'}:
                         if sub_block in block:
                             block_ids.append(block[sub_block]['id'])
 
