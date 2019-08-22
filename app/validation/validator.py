@@ -238,17 +238,18 @@ class Validator:  # pylint: disable=too-many-lines
         for option in answer_options:
 
             action_params = option.get('action', {}).get('params')
-            if action_params:
+            if not action_params:
+                continue
 
-                list_name = action_params.get('list_name')
-                if list_name and list_name not in self._list_names:
-                    errors.append(
-                        (self._error_message(f'List name `{list_name}` defined in action params for answer `{answer["id"]}` does not exist')))
+            list_name = action_params.get('list_name')
+            if list_name and list_name not in self._list_names:
+                errors.append(
+                    (self._error_message(f'List name `{list_name}` defined in action params for answer `{answer["id"]}` does not exist')))
 
-                block_id = action_params.get('block_id')
-                if block_id and block_id not in self._block_ids:
-                    errors.append(
-                        (self._error_message(f'The block_id `{block_id}` defined in action params for answer `{answer["id"]}` does not exist')))
+            block_id = action_params.get('block_id')
+            if block_id and block_id not in self._block_ids:
+                errors.append(
+                    (self._error_message(f'The block_id `{block_id}` defined in action params for answer `{answer["id"]}` does not exist')))
 
         return errors
 
