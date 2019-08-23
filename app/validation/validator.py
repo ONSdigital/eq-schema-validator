@@ -75,8 +75,6 @@ class Validator:  # pylint: disable=too-many-lines
 
     def _validate_section(self, json_to_validate, section, answers_with_parent_ids):
         errors = []
-
-
         valid_metadata_ids = []
         if 'metadata' in json_to_validate:
             valid_metadata_ids = [m['name'] for m in json_to_validate['metadata']]
@@ -1179,8 +1177,7 @@ class Validator:  # pylint: disable=too-many-lines
         errors = []
         strings_with_placeholders = self._get_dicts_with_key(block_json, 'placeholders')
         for string_with_placeholders in strings_with_placeholders or []:
-            regex = re.compile('{(.*?)}')
-            placeholders_in_string = regex.findall(string_with_placeholders.get('text'))
+            placeholders_in_string = re.compile('{(.*?)}').findall(string_with_placeholders.get('text'))
             placeholder_definition_names = []
             for placeholder_definition in string_with_placeholders.get('placeholders'):
                 placeholder_definition_names.append(placeholder_definition['placeholder'])
