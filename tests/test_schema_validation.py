@@ -600,6 +600,7 @@ def test_invalid_repeating_section_list_name():
 
     check_validation_errors(filename, expected_error_messages)
 
+
 def test_invalid_repeating_section_title_placeholders():
     filename = 'schemas/invalid/test_invalid_repeating_section_title_placeholders.json'
     expected_error_messages = [
@@ -607,7 +608,6 @@ def test_invalid_repeating_section_title_placeholders():
     ]
 
     check_validation_errors(filename, expected_error_messages)
-
 
 
 def test_invalid_hub_section_non_existent():
