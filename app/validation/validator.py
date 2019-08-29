@@ -86,8 +86,8 @@ class Validator:  # pylint: disable=too-many-lines
         if section_repeat:
             errors.extend(self._validate_list_exists(section_repeat['for_list']))
             errors.extend(
-                self._validate_placeholders(
-                    section_repeat, answers_with_parent_ids, valid_metadata_ids, None
+                self._validate_placeholder_object(
+                    answers_with_parent_ids, valid_metadata_ids, section_repeat['title'], None
                 )
             )
         return errors
@@ -1224,7 +1224,8 @@ class Validator:  # pylint: disable=too-many-lines
         placeholder_differences = set(placeholders_in_string) - set(placeholder_definition_names)
         if placeholder_differences:
             errors.append(self._error_message(
-                "Placeholders in 'text' don't match 'placeholders' definition for placeholder '{}', missing '{}'".format(placeholder_object['text'], placeholder_differences)))
+                "Placeholders in '{}' don't match definitions. Missing '{}'".format(
+                    placeholder_object['text'], placeholder_differences)))
 
         return errors
 
