@@ -149,7 +149,14 @@
                   "label": "Legally Registered Civil Partner",
                   "title": "Thinking of {first_person_name}, {second_person_name} is their <em>legally registered civil partner</em>",
                   "playback": "{second_person_name} is {first_person_name} <em>legally registered civil partner</em>"
-                }
+                },
+                {
+                  "label": "Brother or sister",
+                  "value": "Brother or sister",
+                  "title": "Thinking of {first_person_name}, {second_person_name} is their <em>brother or sister</em>",
+                  "playback": "{second_person_name} is {first_person_name_possessive} <em>brother or sister</em>",
+                  "description": "Including half brother or half sister"
+              }
               ]
             }]
           }
