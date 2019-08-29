@@ -1221,9 +1221,10 @@ class Validator:  # pylint: disable=too-many-lines
             if transforms:
                 errors.extend(self._validate_placeholder_transforms(transforms, current_block_id))
 
-        if sorted(placeholders_in_string) != sorted(placeholder_definition_names):
+        placeholder_differences = set(placeholders_in_string) - set(placeholder_definition_names)
+        if placeholder_differences:
             errors.append(self._error_message(
-                "Placeholders in 'text' don't match 'placeholders' definition for placeholder '{}'".format(placeholder_object['text'])))
+                "Placeholders in 'text' don't match 'placeholders' definition for placeholder '{}', missing '{}'".format(placeholder_object['text'], placeholder_differences)))
 
         return errors
 
