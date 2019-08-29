@@ -291,9 +291,9 @@ def test_invalid_string_transforms():
     filename = 'schemas/invalid/test_invalid_string_transforms.json'
 
     expected_error_messages = [
-        "Schema Integrity Error. Placeholders in 'text' doesn't match 'placeholders' definition for block id 'block1'",
-        "Schema Integrity Error. Placeholders in 'text' doesn't match 'placeholders' definition for block id 'block2'",
-        "Schema Integrity Error. Placeholders in 'text' doesn't match 'placeholders' definition for block id 'block3'",
+        "Schema Integrity Error. Placeholders in 'text' don't match 'placeholders' definition for placeholder 'test {answer1}'",
+        "Schema Integrity Error. Placeholders in 'text' don't match 'placeholders' definition for placeholder 'test {answer1}'",
+        "Schema Integrity Error. Placeholders in 'text' don't match 'placeholders' definition for placeholder 'test {answer1}'",
         "Schema Integrity Error. Can't reference `previous_transform` in a first transform in block id 'block4'",
         "Schema Integrity Error. `previous_transform` not referenced in chained transform in block id 'block5'"
     ]
@@ -604,7 +604,7 @@ def test_invalid_repeating_section_list_name():
 def test_invalid_repeating_section_title_placeholders():
     filename = 'schemas/invalid/test_invalid_repeating_section_title_placeholders.json'
     expected_error_messages = [
-        "Schema Integrity Error. Placeholders in 'text' doesn't match 'placeholders' definition for block id 'None'",
+        "Schema Integrity Error. Placeholders in 'text' don't match 'placeholders' definition for placeholder '{person}'",
     ]
 
     check_validation_errors(filename, expected_error_messages)

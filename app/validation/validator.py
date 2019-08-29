@@ -84,8 +84,12 @@ class Validator:  # pylint: disable=too-many-lines
         section_repeat = section.get('repeat', {})
 
         if section_repeat:
-            errors.extend(self._validate_list_exists(section['repeat']['for_list']))
-            errors.extend(self._validate_placeholders(section['repeat'], answers_with_parent_ids, valid_metadata_ids, None))
+            errors.extend(self._validate_list_exists(section_repeat['for_list']))
+            errors.extend(
+                self._validate_placeholders(
+                    section_repeat, answers_with_parent_ids, valid_metadata_ids, None
+                )
+            )
         return errors
 
     def _validate_required_section_ids(self, section_ids, required_section_ids):
@@ -1197,30 +1201,37 @@ class Validator:  # pylint: disable=too-many-lines
             for item in input_data:
                 yield from self._get_dicts_with_key(item, key_name)
 
+    def _validate_placeholder_object(self, answers_with_parent_ids, valid_metadata_ids, placeholder_object, current_block_id):
+        """ Current block id may be None if called outside of a block
+        """
+        errors = []
+        placeholders_in_string = re.compile('{(.*?)}').findall(placeholder_object.get('text'))
+        placeholder_definition_names = []
+        for placeholder_definition in placeholder_object.get('placeholders'):
+            placeholder_definition_names.append(placeholder_definition['placeholder'])
+
+            transforms = placeholder_definition.get('transforms')
+            answer_ids_to_validate, metadata_ids_to_validate = self._get_placeholder_source_ids(placeholder_definition, transforms)
+
+            errors.extend(self._validate_placeholder_answer_ids(current_block_id, placeholder_definition,
+                                                                answers_with_parent_ids, answer_ids_to_validate))
+            errors.extend(self._validate_placeholder_metadata_ids(valid_metadata_ids, metadata_ids_to_validate,
+                                                                  placeholder_definition['placeholder']))
+
+            if transforms:
+                errors.extend(self._validate_placeholder_transforms(transforms, current_block_id))
+
+        if sorted(placeholders_in_string) != sorted(placeholder_definition_names):
+            errors.append(self._error_message(
+                "Placeholders in 'text' don't match 'placeholders' definition for placeholder '{}'".format(placeholder_object['text'])))
+
+        return errors
+
     def _validate_placeholders(self, block_json, answers_with_parent_ids, valid_metadata_ids, current_block_id):
         errors = []
         strings_with_placeholders = self._get_dicts_with_key(block_json, 'placeholders')
-        for string_with_placeholders in strings_with_placeholders or []:
-            placeholders_in_string = re.compile('{(.*?)}').findall(string_with_placeholders.get('text'))
-            placeholder_definition_names = []
-            for placeholder_definition in string_with_placeholders.get('placeholders'):
-                placeholder_definition_names.append(placeholder_definition['placeholder'])
-
-                transforms = placeholder_definition.get('transforms')
-                answer_ids_to_validate, metadata_ids_to_validate = self._get_placeholder_source_ids(placeholder_definition, transforms)
-
-                errors.extend(self._validate_placeholder_answer_ids(current_block_id, placeholder_definition,
-                                                                    answers_with_parent_ids, answer_ids_to_validate))
-                errors.extend(self._validate_placeholder_metadata_ids(valid_metadata_ids, metadata_ids_to_validate,
-                                                                      placeholder_definition['placeholder']))
-
-                if transforms:
-                    errors.extend(self._validate_placeholder_transforms(transforms, current_block_id))
-
-            if sorted(placeholders_in_string) != sorted(placeholder_definition_names):
-                errors.append(self._error_message(
-                    "Placeholders in 'text' doesn't match 'placeholders' definition for block id '{}'".format(
-                        current_block_id)))
+        for placeholder_object in strings_with_placeholders or []:
+            errors.extend(self._validate_placeholder_object(answers_with_parent_ids, valid_metadata_ids, placeholder_object, current_block_id))
 
         return errors
 
