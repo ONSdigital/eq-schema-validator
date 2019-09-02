@@ -291,9 +291,8 @@ def test_invalid_string_transforms():
     filename = 'schemas/invalid/test_invalid_string_transforms.json'
 
     expected_error_messages = [
-        "Schema Integrity Error. Placeholders in 'text' doesn't match 'placeholders' definition for block id 'block1'",
-        "Schema Integrity Error. Placeholders in 'text' doesn't match 'placeholders' definition for block id 'block2'",
-        "Schema Integrity Error. Placeholders in 'text' doesn't match 'placeholders' definition for block id 'block3'",
+        "Schema Integrity Error. Placeholders in 'test {answer1}' don't match definitions. Missing '{'answer1'}'",
+        "Schema Integrity Error. Placeholders in 'test {answer1} and {answer2}' don't match definitions. Missing '{'answer2'}'",
         "Schema Integrity Error. Can't reference `previous_transform` in a first transform in block id 'block4'",
         "Schema Integrity Error. `previous_transform` not referenced in chained transform in block id 'block5'"
     ]
@@ -549,9 +548,14 @@ def test_invalid_list_name_in_when_rule():
 
 def test_invalid_relationship_no_list_specified():
     filename = 'schemas/invalid/test_invalid_relationship_list_doesnt_exist.json'
+    for_list_error = ["Schema Integrity Error. for_list 'not-a-list' is not populated by any ListCollector blocks"]
     expected_error_message = [
-        "Schema Integrity Error. for_list 'not-a-list' is not populated by any ListCollector blocks",
-    ]
+        'Schema Integrity Error. Invalid answer id reference `first-name` for placeholder `first_person_name`',
+        'Schema Integrity Error. Invalid answer id reference `last-name` for placeholder `first_person_name`',
+        'Schema Integrity Error. Invalid answer id reference `first-name` for placeholder `second_person_name`',
+        'Schema Integrity Error. Invalid answer id reference `last-name` for placeholder `second_person_name`',
+        ] * 6
+    expected_error_message = for_list_error + expected_error_message
 
     check_validation_errors(filename, expected_error_message)
 
@@ -596,6 +600,15 @@ def test_invalid_repeating_section_list_name():
     filename = 'schemas/invalid/test_invalid_repeating_section_list_name.json'
     expected_error_messages = [
         "Schema Integrity Error. for_list 'non-existent-list' is not populated by any ListCollector blocks"
+    ]
+
+    check_validation_errors(filename, expected_error_messages)
+
+
+def test_invalid_repeating_section_title_placeholders():
+    filename = 'schemas/invalid/test_invalid_repeating_section_title_placeholders.json'
+    expected_error_messages = [
+        "Schema Integrity Error. Placeholders in '{person}' don't match definitions. Missing '{'person'}'",
     ]
 
     check_validation_errors(filename, expected_error_messages)
