@@ -198,8 +198,9 @@ class Validator:  # pylint: disable=too-many-lines
                     errors.extend(self._validate_relationship_collector_answers(block['question']['answers']))
             elif block['type'] == 'ListCollectorDrivingQuestion':
                 if not self._has_single_list_collector(block['for_list'], section):
-                    errors.append(self._error_message(f'ListCollectorDrivingQuestion `{block["id"]}` for list `{block["for_list"]}` '
-                                  'cannot be used with multiple ListCollectors'))
+                    errors.append(
+                        self._error_message(f'ListCollectorDrivingQuestion `{block["id"]}` for list '
+                                            f'`{block["for_list"]}` cannot be used with multiple ListCollectors'))
 
             errors.extend(self._validate_questions(block, numeric_answer_ranges))
 
@@ -1393,10 +1394,8 @@ class Validator:  # pylint: disable=too-many-lines
 
     @staticmethod
     def _has_single_list_collector(list_name, section):
-        no_of_collectors = [block for block in Validator._get_blocks_for_section(section)
-            if block['type'] == 'ListCollector' and list_name == block['for_list']
-        ]
-        return len(no_of_collectors) == 1
+        return len([block for block in Validator._get_blocks_for_section(section) if block['type'] == 'ListCollector'
+                    and list_name == block['for_list']]) == 1
 
     @staticmethod
     def _get_blocks_for_section(section):
