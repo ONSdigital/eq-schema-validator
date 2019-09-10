@@ -636,3 +636,13 @@ def test_invalid_answer_action():
     ]
 
     check_validation_errors(filename, expected_error_messages)
+
+
+def test_invalid_driving_question():
+    filename = 'schemas/invalid/test_invalid_list_collector_driving_question.json'
+    expected_error_messages = [
+        'Schema Integrity Error. ListCollectorDrivingQuestion `anyone-usually-live-at` for list `people` cannot be used '
+        'with multiple ListCollectors'
+    ]
+
+    check_validation_errors(filename, expected_error_messages)
