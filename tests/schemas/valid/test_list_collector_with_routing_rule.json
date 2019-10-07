@@ -59,7 +59,7 @@
               "value": "No"
             }]
           }
-          }, {
+        }, {
           "goto": {
             "block": "summary"
           }
