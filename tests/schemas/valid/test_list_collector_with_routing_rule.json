@@ -51,19 +51,19 @@
           }]
         },
         "routing_rules": [{
-            "goto": {
-              "block": "summary",
-              "when": [{
-                "id": "remove-confirmation",
-                "condition": "equals",
-                "value": "Yes"
-              }]
-            }
+          "goto": {
+            "block": "summary",
+            "when": [{
+              "id": "anyone-else",
+              "condition": "equals",
+              "value": "No"
+            }]
+          }
           }, {
-            "goto": {
-              "block": "summary"
-            }
-          }],
+          "goto": {
+            "block": "summary"
+          }
+        }],
         "add_block": {
           "id": "add-person",
           "type": "ListAddQuestion",
