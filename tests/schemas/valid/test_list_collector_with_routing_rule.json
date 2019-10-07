@@ -50,6 +50,20 @@
             }]
           }]
         },
+        "routing_rules": [{
+            "goto": {
+              "block": "summary",
+              "when": [{
+                "id": "remove-confirmation",
+                "condition": "equals",
+                "value": "Yes"
+              }]
+            }
+          }, {
+            "goto": {
+              "block": "summary"
+            }
+          }],
         "add_block": {
           "id": "add-person",
           "type": "ListAddQuestion",
@@ -109,21 +123,7 @@
                 "value": "No"
               }]
             }]
-          },
-          "routing_rules": [{
-            "goto": {
-              "block": "summary",
-              "when": [{
-                "id": "remove-confirmation",
-                "condition": "equals",
-                "value": "Yes"
-              }]
-            }
-          }, {
-            "goto": {
-              "block": "summary"
-            }
-          }]
+          }
         }
       }, {
         "type": "Summary",
