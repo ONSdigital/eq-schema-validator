@@ -143,10 +143,10 @@
                     }
                   },
                   "transform": "concatenate_list"
-                  }]
                 }]
-              }
+              }]
             }
+          }
           },
 
         {
