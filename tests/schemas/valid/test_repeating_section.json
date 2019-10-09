@@ -191,11 +191,11 @@
                           "identifier": [
                             "first-name",
                             "last-name"
-                           ],
+                          ],
                           "source": "answers"
                         }
                       },
-                    "transform": "concatenate_list"
+                      "transform": "concatenate_list"
                     }]
                   }]
                 }
@@ -326,18 +326,18 @@
                       "arguments": {
                         "delimiter": " ",
                         "list_to_concatenate": {
-                        "identifier": [
-                          "first-name",
-                          "last-name"
-                        ],
-                        "source": "answers"
-                      }
-                    },
-                    "transform": "concatenate_list"
+                          "identifier": [
+                            "first-name",
+                            "last-name"
+                          ],
+                          "source": "answers"
+                        }
+                      },
+                      "transform": "concatenate_list"
                     }]
                   }]
-                  }
-               }
+                }
+              }
             }
           ]
         }

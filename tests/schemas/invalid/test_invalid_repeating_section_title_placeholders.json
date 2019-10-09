@@ -181,25 +181,25 @@
                 "add_link_text": "Add another person to this household",
                 "empty_list_text": "There are no people",
                 "item_title": {
-                "text": "{person_name}",
-                "placeholders": [{
-                  "placeholder": "person_name",
-                  "transforms": [{
-                    "arguments": {
-                    "delimiter": " ",
-                    "list_to_concatenate": {
-                      "identifier": [
-                        "first-name",
-                        "last-name"
-                      ],
-                      "source": "answers"
-                    }
-                  },
-                  "transform": "concatenate_list"
-                }]
-              }]
-            }
-          }
+                  "text": "{person_name}",
+                  "placeholders": [{
+                    "placeholder": "person_name",
+                    "transforms": [{
+                      "arguments": {
+                        "delimiter": " ",
+                        "list_to_concatenate": {
+                          "identifier": [
+                            "first-name",
+                            "last-name"
+                          ],
+                          "source": "answers"
+                        }
+                      },
+                      "transform": "concatenate_list"
+                    }]
+                  }]
+                }
+              }
             }
           ]
         },
@@ -323,21 +323,21 @@
                   "placeholders": [{
                     "placeholder": "person_name",
                     "transforms": [{
-                    "arguments": {
-                      "delimiter": " ",
-                      "list_to_concatenate": {
-                        "identifier": [
-                        "first-name",
-                        "last-name"
-                    ],
-                    "source": "answers"
-                    }
-                  },
-                    "transform": "concatenate_list"
-                }]
-              }]
-            }
-          }
+                      "arguments": {
+                        "delimiter": " ",
+                        "list_to_concatenate": {
+                          "identifier": [
+                            "first-name",
+                            "last-name"
+                          ],
+                          "source": "answers"
+                        }
+                      },
+                      "transform": "concatenate_list"
+                    }]
+                  }]
+                }
+              }
             }
           ]
         }
