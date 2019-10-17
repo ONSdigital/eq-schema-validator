@@ -27,6 +27,9 @@
       "mandatory": {
         "type": "boolean"
       },
+      "autocomplete": {
+        "type": "string"
+      },
       "validation": {
         "type": "object",
         "properties": {
