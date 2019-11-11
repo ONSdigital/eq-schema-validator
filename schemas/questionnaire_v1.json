@@ -243,7 +243,7 @@
             }
           },
           "is_enabled": {
-            "description": "Allows an element to be skipped when a condition has been met. By adding more than one `when` element it will evaluate as an or rule.",
+            "description": "Allows removing a section from the routing path based on when rules. By adding more than one `when` element it will evaluate as an or rule.",
             "type": "array",
             "minItems": 1,
             "uniqueItems": true,
