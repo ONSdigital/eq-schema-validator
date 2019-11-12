@@ -29,9 +29,6 @@ class Validator:  # pylint: disable=too-many-lines
         :param json_to_validate: json schema to be validated
         :return: list of dictionaries containing error messages, otherwise it returns an empty list
         """
-        all_errors = {
-            'schema_errors': self._validate_json_against_schema(json_to_validate)
-        }
 
         validation_errors = []
         validation_errors.extend(self._validate_schema_contain_metadata(json_to_validate))
@@ -71,9 +68,9 @@ class Validator:  # pylint: disable=too-many-lines
 
         validation_errors.extend(self._validate_required_section_ids(section_ids, required_hub_section_ids))
 
-        all_errors['validation_errors'] = validation_errors
+        schema_errors = self._validate_json_against_schema(json_to_validate)
 
-        return all_errors
+        return schema_errors, validation_errors
 
     def _validate_section(self, json_to_validate, section, answers_with_parent_ids):
         errors = []

@@ -14,14 +14,6 @@ configure(logger_factory=LoggerFactory())
 validator = Validator()
 
 
-def validate_schema(json_to_validate):
-    errors = validator.validate_schema(json_to_validate)
-    validation_errors = errors['validation_errors']
-    schema_errors = errors['schema_errors']
-
-    return validation_errors, schema_errors
-
-
 def _open_and_load_schema_file(file):
     json_file = open(os.path.join(os.path.dirname(os.path.realpath(__file__)), file), encoding='utf8')
     json_to_validate = load(json_file)
@@ -36,7 +28,7 @@ def check_validation_errors(filename, expected_validation_error_messages, expect
 
     json_to_validate = _open_and_load_schema_file(filename)
 
-    validation_errors, schema_errors = validate_schema(json_to_validate)
+    schema_errors, validation_errors = validator.validate_schema(json_to_validate)
 
     print(f'validation errors: {validation_errors}')
     print(f'schema errors: {schema_errors}')
@@ -62,9 +54,9 @@ def test_param_valid_schemas(valid_schema_filename):
     with open(valid_schema_filename, encoding='utf8') as json_file:
         json_to_validate = load(json_file)
 
-        errors = validator.validate_schema(json_to_validate)
-        assert not errors['validation_errors']
-        assert not errors['schema_errors']
+        schema_errors, validation_errors = validator.validate_schema(json_to_validate)
+        assert not validation_errors
+        assert not schema_errors
 
 
 def test_invalid_schema_block():
@@ -183,7 +175,7 @@ def test_invalid_survey_id_whitespace():
     file = 'schemas/invalid/test_invalid_survey_id_whitespace.json'
     json_to_validate = _open_and_load_schema_file(file)
 
-    validation_errors, schema_errors = validate_schema(json_to_validate)
+    schema_errors, validation_errors = validator.validate_schema(json_to_validate)
 
     assert validation_errors == []
 
@@ -206,7 +198,7 @@ def test_invalid_calculated_summary():
         'Schema Integrity Error. Duplicate answers',
     ]
 
-    validation_errors, schema_errors = validate_schema(json_to_validate)
+    schema_errors, validation_errors = validator.validate_schema(json_to_validate)
 
     assert schema_errors == {}
     assert len(validation_errors) == len(expected_error_messages) + len(expected_fuzzy_error_messages)
@@ -317,9 +309,9 @@ def test_single_variant_invalid():
     file_name = 'schemas/invalid/test_invalid_single_variant.json'
     json_to_validate = _open_and_load_schema_file(file_name)
 
-    validation_errors, schema_errors = validate_schema(json_to_validate)
+    schema_errors, validation_errors = validator.validate_schema(json_to_validate)
 
-    assert 'is not valid under any of the given schemas' in schema_errors['message']
+    assert "'when' is a required property" in schema_errors['message']
 
     assert len(validation_errors) == 1
 
@@ -436,7 +428,7 @@ def test_inconsistent_ids_in_variants():
     file_name = 'schemas/invalid/test_invalid_inconsistent_ids_in_variants.json'
     json_to_validate = _open_and_load_schema_file(file_name)
 
-    validation_errors, schema_errors = validate_schema(json_to_validate)
+    schema_errors, validation_errors = validator.validate_schema(json_to_validate)
     error_messages = [error['message'] for error in validation_errors]
 
     fuzzy_error_messages = ['Schema Integrity Error. Variants contain more than one question_id for block: block-2. Found ids',
@@ -458,7 +450,7 @@ def test_inconsistent_default_answers_in_variants():
     file_name = 'schemas/invalid/test_invalid_inconsistent_default_answers_in_variants.json'
     json_to_validate = _open_and_load_schema_file(file_name)
 
-    validation_errors, _ = validate_schema(json_to_validate)
+    _, validation_errors = validator.validate_schema(json_to_validate)
     error_messages = [error['message'] for error in validation_errors]
 
     fuzzy_error_messages = ['Schema Integrity Error. Variants contain different default answers for block: block-2. Found ids',
@@ -483,7 +475,7 @@ def test_inconsistent_types_in_variants():
     file_name = 'schemas/invalid/test_invalid_inconsistent_types_in_variants.json'
     json_to_validate = _open_and_load_schema_file(file_name)
 
-    validation_errors, _ = validate_schema(json_to_validate)
+    _, validation_errors = validator.validate_schema(json_to_validate)
     error_messages = [error['message'] for error in validation_errors]
     fuzzy_error_messages = (
         'Schema Integrity Error. Variants have more than one question type for block: block-2',
@@ -500,7 +492,7 @@ def test_invalid_when_condition_property():
     file_name = 'schemas/invalid/test_invalid_when_condition_property.json'
     json_to_validate = _open_and_load_schema_file(file_name)
 
-    validation_errors, schema_errors = validate_schema(json_to_validate)
+    schema_errors, validation_errors  = validator.validate_schema(json_to_validate)
     error_messages = [error['message'] for error in validation_errors]
 
     fuzzy_error_messages = [
