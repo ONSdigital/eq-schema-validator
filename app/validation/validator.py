@@ -23,6 +23,21 @@ class Validator:  # pylint: disable=too-many-lines
         self._list_names = []
         self._block_ids = []
 
+    def validate_json_schema(self, json_to_validate):
+        try:
+            base_uri = pathlib.Path(os.path.abspath('schemas/questionnaire_v1.json')).as_uri()
+            resolver = RefResolver(base_uri=base_uri, referrer=self.schema)
+            validate(json_to_validate, self.schema, resolver=resolver)
+            return {}
+        except ValidationError as e:
+            return {
+                'message': e.message,
+                'predicted_cause': best_match([e]).message,
+                'path': str(e.path),
+            }
+        except SchemaError as e:
+            return '{}'.format(e)
+
     def validate_schema(self, json_to_validate):
         """
         Validates the json schema provided is correct
@@ -68,9 +83,7 @@ class Validator:  # pylint: disable=too-many-lines
 
         validation_errors.extend(self._validate_required_section_ids(section_ids, required_hub_section_ids))
 
-        schema_errors = self._validate_json_against_schema(json_to_validate)
-
-        return schema_errors, validation_errors
+        return validation_errors
 
     def _validate_section(self, json_to_validate, section, answers_with_parent_ids):
         errors = []
@@ -383,21 +396,6 @@ class Validator:  # pylint: disable=too-many-lines
         errors.extend(self._ensure_relevant_variant_fields_are_consistent(block, question_variants))
 
         return errors
-
-    def _validate_json_against_schema(self, json_to_validate):
-        try:
-            base_uri = pathlib.Path(os.path.abspath('schemas/questionnaire_v1.json')).as_uri()
-            resolver = RefResolver(base_uri=base_uri, referrer=self.schema)
-            validate(json_to_validate, self.schema, resolver=resolver)
-            return {}
-        except ValidationError as e:
-            return {
-                'message': e.message,
-                'predicted_cause': best_match([e]).message,
-                'path': str(e.path),
-            }
-        except SchemaError as e:
-            return '{}'.format(e)
 
     def _validate_schema_contain_metadata(self, schema):
 

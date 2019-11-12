@@ -27,10 +27,9 @@ def test_valid_schema_names():
 
     for schema_name in schema_names:
         json_to_validate = create_schema_with_id(schema_name)
-        schema_errors, validation_errors = validator.validate_schema(json_to_validate)
+        schema_errors = validator.validate_json_schema(json_to_validate)
 
         assert schema_errors == {}
-        assert validation_errors == []
 
 
 def test_invalid_schema_names():
@@ -40,9 +39,8 @@ def test_invalid_schema_names():
 
     for schema_name in schema_names:
         json_to_validate = create_schema_with_id(schema_name)
-        schema_errors, validation_errors = validator.validate_schema(json_to_validate)
+        schema_errors = validator.validate_json_schema(json_to_validate)
 
         message = schema_errors.get('message')
 
         assert f"'{schema_name}' does not match '^[a-z0-9][a-z0-9\\\\-]*[a-z0-9]$'" == message
-        assert validation_errors == []
