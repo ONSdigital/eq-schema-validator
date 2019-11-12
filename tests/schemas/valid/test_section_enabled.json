@@ -68,7 +68,7 @@
     },
     {
       "id": "optionally-enabled-section",
-      "is_enabled": [{
+      "enabled": [{
         "when": [{
           "id": "mandatory-checkbox-answer",
           "condition": "contains any",
