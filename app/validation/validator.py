@@ -165,6 +165,7 @@ class Validator:  # pylint: disable=too-many-lines
                 errors.extend(self._validate_schema_routing_rule_routes_to_valid_target(all_groups, 'group', rule))
 
                 errors.extend(self._validate_routing_rule(rule, answers_with_parent_ids, block))
+                errors.extend(self._validate_answer_routing_value(rule, answers_with_parent_ids))
 
             for skip_condition in block.get('skip_conditions', []):
                 errors.extend(self._validate_skip_condition(skip_condition, answers_with_parent_ids, block))
@@ -500,6 +501,63 @@ class Validator:  # pylint: disable=too-many-lines
         if 'when' in rule:
             errors.extend(self._validate_when_rule(rule['when'], answer_ids_with_group_id, block_or_group['id']))
 
+        return errors
+
+    @staticmethod
+    def _validate_answer_routing_value(rule, answer_ids_with_group_id):
+        errors = []
+
+        when_rule = rule.get('goto', {}).get('when', {})
+        if when_rule:
+            for when_dict in when_rule:
+                if when_dict.get('value', {}):
+                    rule_value = when_dict.get('value', {})
+                    if rule_value:
+                        amount_blocks = 0
+                        amount_matched = 0
+                        for block in answer_ids_with_group_id:
+                            if isinstance(answer_ids_with_group_id[block], dict):
+                                if 'answer' in answer_ids_with_group_id[block]:
+                                    answer = answer_ids_with_group_id[block]['answer']
+                                    if 'options' in answer:
+                                        answer_options = answer.get('options', {})
+                                        for answer_block in answer_options:
+                                            amount_blocks += 1
+                                            option_value = answer_block.get('value')
+                                            if rule_value == option_value:
+                                                amount_matched += 1
+                        if (amount_blocks >= amount_matched) and (amount_matched > 0):
+                            return errors
+                        elif amount_matched == 0:
+                            errors.append(Validator._error_message(
+                                f'Answer option and routing rule value mismatch, missing answer value: {rule_value}'))
+                    return errors
+
+                elif when_dict.get('values'):
+                    rule_values = when_dict.get('values')
+                    if rule_values:
+                        for rule_value in rule_values:
+                            amount_blocks = 0
+                            amount_matched = 0
+                            for block in answer_ids_with_group_id:
+                                if isinstance(answer_ids_with_group_id[block], dict):
+                                    if 'answer' in answer_ids_with_group_id[block]:
+                                        answer = answer_ids_with_group_id[block]['answer']
+                                        if 'options' in answer:
+                                            answer_options = answer.get('options', {})
+                                            for answer_block in answer_options:
+                                                amount_blocks += 1
+                                                option_value = answer_block.get('value')
+                                                if rule_value == option_value:
+                                                    amount_matched += 1
+                            if (amount_blocks >= amount_matched) and (amount_matched > 0):
+                                return errors
+                            elif amount_matched == 0:
+                                errors.append(Validator._error_message(
+                                    f'Answer option and routing rule value mismatch, missing answer value: {rule_value}'))
+                        return errors
+                else:
+                    return errors
         return errors
 
     def _validate_skip_condition(self, skip_condition, answer_ids_with_group_id, block_or_group):
