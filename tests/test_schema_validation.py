@@ -507,7 +507,7 @@ def test_invalid_when_condition_property():
         'Schema Integrity Error. The comparison id `country-checkbox-answer2` is not of answer type `Checkbox`. '
         'The condition `contains any` can only reference `Checkbox` answers when using `comparison id`',
 
-        'Schema Integrity Error. The condition `equals any` cannot be used with `Checkbox` answer type.'
+        'Schema Integrity Error. The condition `equals any` cannot be used with `Checkbox` answer type.',
     ]
 
     for fuzzy_error in fuzzy_error_messages:
