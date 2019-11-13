@@ -285,7 +285,7 @@ class Validator:  # pylint: disable=too-many-lines
     def _ensure_answer_labels_and_values_match(self, answer):
         errors = []
         if 'options' in answer:
-            for options in answer["options"]:
+            for options in answer['options']:
                 if 'placeholders' not in options['label']:
                     if options['label'] != options['value']:
                         errors.append(
