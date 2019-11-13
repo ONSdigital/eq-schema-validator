@@ -25,7 +25,7 @@ gulp.task("lint", () =>
         fail: true
       })
     )
-    .on("error", err => {
+    .on("error", (err) => {
       gutil.log("Linting failed try running `gulp format`");
       throw err;
     })
