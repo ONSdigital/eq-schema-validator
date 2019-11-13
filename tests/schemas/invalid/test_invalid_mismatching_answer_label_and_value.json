@@ -5,7 +5,7 @@
   "survey_id": "0",
   "title": "Other input fields",
   "theme": "default",
-  "description": "A questionnaire to demo checkbox field combined contains routing",
+  "description": "A questionnaire to check mismatching answer values and lables",
   "metadata": [{
     "name": "user_id",
     "type": "string"
@@ -83,16 +83,16 @@
               "value": "Yes"
             }, {
               "label": "Sometimes",
-              "value": "Sometimes"
+              "value": "sometimes"
             }, {
               "label": "No, I prefer tea",
               "value": "No, I prefer tea"
             }, {
-              "label": "I don't like coffee",
-              "value": "I don't like coffee"
+              "label": "I don’t like coffee",
+              "value": "I don’t like coffee"
             }, {
-              "label": "No, I don't drink any hot drinks",
-              "value": "No, I don't drink any hot drinks"
+              "label": "No, I don’t drink any hot drinks",
+              "value": "No, I don’t drink any hot drinks"
             }],
             "q_code": "1",
             "id": "conditional-routing-answer",
@@ -107,7 +107,7 @@
             "when": [{
               "id": "conditional-routing-answer",
               "condition": "equals any",
-              "values": ["Yes", "Sometimes"]
+              "values": ["yes", "sometimes"]
             }]
           }
         }, {
@@ -116,7 +116,7 @@
             "when": [{
               "id": "conditional-routing-answer",
               "condition": "not equals any",
-              "values": ["Yes", "Sometimes", "I don't like coffee", "No, I don't drink any hot drinks"]
+              "values": ["Yes", "sometimes", "I don’t like coffee", "No, I don’t drink any hot drinks"]
             }]
           }
         }, {

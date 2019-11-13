@@ -230,7 +230,7 @@ class Validator:  # pylint: disable=too-many-lines
                 errors.extend(self._validate_duplicate_options(answer))
                 errors.extend(self._validate_totaliser_defines_decimal_places(answer))
                 errors.extend(self._validate_answer_actions(answer))
-                errors.extend(self._validate_labels_and_values_match(answer))
+                errors.extend(self._ensure_answer_labels_and_values_match(answer))
 
                 if answer['type'] == 'Date':
                     if 'minimum' in answer and 'maximum' in answer:
@@ -278,14 +278,14 @@ class Validator:  # pylint: disable=too-many-lines
 
         return errors
 
-    def _validate_labels_and_values_match(self, answer):
+    def _ensure_answer_labels_and_values_match(self, answer):
         errors = []
         if 'options' in answer:
             for options in answer["options"]:
                 if 'placeholders' not in options['label']:
                     if options['label'] != options['value']:
                         errors.append(
-                            (self._error_message(f'`Found a mismatching answer value and label {options["label"]} for {answer["id"]}`')))
+                            (self._error_message(f'`Found mismatching answer value(s) and label(s) for {answer["id"]}`')))
         return errors
 
 
