@@ -292,7 +292,6 @@ class Validator:  # pylint: disable=too-many-lines
                             (self._error_message(f'`Found mismatching answer value(s) and label(s) for {answer["id"]}`')))
         return errors
 
-
     def _ensure_relevant_variant_fields_are_consistent(self, block, variants):
         """ Ensure consistency between relevant fields in variants
 

@@ -660,13 +660,14 @@ def test_invalid_driving_question_multiple_driving_questions():
     check_validation_errors(filename, expected_error_messages)
 
 
-def test_invalid_driving_question_multiple_driving_questions():
+def test_invalid_mismatching_answer_label_and_value():
     filename = 'schemas/invalid/test_invalid_mismatching_answer_label_and_value.json'
     expected_error_messages = [
         'Schema Integrity Error. `Found mismatching answer value(s) and label(s) for conditional-routing-answer`',
     ]
 
     check_validation_errors(filename, expected_error_messages)
+
 
 def test_invalid_quotes_in_schema():
     filename = 'schemas/invalid/test_invalid_quotes_in_schema_text.json'
@@ -680,4 +681,3 @@ def test_invalid_quotes_in_schema():
     ]
 
     check_validation_errors(filename, expected_error_messages)
-
