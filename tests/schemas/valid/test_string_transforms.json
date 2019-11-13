@@ -470,7 +470,7 @@
               "value": "value"
             }, {
               "label": "Another value",
-              "value": "value2"
+              "value": "Another value"
             }]
           }]
         }
@@ -502,7 +502,7 @@
               "value": "value"
             }, {
               "label": "Another value",
-              "value": "value2"
+              "value": "Another value"
             }]
           }]
         }

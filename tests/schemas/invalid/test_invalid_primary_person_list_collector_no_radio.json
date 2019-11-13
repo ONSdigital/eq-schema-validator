@@ -27,7 +27,7 @@
         "for_list": "people",
         "add_or_edit_answer": {
           "id": "you-live-here",
-          "value": "Yes"
+          "value": "Do you?"
         },
         "question": {
           "id": "confirmation-question",
@@ -39,7 +39,7 @@
             "type": "Checkbox",
             "options": [{
               "label": "Do you?",
-              "value": "Yes"
+              "value": "Do you?"
             }]
           }]
         },

@@ -26,11 +26,11 @@
             "options": [{
               "description": "",
               "label": "Yes",
-              "value": "yes"
+              "value": "Yes"
             }, {
               "description": "",
               "label": "No, I prefer tea",
-              "value": "no"
+              "value": "No, I prefer tea"
             }],
             "q_code": "1",
             "type": "Radio"
@@ -46,7 +46,7 @@
             "when": [{
               "condition": "equals",
               "id": "conditional-routing-answer",
-              "value": "yes"
+              "value": "Yes"
             }]
           }
         }, {

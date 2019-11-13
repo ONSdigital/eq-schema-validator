@@ -377,7 +377,7 @@
                 "mandatory": false,
                 "options": [{
                     "label": "No, I’m answering for myself",
-                    "value": "No"
+                    "value": "No, I’m answering for myself"
                   },
                   {
                     "label": "Yes",
@@ -516,7 +516,7 @@
                       },
                       {
                         "label": "No, I need to change my date of birth",
-                        "value": "No"
+                        "value": "No, I need to change my date of birth"
                       }
                     ],
                     "type": "Radio"
@@ -593,7 +593,7 @@
                       },
                       {
                         "label": "No, I need to change their date of birth",
-                        "value": "No"
+                        "value": "No, I need to change their date of birth"
                       }
                     ],
                     "type": "Radio"

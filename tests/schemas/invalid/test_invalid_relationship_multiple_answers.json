@@ -238,7 +238,7 @@
                 },
                 "options": [{
                     "value": "Husband or Wife",
-                    "label": "husband or Wife",
+                    "label": "Husband or Wife",
                     "title": {
                       "text": "Thinking of {first_person_name}, {second_person_name} is their <em>husband or wife</em>",
                       "placeholders": [{
@@ -442,7 +442,7 @@
                 },
                 "options": [{
                     "value": "Husband or Wife",
-                    "label": "husband or Wife",
+                    "label": "Husband or Wife",
                     "title": {
                       "text": "Thinking of {first_person_name}, {second_person_name} is their <em>husband or wife</em>",
                       "placeholders": [{
