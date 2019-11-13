@@ -197,8 +197,7 @@
                   "type": "array",
                   "minItems": 1,
                   "items": {
-                    "oneOf": [
-                      {
+                    "oneOf": [{
                         "$ref": "blocks/answer_summary.json#/block"
                       },
                       {
