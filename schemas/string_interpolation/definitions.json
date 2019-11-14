@@ -1,12 +1,12 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema",
+  "$id": "https://eq.ons.gov.uk/string_interpolation/definitions.json",
+  "$schema": "http://json-schema.org/draft-06/schema",
   "string_with_placeholders": {
-    "oneOf": [
-      {
+    "oneOf": [{
         "description": "String with no placeholders.",
         "type": "string",
         "not": {
-          "pattern": "({[_a-zA-Z0-9]*})+"
+            "pattern": "({[_a-zA-Z0-9]*})+"
         }
       },
       {
@@ -21,7 +21,10 @@
           }
         },
         "additionalProperties": false,
-        "required": ["text", "placeholders"]
+        "required": [
+          "text",
+          "placeholders"
+        ]
       }
     ]
   },
@@ -51,8 +54,7 @@
         "type": "array",
         "items": {
           "type": "object",
-          "anyOf": [
-            {
+          "anyOf": [{
               "$ref": "transforms/format_number.json#/format_number"
             },
             {
@@ -87,9 +89,10 @@
       }
     },
     "additionalProperties": false,
-    "required": ["placeholder"],
-    "oneOf": [
-      {
+    "required": [
+      "placeholder"
+    ],
+    "oneOf": [{
         "required": ["value"]
       },
       {
@@ -98,8 +101,7 @@
     ]
   },
   "value_sources": {
-    "oneOf": [
-      {
+    "oneOf": [{
         "$ref": "#/chained_source"
       },
       {
@@ -113,11 +115,15 @@
     "properties": {
       "source": {
         "type": "string",
-        "enum": ["previous_transform"]
+        "enum": [
+          "previous_transform"
+        ]
       }
     },
     "additionalProperties": false,
-    "required": ["source"]
+    "required": [
+      "source"
+    ]
   },
   "lookup_source": {
     "description": "Look up the value from a data source.",
@@ -126,7 +132,11 @@
       "source": {
         "description": "The data source.",
         "type": "string",
-        "enum": ["answers", "metadata", "collection_metadata"]
+        "enum": [
+          "answers",
+          "metadata",
+          "collection_metadata"
+        ]
       },
       "identifier": {
         "description": "The identifier of the item in the data source. This would be an answer id for answers, and a metadata property name for metadata. The array option allows multiple values to be passed as a list to a transform.",
@@ -136,20 +146,26 @@
         "description": "The identifier and source of the list item.",
         "type": "object",
         "properties": {
-          "source": {
-            "description": "The source of the data.",
-            "type": "string",
-            "enum": ["location"]
-          },
-          "id": {
-            "description": "The unique id of the object.",
-            "type": "string",
-            "enum": ["list_item_id", "to_list_item_id"]
-          }
+            "source": {
+                "description": "The source of the data.",
+                "type": "string",
+                "enum": ["location"]
+            },
+            "id": {
+                "description": "The unique id of the object.",
+                "type": "string",
+                "enum": [
+                  "list_item_id",
+                  "to_list_item_id"
+                ]
+            }
         }
       }
     },
     "additionalProperties": false,
-    "required": ["source", "identifier"]
+    "required": [
+      "source",
+      "identifier"
+    ]
   }
 }

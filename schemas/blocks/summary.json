@@ -1,14 +1,18 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema",
+  "$id": "https://eq.ons.gov.uk/blocks/summary.json",
+  "$schema": "http://json-schema.org/draft-06/schema",
   "block": {
     "type": "object",
     "properties": {
       "id": {
-        "$ref": "../common_definitions.json#/id"
+        "$ref": "../common_definitions.json#/idx"
       },
       "type": {
         "type": "string",
-        "enum": ["Summary", "SectionSummary"]
+        "enum": [
+          "Summary",
+          "SectionSummary"
+        ]
       },
       "collapsible": {
         "description": "When True, the summary page will contain a list of collapsible section summaries",
@@ -16,6 +20,9 @@
       }
     },
     "additionalProperties": false,
-    "required": ["id", "type"]
+    "required": [
+      "id",
+      "type"
+    ]
   }
 }

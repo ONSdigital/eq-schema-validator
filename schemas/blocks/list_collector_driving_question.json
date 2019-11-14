@@ -1,10 +1,11 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema",
+  "$id": "https://eq.ons.gov.uk/blocks/list_collector_driving_question.json",
+  "$schema": "http://json-schema.org/draft-06/schema",
   "block": {
     "type": "object",
     "properties": {
       "id": {
-        "$ref": "../common_definitions.json#/id"
+        "$ref": "../common_definitions.json#/idx"
       },
       "number": {
         "type": "string"
@@ -17,7 +18,7 @@
         "enum": ["ListCollectorDrivingQuestion"]
       },
       "show_on_section_summary": {
-        "type": "boolean"
+          "type": "boolean"
       },
       "question": {
         "$ref": "../questions/definitions.json#/question"
@@ -33,13 +34,21 @@
       }
     },
     "additionalProperties": false,
-    "required": ["id", "for_list", "type"],
+    "required": [
+      "id",
+      "for_list",
+      "type"
+    ],
     "oneOf": [
       {
-        "required": ["question"]
+        "required": [
+          "question"
+        ]
       },
       {
-        "required": ["question_variants"]
+        "required": [
+          "question_variants"
+        ]
       }
     ]
   }

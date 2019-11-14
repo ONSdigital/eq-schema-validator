@@ -1,14 +1,17 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema",
+  "$id": "https://eq.ons.gov.uk/blocks/calculated_summary.json",
+  "$schema": "http://json-schema.org/draft-06/schema",
   "block": {
     "type": "object",
     "properties": {
       "id": {
-        "$ref": "../common_definitions.json#/id"
+        "$ref": "../common_definitions.json#/idx"
       },
       "type": {
         "type": "string",
-        "enum": ["CalculatedSummary"]
+        "enum": [
+          "CalculatedSummary"
+        ]
       },
       "title": {
         "$ref": "../string_interpolation/definitions.json#/string_with_placeholders"
@@ -24,13 +27,15 @@
         "properties": {
           "calculation_type": {
             "type": "string",
-            "enum": ["sum"]
+            "enum": [
+              "sum"
+            ]
           },
           "answers_to_calculate": {
             "type": "array",
             "minItems": 2,
             "items": {
-              "$ref": "../common_definitions.json#/id"
+              "$ref": "../common_definitions.json#/idx"
             },
             "description": "The id of the answers from which to do calculated_type to"
           },
@@ -39,10 +44,19 @@
           }
         },
         "additionalProperties": false,
-        "required": ["calculation_type", "answers_to_calculate", "title"]
+        "required": [
+          "calculation_type",
+          "answers_to_calculate",
+          "title"
+        ]
       }
     },
     "additionalProperties": false,
-    "required": ["id", "type", "title", "calculation"]
+    "required": [
+      "id",
+      "type",
+      "title",
+      "calculation"
+    ]
   }
 }

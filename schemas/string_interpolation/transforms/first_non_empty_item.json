@@ -1,5 +1,6 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema",
+  "$id": "https://eq.ons.gov.uk/string_interpolation/transforms/first_non_empty_item.json",
+  "$schema": "http://json-schema.org/draft-06/schema",
   "first_non_empty_item": {
     "description": "A transform for selecting the first non empty item",
     "type": "object",
@@ -13,14 +14,19 @@
         "properties": {
           "items": {
             "description": "This should be set to something that produces a list e.g. an answer that repeats, or provide multiple answer ids.",
-            "$ref": "../definitions.json#/value_sources"
+            "$ref": "../definitions.json#/value_sources" 
           }
         },
         "additionalProperties": false,
-        "required": ["items"]
+        "required": [
+          "items"
+        ]    
       }
     },
     "additionalProperties": false,
-    "required": ["transform", "arguments"]
+    "required": [
+      "transform",
+      "arguments"
+    ]
   }
 }

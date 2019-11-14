@@ -1,10 +1,11 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema",
+  "$id": "https://eq.ons.gov.uk/questions/types/mutually_exclusive.json",
+  "$schema": "http://json-schema.org/draft-06/schema",
   "question": {
     "type": "object",
     "properties": {
       "id": {
-        "$ref": "../../common_definitions.json#/id"
+        "$ref": "../../common_definitions.json#/idx"
       },
       "title": {
         "$ref": "../../string_interpolation/definitions.json#/string_with_placeholders"
@@ -15,11 +16,8 @@
       "description": {
         "$ref": "../../string_interpolation/definitions.json#/string_with_placeholders"
       },
-      "instruction": {
-        "$ref": "../../string_interpolation/definitions.json#/string_with_placeholders"
-      },
       "definitions": {
-        "$ref": "../../common_definitions.json#/definitions"
+        "$ref": "../../common_definitions.json#/question_definitions"
       },
       "guidance": {
         "$ref": "../definitions.json#/question_guidance"
@@ -35,7 +33,7 @@
         "type": "boolean"
       },
       "show_on_section_summary": {
-        "type": "boolean"
+          "type": "boolean"
       },
       "answers": {
         "type": "array",
@@ -84,6 +82,12 @@
       }
     },
     "additionalProperties": false,
-    "required": ["id", "type", "mandatory", "answers", "title"]
+    "required": [
+      "id",
+      "type",
+      "mandatory",
+      "answers",
+      "title"
+    ]
   }
 }

@@ -1,5 +1,6 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema",
+  "$id": "https://eq.ons.gov.uk/when_rule/compare_to_answer_store.json",
+  "$schema": "http://json-schema.org/draft-06/schema",
   "type": "object",
   "description": "Comparison against an answer",
   "properties": {
@@ -7,9 +8,15 @@
       "$ref": "definitions.json#/answer_identifier"
     },
     "condition": {
-      "enum": ["set", "not set"]
+      "enum": [
+        "set",
+        "not set"
+      ]
     }
   },
-  "required": ["id", "condition"],
+  "required": [
+    "id",
+    "condition"
+  ],
   "additionalProperties": false
 }

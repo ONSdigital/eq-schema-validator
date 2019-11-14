@@ -1,26 +1,33 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema",
-  "type": "object",
-  "description": "Overrides default behaviour and redirect to the list add question block",
-  "properties": {
-    "type": {
-      "type": "string",
-      "enum": ["RedirectToListAddQuestion"]
-    },
-    "params": {
-      "type": "object",
-      "properties": {
-        "block_id": {
-          "type": "string"
+    "$id": "https://eq.ons.gov.uk/answer_actions/redirect_to_list_add_question.json",
+    "$schema": "http://json-schema.org/draft-06/schema",
+    "type": "object",
+    "description": "Overrides default behaviour and redirect to the list add question block",
+    "properties": {
+        "type": {
+            "type": "string",
+            "const": "RedirectToListAddQuestion"
         },
-        "list_name": {
-          "type": "string"
+        "params": {
+            "type": "object",
+            "properties": {
+                "block_id": {
+                    "type": "string"
+                },
+                "list_name": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "block_id",
+                "list_name"
+            ]
         }
-      },
-      "additionalProperties": false,
-      "required": ["block_id", "list_name"]
-    }
-  },
-  "additionalProperties": false,
-  "required": ["type", "params"]
+    },
+    "additionalProperties": false,
+    "required": [
+        "type",
+        "params"
+    ]
 }

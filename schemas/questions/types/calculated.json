@@ -1,10 +1,11 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema",
+  "$id": "https://eq.ons.gov.uk/questions/types/calculated.json",
+  "$schema": "http://json-schema.org/draft-06/schema",
   "question": {
     "type": "object",
     "properties": {
       "id": {
-        "$ref": "../../common_definitions.json#/id"
+        "$ref": "../../common_definitions.json#/idx"
       },
       "title": {
         "$ref": "../../string_interpolation/definitions.json#/string_with_placeholders"
@@ -16,7 +17,7 @@
         "$ref": "../../string_interpolation/definitions.json#/string_with_placeholders"
       },
       "definitions": {
-        "$ref": "../../common_definitions.json#/definitions"
+        "$ref": "../../common_definitions.json#/question_definitions"
       },
       "guidance": {
         "$ref": "../definitions.json#/question_guidance"
@@ -26,10 +27,12 @@
       },
       "type": {
         "type": "string",
-        "enum": ["Calculated"]
+        "enum": [
+          "Calculated"
+        ]
       },
       "show_on_section_summary": {
-        "type": "boolean"
+          "type": "boolean"
       },
       "calculations": {
         "type": "array",
@@ -38,7 +41,9 @@
           "properties": {
             "calculation_type": {
               "type": "string",
-              "enum": ["sum"]
+              "enum": [
+                "sum"
+              ]
             },
             "answer_id": {
               "type": "string",
@@ -52,7 +57,7 @@
               "type": "array",
               "minItems": 2,
               "items": {
-                "$ref": "../../common_definitions.json#/id"
+                "$ref": "../../common_definitions.json#/idx"
               },
               "description": "The id of the answers from which to do calculated_type to"
             },
@@ -79,13 +84,21 @@
           },
           "oneOf": [
             {
-              "required": ["answer_id"]
+              "required": [
+                "answer_id"
+              ]
             },
             {
-              "required": ["value"]
+              "required": [
+                "value"
+              ]
             }
           ],
-          "required": ["calculation_type", "answers_to_calculate", "conditions"]
+          "required": [
+            "calculation_type",
+            "answers_to_calculate",
+            "conditions"
+          ]
         }
       },
       "answers": {
@@ -109,7 +122,13 @@
         }
       },
       "additionalProperties": false,
-      "required": ["id", "type", "calculations", "answers", "title"]
+      "required": [
+        "id",
+        "type",
+        "calculations",
+        "answers",
+        "title"
+      ]
     }
   }
 }

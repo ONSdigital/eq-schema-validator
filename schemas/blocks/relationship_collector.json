@@ -1,10 +1,11 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema",
+  "$id": "https://eq.ons.gov.uk/blocks/relationship_collector.json",
+  "$schema": "http://json-schema.org/draft-06/schema",
   "block": {
     "type": "object",
     "properties": {
       "id": {
-        "$ref": "../common_definitions.json#/id"
+        "$ref": "../common_definitions.json#/idx"
       },
       "type": {
         "type": "string",
@@ -23,20 +24,28 @@
         "$ref": "definitions.json#/question_variants"
       },
       "routing_rules": {
-        "$ref": "../common_definitions.json#/routing_rules"
+          "$ref": "../common_definitions.json#/routing_rules"
       },
       "skip_conditions": {
-        "$ref": "../common_definitions.json#/skip_conditions"
+          "$ref": "../common_definitions.json#/skip_conditions"
       }
     },
     "additionalProperties": false,
-    "required": ["id", "type", "for_list"],
+    "required": [
+      "id",
+      "type",
+      "for_list"
+    ],
     "oneOf": [
       {
-        "required": ["question"]
+        "required": [
+          "question"
+        ]
       },
       {
-        "required": ["question_variants"]
+        "required": [
+          "question_variants"
+        ]
       }
     ]
   }

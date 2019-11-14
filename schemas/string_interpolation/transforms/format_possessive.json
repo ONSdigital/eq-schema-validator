@@ -1,5 +1,6 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema",
+  "$id": "https://eq.ons.gov.uk/string_interpolation/transforms/format_possessive.json",
+  "$schema": "http://json-schema.org/draft-06/schema",
   "format_possessive": {
     "type": "object",
     "properties": {
@@ -11,14 +12,19 @@
         "type": "object",
         "properties": {
           "string_to_format": {
-            "$ref": "../definitions.json#/value_sources"
+            "$ref": "../definitions.json#/value_sources" 
           }
         },
         "additionalProperties": false,
-        "required": ["string_to_format"]
+        "required": [
+          "string_to_format"
+        ]    
       }
     },
     "additionalProperties": false,
-    "required": ["transform", "arguments"]
+    "required": [
+      "transform",
+      "arguments"
+    ]
   }
 }

@@ -1,10 +1,11 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema",
+  "$id": "https://eq.ons.gov.uk/blocks/introduction.json",
+  "$schema": "http://json-schema.org/draft-06/schema",
   "block": {
     "type": "object",
     "properties": {
       "id": {
-        "$ref": "../common_definitions.json#/id"
+        "$ref": "../common_definitions.json#/idx"
       },
       "title": {
         "$ref": "../string_interpolation/definitions.json#/string_with_placeholders"
@@ -19,7 +20,7 @@
           "type": "object",
           "properties": {
             "id": {
-              "$ref": "../common_definitions.json#/id"
+              "$ref": "../common_definitions.json#/idx"
             },
             "title": {
               "$ref": "../string_interpolation/definitions.json#/string_with_placeholders"
@@ -35,7 +36,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "$ref": "../common_definitions.json#/id"
+            "$ref": "../common_definitions.json#/idx"
           },
           "title": {
             "$ref": "../string_interpolation/definitions.json#/string_with_placeholders"
@@ -46,7 +47,7 @@
               "type": "object",
               "properties": {
                 "id": {
-                  "$ref": "../common_definitions.json#/id"
+                  "$ref": "../common_definitions.json#/idx"
                 },
                 "question": {
                   "$ref": "../string_interpolation/definitions.json#/string_with_placeholders"
@@ -69,7 +70,7 @@
           "type": "object",
           "properties": {
             "id": {
-              "$ref": "../common_definitions.json#/id"
+              "$ref": "../common_definitions.json#/idx"
             },
             "contents": {
               "$ref": "../common_definitions.json#/contents"
@@ -80,6 +81,9 @@
       }
     },
     "additionalProperties": false,
-    "required": ["id", "type"]
+    "required": [
+      "id",
+      "type"
+    ]
   }
 }

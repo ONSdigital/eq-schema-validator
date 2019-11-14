@@ -1,10 +1,11 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema",
+  "$id": "https://eq.ons.gov.uk/questions/types/date_range.json",
+  "$schema": "http://json-schema.org/draft-06/schema",
   "question": {
     "type": "object",
     "properties": {
       "id": {
-        "$ref": "../../common_definitions.json#/id"
+        "$ref": "../../common_definitions.json#/idx"
       },
       "title": {
         "$ref": "../../string_interpolation/definitions.json#/string_with_placeholders"
@@ -29,7 +30,7 @@
         "enum": ["DateRange"]
       },
       "show_on_section_summary": {
-        "type": "boolean"
+          "type": "boolean"
       },
       "period_limits": {
         "type": "object",
@@ -52,13 +53,13 @@
             "additionalProperties": false,
             "anyOf": [
               {
-                "required": ["days"]
+                "required": [ "days" ]
               },
               {
-                "required": ["months"]
+                "required": [ "months" ]
               },
               {
-                "required": ["years"]
+                "required": [ "years" ]
               }
             ]
           },
@@ -79,26 +80,26 @@
             "additionalProperties": false,
             "anyOf": [
               {
-                "required": ["days"]
+                "required": [ "days" ]
               },
               {
-                "required": ["months"]
+                "required": [ "months" ]
               },
               {
-                "required": ["years"]
+                "required": [ "years" ]
               }
             ]
           }
         },
         "additionalProperties": false,
-        "anyOf": [
-          {
-            "required": ["minimum"]
-          },
-          {
-            "required": ["maximum"]
-          }
-        ]
+          "anyOf": [
+            {
+              "required": [ "minimum" ]
+            },
+            {
+              "required": [ "maximum" ]
+            }
+          ]
       },
       "answers": {
         "type": "array",
@@ -120,6 +121,11 @@
       }
     },
     "additionalProperties": false,
-    "required": ["id", "type", "answers", "title"]
+    "required": [
+      "id",
+      "type",
+      "answers",
+      "title"
+    ]
   }
 }

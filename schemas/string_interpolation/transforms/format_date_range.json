@@ -1,5 +1,6 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema",
+  "$id": "https://eq.ons.gov.uk/string_interpolation/transforms/format_date_range.json",
+  "$schema": "http://json-schema.org/draft-06/schema",
   "format_date_range": {
     "type": "object",
     "properties": {
@@ -18,10 +19,15 @@
           }
         },
         "additionalProperties": false,
-        "required": ["start_date"]
+        "required": [
+          "start_date"
+        ]    
       }
     },
     "additionalProperties": false,
-    "required": ["transform", "arguments"]
+    "required": [
+      "transform",
+      "arguments"
+    ]
   }
 }

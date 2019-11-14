@@ -1,14 +1,18 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema",
+  "$id": "https://eq.ons.gov.uk/blocks/primary_person_list_collector.json",
+  "$schema": "http://json-schema.org/draft-06/schema",
   "answer_reference": {
     "type": "object",
     "properties": {
       "id": {
-        "$ref": "../common_definitions.json#/id",
+        "$ref": "../common_definitions.json#/idx",
         "description": "The id of an answer to reference"
       },
       "value": {
-        "type": ["string", "integer"],
+        "type": [
+          "string",
+          "integer"
+        ],
         "description": "The value of the answer which should be matched"
       }
     },
@@ -19,7 +23,7 @@
     "type": "object",
     "properties": {
       "id": {
-        "$ref": "../common_definitions.json#/id"
+        "$ref": "../common_definitions.json#/idx"
       },
       "type": {
         "type": "string",
@@ -54,10 +58,14 @@
     ],
     "oneOf": [
       {
-        "required": ["question"]
+        "required": [
+          "question"
+        ]
       },
       {
-        "required": ["question_variants"]
+        "required": [
+          "question_variants"
+        ]
       }
     ]
   }

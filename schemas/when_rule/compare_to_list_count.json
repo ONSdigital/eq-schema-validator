@@ -1,5 +1,6 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema",
+  "$id": "https://eq.ons.gov.uk/when_rule/compare_to_list_count.json",
+  "$schema": "http://json-schema.org/draft-06/schema",
   "type": "object",
   "description": "Comparison against a list count",
   "properties": {
@@ -21,6 +22,10 @@
       "description": "The value to compare against"
     }
   },
-  "required": ["list", "condition", "value"],
+  "required": [
+    "list",
+    "condition",
+    "value"
+  ],
   "additionalProperties": false
 }

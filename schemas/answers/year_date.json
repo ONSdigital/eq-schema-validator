@@ -1,10 +1,11 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema",
+  "$id": "https://eq.ons.gov.uk/answers/year_date.json",
+  "$schema": "http://json-schema.org/draft-06/schema",
   "answer": {
     "type": "object",
     "properties": {
       "id": {
-        "$ref": "../common_definitions.json#/id"
+        "$ref": "../common_definitions.json#/idx"
       },
       "q_code": {
         "$ref": "../common_definitions.json#/q_code"
@@ -13,7 +14,7 @@
         "type": "string"
       },
       "guidance": {
-        "$ref": "definitions.json#/answer_guidance"
+        "$ref": "https://eq.ons.gov.uk/answers/definitions.json#/answer_guidance"
       },
       "description": {
         "$ref": "../string_interpolation/definitions.json#/string_with_placeholders"
@@ -62,15 +63,20 @@
           }
         },
         "additionalProperties": false,
-        "oneOf": [
-          {
-            "required": ["value"]
+        "oneOf": [{
+            "required": [
+              "value"
+            ]
           },
           {
-            "required": ["answer_id"]
+            "required": [
+              "answer_id"
+            ]
           },
           {
-            "required": ["meta"]
+            "required": [
+              "meta"
+            ]
           }
         ]
       },
@@ -95,20 +101,29 @@
           }
         },
         "additionalProperties": false,
-        "oneOf": [
-          {
-            "required": ["value"]
+        "oneOf": [{
+            "required": [
+              "value"
+            ]
           },
           {
-            "required": ["answer_id"]
+            "required": [
+              "answer_id"
+            ]
           },
           {
-            "required": ["meta"]
+            "required": [
+              "meta"
+            ]
           }
         ]
       }
     },
     "additionalProperties": false,
-    "required": ["id", "type", "mandatory"]
+    "required": [
+      "id",
+      "type",
+      "mandatory"
+    ]
   }
 }

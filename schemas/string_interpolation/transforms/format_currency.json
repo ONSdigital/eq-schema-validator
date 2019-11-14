@@ -1,5 +1,6 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema",
+  "$id": "https://eq.ons.gov.uk/string_interpolation/transforms/format_currency.json",
+  "$schema": "http://json-schema.org/draft-06/schema",
   "format_currency": {
     "type": "object",
     "properties": {
@@ -15,10 +16,15 @@
           }
         },
         "additionalProperties": false,
-        "required": ["number"]
+        "required": [
+          "number"
+        ]
       }
     },
     "additionalProperties": false,
-    "required": ["transform", "arguments"]
+    "required": [
+      "transform",
+      "arguments"
+    ]
   }
 }

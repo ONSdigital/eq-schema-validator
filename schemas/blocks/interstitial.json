@@ -1,10 +1,11 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema",
+  "$id": "https://eq.ons.gov.uk/blocks/interstitial.json",
+  "$schema": "http://json-schema.org/draft-06/schema",
   "block": {
     "type": "object",
     "properties": {
       "id": {
-        "$ref": "../common_definitions.json#/id"
+        "$ref": "../common_definitions.json#/idx"
       },
       "number": {
         "type": "string"
@@ -27,13 +28,20 @@
       }
     },
     "additionalProperties": false,
-    "required": ["id", "type"],
+    "required": [
+      "id",
+      "type"
+    ],
     "oneOf": [
       {
-        "required": ["content"]
+        "required": [
+          "content"
+        ]
       },
       {
-        "required": ["content_variants"]
+        "required": [
+          "content_variants"
+        ]
       }
     ]
   }

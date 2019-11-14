@@ -1,10 +1,11 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema",
+  "$id": "https://eq.ons.gov.uk/blocks/confirmation_question.json",
+  "$schema": "http://json-schema.org/draft-06/schema",
   "block": {
     "type": "object",
     "properties": {
       "id": {
-        "$ref": "../common_definitions.json#/id"
+        "$ref": "../common_definitions.json#/idx"
       },
       "number": {
         "type": "string"
@@ -27,13 +28,21 @@
       }
     },
     "additionalProperties": false,
-    "required": ["id", "type", "routing_rules"],
+    "required": [
+      "id",
+      "type",
+      "routing_rules"
+    ],
     "oneOf": [
       {
-        "required": ["question"]
+        "required": [
+          "question"
+        ]
       },
       {
-        "required": ["question_variants"]
+        "required": [
+          "question_variants"
+        ]
       }
     ]
   }
