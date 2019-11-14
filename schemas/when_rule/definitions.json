@@ -36,11 +36,7 @@
     "description": "The id of a metadata provided by the calling service from which to obtain the value"
   },
   "comparison_value": {
-    "type": [
-      "string",
-      "boolean",
-      "integer"
-    ],
+    "type": ["string", "boolean", "integer"],
     "description": "The value to compare against"
   },
   "comparison_values": {
@@ -98,19 +94,13 @@
     "additionalProperties": false,
     "oneOf": [
       {
-        "required": [
-          "id"
-        ]
+        "required": ["id"]
       },
       {
-        "required": [
-          "meta"
-        ]
+        "required": ["meta"]
       },
       {
-        "required": [
-          "value"
-        ]
+        "required": ["value"]
       }
     ]
   },
