@@ -153,39 +153,45 @@
     {
       "id": "accommodation-section",
       "title": "accommodation",
-      "groups": [{
-        "blocks": [{
-            "id": "proxy",
-            "question": {
-              "answers": [{
-                "default": "Yes",
-                "id": "proxy-answer",
-                "mandatory": false,
-                "options": [{
-                    "label": "No, I’m answering for myself",
-                    "value": "No, I’m answering for myself"
-                  },
+      "groups": [
+        {
+          "blocks": [
+            {
+              "id": "proxy",
+              "question": {
+                "answers": [
                   {
-                    "label": "Yes",
-                    "value": "Yes"
+                    "default": "Yes",
+                    "id": "proxy-answer",
+                    "mandatory": false,
+                    "options": [
+                      {
+                        "label": "No, I’m answering for myself",
+                        "value": "No, I’m answering for myself"
+                      },
+                      {
+                        "label": "Yes",
+                        "value": "Yes"
+                      }
+                    ],
+                    "type": "Radio"
                   }
                 ],
-                "type": "Radio"
-              }],
-              "id": "proxy-question",
-              "title": "Are you answering the questions on behalf of someone else?",
-              "type": "General"
+                "id": "proxy-question",
+                "title": "Are you answering the questions on behalf of someone else?",
+                "type": "General"
+              },
+              "type": "Question"
             },
-            "type": "Question"
-          },
-          {
-            "id": "accommodation-details-summary",
-            "type": "SectionSummary"
-          }
-        ],
-        "id": "checkboxes",
-        "title": ""
-      }]
+            {
+              "id": "accommodation-details-summary",
+              "type": "SectionSummary"
+            }
+          ],
+          "id": "checkboxes",
+          "title": ""
+        }
+      ]
     }
   ]
 }
