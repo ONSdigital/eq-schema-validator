@@ -7,7 +7,8 @@
   "theme": "default",
   "description": "A questionnaire to test capturing of relationships.",
   "messages": {},
-  "metadata": [{
+  "metadata": [
+    {
       "name": "user_id",
       "type": "string"
     },
