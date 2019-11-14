@@ -284,12 +284,11 @@ class Validator:  # pylint: disable=too-many-lines
 
     def _ensure_answer_labels_and_values_match(self, answer):
         errors = []
-        if 'options' in answer:
-            for options in answer['options']:
-                if 'placeholders' not in options['label']:
-                    if options['label'] != options['value']:
-                        errors.append(
-                            (self._error_message(f'`Found mismatching answer value(s) and label(s) for {answer["id"]}`')))
+        for option in answer.get('options', []):
+            if isinstance(option['label'], str) and option['label'] != option['value']:
+                errors.append(
+                    (self._error_message(f'`Found mismatching answer value(s) and label(s) for {answer["id"]}`')))
+
         return errors
 
     def _ensure_relevant_variant_fields_are_consistent(self, block, variants):
