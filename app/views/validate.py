@@ -45,7 +45,7 @@ def validate_schema(data):
     schema_errors = validator.validate_json_schema(json_to_validate),
     validation_errors = validator.validate_schema(json_to_validate)
 
-    if schema_errors or validation_errors:
+    if len(schema_errors) > 1 or validation_errors:
         response['errors'] = {
             'schema_errors': schema_errors,
             'validation_errors': validation_errors

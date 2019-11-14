@@ -1,6 +1,6 @@
-import os
-import pathlib
 import re
+import glob
+import json
 from collections import defaultdict
 from datetime import datetime
 from json import load
@@ -26,10 +26,20 @@ class Validator:  # pylint: disable=too-many-lines
         self._list_names = []
         self._block_ids = []
 
+    @staticmethod
+    def lookup_ref_store():
+        store = {}
+        for glob_path in ['schemas/**/**/*.json', 'schemas/**/*.json', 'schemas/*.json']:
+            for filename in glob.glob(glob_path):
+                with open(filename) as schema_file:
+                    json_data = json.load(schema_file)
+                    store[json_data['$id']] = json_data
+        return store
+
     def validate_json_schema(self, json_to_validate):
         try:
-            base_uri = pathlib.Path(os.path.abspath('schemas/questionnaire_v1.json')).as_uri()
-            resolver = RefResolver(base_uri=base_uri, referrer=self.schema)
+            resolver = RefResolver(base_uri='https://eq.ons.gov.uk/', referrer=self.schema,
+                                   store=self.lookup_ref_store())
             validate(json_to_validate, self.schema, resolver=resolver)
             return {}
         except ValidationError as e:
