@@ -1,207 +1,131 @@
 {
-  "mime_type": "application/json/ons/eq",
-  "schema_version": "0.0.2",
-  "data_version": "0.0.3",
-  "survey_id": "0",
-  "title": "Other input fields",
-  "theme": "default",
-  "description": "A questionnaire to check mismatching answer values and lables",
-  "metadata": [
-    {
-      "name": "user_id",
-      "type": "string"
-    },
-    {
-      "name": "period_id",
-      "type": "string"
-    },
-    {
-      "name": "ru_name",
-      "type": "string"
-    }
-  ],
-  "sections": [
-    {
-      "id": "default-section",
-      "groups": [
+    "mime_type": "application/json/ons/eq",
+    "schema_version": "0.0.1",
+    "data_version": "0.0.3",
+    "survey_id": "023",
+    "title": "Multiple answers per question",
+    "description": "Check for mismatching answer labels and values",
+    "theme": "default",
+    "legal_basis": "Notice is given under section 1 of the Statistics of Trade Act 1947.",
+    "metadata": [
         {
-          "blocks": [
-            {
-              "type": "Question",
-              "id": "country-checkbox",
-              "question": {
-                "id": "country-checkbox-question",
-                "title": "Have you visited any of the following countries?",
-                "type": "General",
-                "answers": [
-                  {
-                    "id": "country-checkbox-answer",
-                    "label": "",
-                    "mandatory": false,
-                    "type": "Checkbox",
-                    "options": [
-                      {
-                        "label": "India",
-                        "value": "India"
-                      },
-                      {
-                        "label": "Azerbaijan",
-                        "value": "Azerbaijan"
-                      },
-                      {
-                        "label": "Liechtenstein",
-                        "value": "Liechtenstein"
-                      },
-                      {
-                        "label": "Malta",
-                        "value": "Malta"
-                      }
-                    ]
-                  }
-                ]
-              },
-              "routing_rules": [
-                {
-                  "goto": {
-                    "block": "country-interstitial-all",
-                    "when": [
-                      {
-                        "id": "country-checkbox-answer",
-                        "condition": "contains all",
-                        "values": ["India", "Azerbaijan", "Liechtenstein"]
-                      }
-                    ]
-                  }
-                },
-                {
-                  "goto": {
-                    "block": "country-interstitial-any",
-                    "when": [
-                      {
-                        "id": "country-checkbox-answer",
-                        "condition": "contains any",
-                        "values": ["India", "Azerbaijan"]
-                      }
-                    ]
-                  }
-                },
-                {
-                  "goto": {
-                    "block": "summary"
-                  }
-                }
-              ]
-            },
-            {
-              "type": "Question",
-              "id": "conditional-routing-block",
-              "question": {
-                "id": "conditional-routing-question",
-                "title": "Do you drink coffee?",
-                "description": "",
-                "type": "General",
-                "answers": [
-                  {
-                    "options": [
-                      {
-                        "label": "Yes",
-                        "value": "Yes"
-                      },
-                      {
-                        "label": "Sometimes",
-                        "value": "sometimes"
-                      },
-                      {
-                        "label": "No, I prefer tea",
-                        "value": "No, I prefer tea"
-                      },
-                      {
-                        "label": "I don’t like coffee",
-                        "value": "I don’t like coffee"
-                      },
-                      {
-                        "label": "No, I don’t drink any hot drinks",
-                        "value": "No, I don’t drink any hot drinks"
-                      }
-                    ],
-                    "q_code": "1",
-                    "id": "conditional-routing-answer",
-                    "label": "Which conditional question should we jump to?",
-                    "mandatory": true,
-                    "type": "Radio"
-                  }
-                ]
-              },
-              "routing_rules": [
-                {
-                  "goto": {
-                    "block": "country-interstitial-all",
-                    "when": [
-                      {
-                        "id": "conditional-routing-answer",
-                        "condition": "equals any",
-                        "values": ["yes", "sometimes"]
-                      }
-                    ]
-                  }
-                },
-                {
-                  "goto": {
-                    "block": "country-interstitial-any",
-                    "when": [
-                      {
-                        "id": "conditional-routing-answer",
-                        "condition": "not equals any",
-                        "values": [
-                          "Yes",
-                          "sometimes",
-                          "I don’t like coffee",
-                          "No, I don’t drink any hot drinks"
-                        ]
-                      }
-                    ]
-                  }
-                },
-                {
-                  "goto": {
-                    "block": "summary"
-                  }
-                }
-              ]
-            },
-            {
-              "id": "country-interstitial-any",
-              "type": "Interstitial",
-              "content": {
-                "title": "Any",
-                "contents": [
-                  {
-                    "description": "You chose India or Azerbaijan."
-                  }
-                ]
-              }
-            },
-            {
-              "id": "country-interstitial-all",
-              "type": "Interstitial",
-              "content": {
-                "title": "All",
-                "contents": [
-                  {
-                    "description": "You chose India, Azerbaijan and Liechtenstein."
-                  }
-                ]
-              }
-            },
-            {
-              "type": "Summary",
-              "id": "summary"
-            }
-          ],
-          "id": "checkboxes",
-          "title": ""
+            "name": "user_id",
+            "type": "string"
+        },
+        {
+            "name": "period_id",
+            "type": "string"
+        },
+        {
+            "name": "ru_name",
+            "type": "string"
         }
-      ]
-    }
-  ]
+    ],
+    "sections": [
+        {
+            "id": "default-section",
+            "groups": [
+                {
+                    "blocks": [
+                        {
+                            "type": "Question",
+                            "id": "personal-details-block",
+                            "question": {
+                                "answers": [
+                                    {
+                                        "id": "first-name-answer",
+                                        "label": "What is your first name",
+                                        "mandatory": false,
+                                        "q_code": "1",
+                                        "type": "TextField"
+                                    },
+                                    {
+                                        "id": "surname-answer",
+                                        "label": "What is your surname",
+                                        "mandatory": false,
+                                        "q_code": "2",
+                                        "type": "TextField"
+                                    }
+                                ],
+                                "description": "",
+                                "id": "personal-details-question",
+                                "title": "Tell me about yourself",
+                                "type": "General"
+                            }
+                        },
+                        {
+                            "type": "Question",
+                            "id": "correct",
+                            "question": {
+                                "type": "General",
+                                "id": "correct-question",
+                                "title": "Did you enter your name correctly?",
+                                "answers": [
+                                    {
+                                        "type": "Radio",
+                                        "id": "correct-answer",
+                                        "mandatory": false,
+                                        "options": [
+                                            {
+                                                "label": {
+                                                    "text": "Yes it is {name}",
+                                                    "placeholders": [
+                                                    {
+                                                      "placeholder": "name",
+                                                       "value": {
+                                                         "source": "answers",
+                                                         "identifier": "first-name-answer"
+                                                        }
+                                                    }
+                                                  ]
+                                                },
+                                                "value": "Yes"
+                                            },
+                                            {
+                                                "label": "No",
+                                                "value": "No"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "Question",
+                            "id": "tea-or-coffee",
+                            "question": {
+                                "type": "General",
+                                "id": "tea-or-coffee-question",
+                                "title": "What is you favourite breakfast beverage?",
+                                "answers": [
+                                    {
+                                        "type": "Radio",
+                                        "id": "tea-or-coffee-answer",
+                                        "mandatory": false,
+                                        "options": [
+                                            {
+                                                "label": "Coffee",
+                                                "value": "Coffee"
+                                            },
+                                            {
+                                                "label": "Tea",
+                                                "value": "T"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "Summary",
+                            "id": "summary"
+                        }
+                    ],
+                    "id": "multiple-questions-group",
+                    "title": ""
+                }
+            ]
+        }
+    ]
 }
+
