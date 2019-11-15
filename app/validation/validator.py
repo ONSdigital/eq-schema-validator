@@ -9,7 +9,7 @@ from json import load
 from dateutil.relativedelta import relativedelta
 from eq_translations.survey_schema import SurveySchema
 from jsonpointer import resolve_pointer
-from jsonschema import SchemaError, RefResolver, validate, ValidationError
+from jsonschema import SchemaError, RefResolver, ValidationError, Draft6Validator
 from jsonschema.exceptions import best_match
 
 MAX_NUMBER = 9999999999
@@ -25,6 +25,9 @@ class Validator:  # pylint: disable=too-many-lines
         self._list_collector_answer_ids = {}
         self._list_names = []
         self._block_ids = []
+        resolver = RefResolver(base_uri='https://eq.ons.gov.uk/', referrer=self.schema,
+                               store=self.lookup_ref_store())
+        self.schema_validator = Draft6Validator(self.schema, resolver=resolver)
 
     @staticmethod
     def lookup_ref_store():
@@ -38,9 +41,7 @@ class Validator:  # pylint: disable=too-many-lines
 
     def validate_json_schema(self, json_to_validate):
         try:
-            resolver = RefResolver(base_uri='https://eq.ons.gov.uk/', referrer=self.schema,
-                                   store=self.lookup_ref_store())
-            validate(json_to_validate, self.schema, resolver=resolver)
+            self.schema_validator.validate(json_to_validate)
             return {}
         except ValidationError as e:
             return {
@@ -51,7 +52,7 @@ class Validator:  # pylint: disable=too-many-lines
         except SchemaError as e:
             return '{}'.format(e)
 
-    def validate_schema(self, json_to_validate):
+    def validate_questionnaire(self, json_to_validate):
         """
         Validates the json schema provided is correct
         :param json_to_validate: json schema to be validated
@@ -158,6 +159,7 @@ class Validator:  # pylint: disable=too-many-lines
         errors = []
 
         errors.extend(self._validate_routing_rules_default(group.get('routing_rules', []), group))
+
         for rule in group.get('routing_rules', []):
             errors.extend(self._validate_schema_routing_rule_routes_to_valid_target(group['blocks'], 'block', rule))
             errors.extend(self._validate_schema_routing_rule_routes_to_valid_target(all_groups, 'group', rule))
@@ -187,7 +189,6 @@ class Validator:  # pylint: disable=too-many-lines
             for rule in block.get('routing_rules', []):
                 errors.extend(self._validate_schema_routing_rule_routes_to_valid_target(group['blocks'], 'block', rule))
                 errors.extend(self._validate_schema_routing_rule_routes_to_valid_target(all_groups, 'group', rule))
-
                 errors.extend(self._validate_routing_rule(rule, answers_with_parent_ids, block))
 
             for skip_condition in block.get('skip_conditions', []):
