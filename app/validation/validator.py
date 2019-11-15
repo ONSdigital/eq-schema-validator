@@ -1515,11 +1515,19 @@ class Validator:  # pylint: disable=too-many-lines
         answers = {}
         for question, context in self._get_questions_with_context(json_to_validate):
             for answer in question.get('answers', []):
-                answers[answer['id']] = {
-                    'answer': answer,
-                    **context
-                }
+
+                if not answer['id'] in answers:
+                    answers[answer['id']] = {
+                        'answer': answer,
+                        **context
+                    }
+
                 for option in answer.get('options', []):
+                    answer_options = answers[answer['id']]['answer']['options']
+
+                    if answer_options and option['value'] not in [option['value'] for option in answer_options]:
+                        answer_options.append(option)
+
                     detail_answer = option.get('detail_answer')
                     if detail_answer:
                         answers[detail_answer['id']] = {
