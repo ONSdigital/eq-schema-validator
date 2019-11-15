@@ -16,6 +16,7 @@ pytest = "*"
 "flake8" = "*"
 pylint = "*"
 pylint-quotes = "*"
+jsonschema = "*"
 
 [requires]
 python_version = "3.7"
