@@ -510,55 +510,31 @@ class Validator:  # pylint: disable=too-many-lines
         when_rule = rule.get('goto').get('when')
         if when_rule:
             for when_dict in when_rule:
+                amount_matched = 0
                 if when_dict.get('value'):
-                    rule_value = when_dict.get('value')
-                    if rule_value and isinstance(rule_value, int) is not True:
-                        amount_blocks = 0
-                        amount_matched = 0
+                    if isinstance(when_dict.get('value'), int) is not True:
                         for block in answer_ids_with_parent_id:
-                            if isinstance(answer_ids_with_parent_id[block], dict):
-                                if 'answer' in answer_ids_with_parent_id[block]:
-                                    answer = answer_ids_with_parent_id[block]['answer']
-                                    if 'options' in answer:
-                                        answer_options = answer.get('options')
-                                        for answer_block in answer_options:
-                                            amount_blocks += 1
-                                            option_value = answer_block.get('value')
-                                            if rule_value == option_value:
-                                                amount_matched += 1
-                        if (amount_blocks >= amount_matched) and (amount_matched > 0):
-                            return errors
-                        elif amount_matched == 0:
+                            if 'options' in answer_ids_with_parent_id[block]['answer']:
+                                for answer_block in answer_ids_with_parent_id[block]['answer'].get('options'):
+                                    if when_dict.get('value') == answer_block.get('value'):
+                                        amount_matched += 1
+                        if amount_matched == 0:
                             errors.append(Validator._error_message(
-                                f'Answer option and routing rule values mismatch, missing answer value: {rule_value}'))
-                    return errors
+                                f'Answer option and routing rule values mismatch, missing answer value: '
+                                '{rule_value}'.format(rule_value=when_dict.get('value'))))
 
                 elif when_dict.get('values'):
-                    rule_values = when_dict.get('values')
-                    if rule_values:
-                        for rule_value in rule_values:
-                            if isinstance(rule_value, int) is not True:
-                                amount_blocks = 0
-                                amount_matched = 0
-                                for block in answer_ids_with_parent_id:
-                                    if isinstance(answer_ids_with_parent_id[block], dict):
-                                        if 'answer' in answer_ids_with_parent_id[block]:
-                                            answer = answer_ids_with_parent_id[block]['answer']
-                                            if 'options' in answer:
-                                                answer_options = answer.get('options', {})
-                                                for answer_block in answer_options:
-                                                    amount_blocks += 1
-                                                    option_value = answer_block.get('value')
-                                                    if rule_value == option_value:
-                                                        amount_matched += 1
-                                if (amount_blocks >= amount_matched) and (amount_matched > 0):
-                                    return errors
-                                elif amount_matched == 0:
-                                    errors.append(Validator._error_message(
-                                        f'Answer option and routing rule values mismatch, missing answer value: {rule_value}'))
-                        return errors
-                else:
-                    return errors
+                    for rule_value in when_dict.get('values'):
+                        if isinstance(rule_value, int) is not True:
+                            for block in answer_ids_with_parent_id:
+                                if 'options' in answer_ids_with_parent_id[block]['answer']:
+                                    for answer_block in answer_ids_with_parent_id[block]['answer'].get('options'):
+                                        if rule_value == answer_block.get('value'):
+                                            amount_matched += 1
+                            if amount_matched == 0:
+                                errors.append(Validator._error_message(
+                                    f'Answer option and routing rule values mismatch, missing answer value: '
+                                    f'{rule_value}'))
         return errors
 
     def _validate_skip_condition(self, skip_condition, answer_ids_with_group_id, block_or_group):
