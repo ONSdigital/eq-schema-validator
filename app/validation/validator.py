@@ -547,18 +547,17 @@ class Validator:  # pylint: disable=too-many-lines
     @staticmethod
     def _validate_routing_when_dict_values(when_dict, answer_ids_with_parent_id, amount_matched):
         errors = []
-        if isinstance(when_dict.get('value'), int) is not True:
-            for rule_value in when_dict.get('values'):
-                if isinstance(rule_value, int) is not True:
-                    for block in answer_ids_with_parent_id:
-                        if 'options' in answer_ids_with_parent_id[block]['answer']:
-                            for answer_block in answer_ids_with_parent_id[block]['answer'].get('options'):
-                                if rule_value == answer_block.get('value'):
-                                    amount_matched += 1
-                    if amount_matched == 0:
-                        errors.append(Validator._error_message(
-                            f'Answer option and routing rule values mismatch, missing answer value: '
-                            f'{rule_value}'))
+        for rule_value in when_dict.get('values'):
+            if isinstance(rule_value, int) is not True:
+                for block in answer_ids_with_parent_id:
+                    if 'options' in answer_ids_with_parent_id[block]['answer']:
+                        for answer_block in answer_ids_with_parent_id[block]['answer'].get('options'):
+                            if rule_value == answer_block.get('value'):
+                                amount_matched += 1
+                if amount_matched == 0:
+                    errors.append(Validator._error_message(
+                        f'Answer option and routing rule values mismatch, missing answer value: '
+                        f'{rule_value}'))
         return errors
 
     def _validate_skip_condition(self, skip_condition, answer_ids_with_group_id, block_or_group):
