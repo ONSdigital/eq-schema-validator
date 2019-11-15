@@ -6,7 +6,7 @@
   "session_timeout_in_seconds": 3,
   "title": "Test Question Variants",
   "theme": "default",
-  "description": "A questionnaire to test default values in quesiton variants",
+  "description": "A questionnaire to test question variants and variant choices",
   "metadata": [
     {
       "name": "user_id",
@@ -36,10 +36,21 @@
                 "id": "question-1",
                 "type": "General",
                 "title": "What is your age?",
+                "description": "The person's age",
                 "answers": [
                   {
+                    "guidance": {
+                      "contents": [
+                        {
+                          "description": "Guidance Description",
+                          "list": ["Guid'ance Line 1", "Guidance Line 2"]
+                        }
+                      ],
+                      "hide_guidance": "Hide Guidance",
+                      "show_guidance": "Show Guidance"
+                    },
                     "id": "answer-1",
-                    "label": "Your age?",
+                    "label": "Your age'?",
                     "mandatory": false,
                     "type": "Number"
                   }
@@ -49,17 +60,17 @@
             {
               "type": "Question",
               "id": "block-2",
+              "show_on_section_summary": true,
               "question_variants": [
                 {
                   "question": {
                     "id": "question-2",
                     "type": "General",
-                    "title": "What is your age?",
+                    "title": "What is this person's age?",
                     "answers": [
                       {
-                        "default": 0,
                         "id": "answer-2",
-                        "label": "Your age?",
+                        "label": "The persons age?",
                         "mandatory": false,
                         "type": "Number"
                       }
@@ -80,7 +91,6 @@
                     "title": "What is your age?",
                     "answers": [
                       {
-                        "default": 1,
                         "id": "answer-2",
                         "label": "Your age?",
                         "mandatory": false,
