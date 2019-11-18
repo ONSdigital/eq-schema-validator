@@ -570,7 +570,7 @@
                             }
                           ]
                         },
-                        "value": "value"
+                        "value": "test {simple_answer}"
                       },
                       {
                         "label": "Another value",
@@ -610,7 +610,7 @@
                             }
                           ]
                         },
-                        "value": "value"
+                        "value": "test {simple_answer}"
                       },
                       {
                         "label": "Another value",
