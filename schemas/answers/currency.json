@@ -1,6 +1,6 @@
 {
   "$id": "https://eq.ons.gov.uk/answers/currency.json",
-  "$schema": "http://json-schema.org/draft-06/schema",
+  "$schema": "http://json-schema.org/draft-07/schema",
   "answer": {
     "type": "object",
     "properties": {

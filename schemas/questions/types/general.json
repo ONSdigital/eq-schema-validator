@@ -1,6 +1,6 @@
 {
   "$id": "https://eq.ons.gov.uk/questions/types/general.json",
-  "$schema": "http://json-schema.org/draft-06/schema",
+  "$schema": "http://json-schema.org/draft-07/schema",
   "question": {
     "type": "object",
     "properties": {
@@ -14,6 +14,9 @@
         "type": "string"
       },
       "description": {
+        "$ref": "../../string_interpolation/definitions.json#/string_with_placeholders"
+      },
+      "instruction": {
         "$ref": "../../string_interpolation/definitions.json#/string_with_placeholders"
       },
       "definitions": {

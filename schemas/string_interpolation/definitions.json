@@ -1,6 +1,6 @@
 {
   "$id": "https://eq.ons.gov.uk/string_interpolation/definitions.json",
-  "$schema": "http://json-schema.org/draft-06/schema",
+  "$schema": "http://json-schema.org/draft-07/schema",
   "string_with_placeholders": {
     "oneOf": [{
         "description": "String with no placeholders.",

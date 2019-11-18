@@ -1,6 +1,6 @@
 {
     "$id": "https://eq.ons.gov.uk/questionnaire_v1.json",
-    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "type": "object",
     "required": [
         "mime_type",
@@ -215,44 +215,127 @@
                                     "type": "array",
                                     "minItems": 1,
                                     "items": {
-                                        "oneOf": [
-                                            {
+                                        "oneOf": [{
+                                            "if": {
+                                                "block": {
+                                                    "type": "string", 
+                                                    "enum": ["AnswerSummary"]
+                                                }
+                                            },
+                                            "then": {
                                                 "$ref": "https://eq.ons.gov.uk/blocks/answer_summary.json#/block"
+                                            }
+                                        }, {
+                                            "if": {
+                                                "block": {
+                                                    "type": "string", 
+                                                    "enum": ["CalculatedSummary"]
+                                                }
                                             },
-                                            {
+                                            "then": {
                                                 "$ref": "https://eq.ons.gov.uk/blocks/calculated_summary.json#/block"
+                                            }
+                                        }, {
+                                            "if": {
+                                                "block": {
+                                                    "type": "string", 
+                                                    "enum": ["Confirmation"]
+                                                }
                                             },
-                                            {
+                                            "then": {
                                                 "$ref": "https://eq.ons.gov.uk/blocks/confirmation.json#/block"
+                                            }
+                                        },  {
+                                            "if": {
+                                                "block": {
+                                                    "type": "string", 
+                                                    "enum": ["ConfirmationQuestion"]
+                                                }
                                             },
-                                            {
+                                            "then": {
                                                 "$ref": "https://eq.ons.gov.uk/blocks/confirmation_question.json#/block"
+                                            }
+                                        }, {
+                                            "if": {
+                                                "block": {
+                                                    "type": "string", 
+                                                    "enum": ["Interstitial"]
+                                                }
                                             },
-                                            {
+                                            "then": {
                                                 "$ref": "https://eq.ons.gov.uk/blocks/interstitial.json#/block"
+                                            }
+                                        }, {
+                                            "if": {
+                                                "block": {
+                                                    "type": "string", 
+                                                    "enum": ["Introduction"]
+                                                }
                                             },
-                                            {
+                                            "then": {
                                                 "$ref": "https://eq.ons.gov.uk/blocks/introduction.json#/block"
+                                            }
+                                        }, {
+                                            "if": {
+                                                "block": {
+                                                    "type": "string", 
+                                                    "enum": ["ListCollector"]
+                                                }
                                             },
-                                            {
+                                            "then": {
                                                 "$ref": "https://eq.ons.gov.uk/blocks/list_collector.json#/block"
+                                            }
+                                        }, {
+                                            "if": {
+                                                "block": {
+                                                    "type": "string", 
+                                                    "enum": ["ListCollectorDrivingQuestion"]
+                                                }
                                             },
-                                            {
+                                            "then": {
                                                 "$ref": "https://eq.ons.gov.uk/blocks/list_collector_driving_question.json#/block"
+                                            }
+                                        }, {
+                                            "if": {
+                                                "block": {
+                                                    "type": "string", 
+                                                    "enum": ["PrimaryPersonListCollector"]
+                                                }
                                             },
-                                            {
+                                            "then": {
                                                 "$ref": "https://eq.ons.gov.uk/blocks/primary_person_list_collector.json#/block"
+                                            }
+                                        }, {
+                                            "if": {
+                                                "block": {
+                                                    "type": "string", 
+                                                    "enum": ["Question", "ListAddQuestion", "ListEditQuestion", "ListRemoveQuestion", "PrimaryPersonListAddOrEditQuestion"]
+                                                }
                                             },
-                                            {
+                                            "then": {
                                                 "$ref": "https://eq.ons.gov.uk/blocks/question.json#/block"
+                                            }
+                                        }, {
+                                            "if": {
+                                                "block": {
+                                                    "type": "string", 
+                                                    "enum": ["RelationshipCollector"]
+                                                }
                                             },
-                                            {
+                                            "then": {
                                                 "$ref": "https://eq.ons.gov.uk/blocks/relationship_collector.json#/block"
+                                            }
+                                        }, {
+                                            "if": {
+                                                "block": {
+                                                    "type": "string", 
+                                                    "enum": ["Summary", "SectionSummary"]
+                                                }
                                             },
-                                            {
+                                            "then": {
                                                 "$ref": "https://eq.ons.gov.uk/blocks/summary.json#/block"
                                             }
-                                        ]
+                                        }]
                                     }
                                 }
                             },
@@ -276,6 +359,23 @@
                               "$ref": "when_rule/definitions.json#/when"
                             }
                           },
+                          "additionalProperties": false
+                        },
+                        "required": ["when"]
+                    }
+                },
+                "enabled": {
+                    "description": "When the value evaluates to false, this section will not be included in the questionnaire. When the enabled key is not present, the default value is true. By adding more than one `when` element it will evaluate as an or rule.",
+                    "type": "array",
+                    "minItems": 1,
+                    "uniqueItems": true,
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "when": {
+                          "$ref": "when_rule/definitions.json#/when"
+                        }
+                      },
                           "additionalProperties": false
                         },
                         "required": ["when"]

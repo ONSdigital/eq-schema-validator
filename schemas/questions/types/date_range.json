@@ -1,6 +1,6 @@
 {
   "$id": "https://eq.ons.gov.uk/questions/types/date_range.json",
-  "$schema": "http://json-schema.org/draft-06/schema",
+  "$schema": "http://json-schema.org/draft-07/schema",
   "question": {
     "type": "object",
     "properties": {
