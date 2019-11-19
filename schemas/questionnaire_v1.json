@@ -1,292 +1,265 @@
 {
-    "$id": "https://eq.ons.gov.uk/questionnaire_v1.json",
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "type": "object",
-    "required": [
-        "mime_type",
-        "schema_version",
-        "data_version",
-        "survey_id",
-        "title",
-        "sections",
-        "theme",
-        "metadata"
-    ],
-    "properties": {
-        "messages": {
-            "$ref": "https://eq.ons.gov.uk/common_definitions.json#/messages"
-        },
-        "eq_id": {
-            "type": "string",
-            "description": "Used in combination with the form_type to uniquely identify a questionnaire."
-        },
-        "form_type": {
-            "type": "string",
-            "description": "Used in combination with the eq_id to uniquely identify a questionnaire."
-        },
-        "mime_type": {
-            "type": "string"
-        },
-        "schema_version": {
-            "type": "string"
-        },
-        "data_version": {
-            "enum": [
-                "0.0.1",
-                "0.0.3"
-            ]
-        },
-        "survey_id": {
-            "type": "string",
-            "description": "The ONS id of the survey derived from the inquiry code already in use for that survey.",
-            "pattern": "^[0-9a-z]+$"
-        },
-        "session_timeout_in_seconds": {
-            "description": "The amount of time in seconds before timing out a users session.",
-            "type": "integer"
-        },
-        "title": {
-            "type": "string"
-        },
-        "description": {
-            "type": "string"
-        },
-        "theme": {
-            "type": "string"
-        },
-        "legal_basis": {
-            "type": "string"
-        },
-        "metadata": {
-            "type": "array",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "name": {
-                        "type": "string",
-                        "pattern": "^[a-zA-Z0-9-_]+$"
-                    },
-                    "type": {
-                        "type": "string",
-                        "enum": [
-                            "boolean",
-                            "date",
-                            "string",
-                            "uuid",
-                            "url"
-                        ]
-                    },
-                    "min_length": {
-                        "type": "integer",
-                        "description": "The minimum length of a string field",
-                        "minimum": 1
-                    },
-                    "max_length": {
-                        "type": "integer",
-                        "description": "The maximum length of a string field",
-                        "minimum": 1
-                    },
-                    "length": {
-                        "type": "integer",
-                        "description": "The length of a string field must be equal to this",
-                        "minimum": 0
-                    },
-                    "optional": {
-                        "description": "Whether an error should be raised if this field is not provided.",
-                        "type": "boolean"
-                    }
-                },
-                "additionalProperties": false,
-                "required": [
-                    "name",
-                    "type"
-                ]
-            }
-        },
-        "view_submitted_response": {
-            "type": "object",
-            "properties": {
-                "enabled": {
-                    "description": "Whether or not answers are available after submission.",
-                    "type": "boolean"
-                },
-                "duration": {
-                    "description": "The amount of time in seconds submitted answers are available for.",
-                    "type": "integer"
-                }
-            },
-            "required": [
-                "enabled",
-                "duration"
-            ],
-            "additionalProperties": false
-        },
-        "variables": {
-            "type": "object",
-            "properties": {
-                "period": {
-                    "type": "string"
-                }
-            }
-        },
-        "navigation": {
-            "type": "object",
-            "description": "Used in conjunction with routing to take user through a survey. ",
-            "properties": {
-                "visible": {
-                    "type": "boolean"
-                }
-            }
-        },
-        "hub": {
-            "type": "object",
-            "properties": {
-                "enabled": {
-                    "description": "Whether or not the hub and spoke pattern is enabled for this questionnaire.",
-                    "type": "boolean"
-                },
-                "required_completed_sections": {
-                    "description": "The sections that need to be complete prior to the hub displaying",
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                }
-            },
-            "required": [
-                "enabled"
-            ],
-            "additionalProperties": false
-        },
-        "sections": {
-            "type": "array",
-            "items": {
-                "additionalProperties": false,
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "$ref": "https://eq.ons.gov.uk/common_definitions.json#/idx"
-                    },
-                    "title": {
-                        "type": "string",
-                        "description": "Title used for the navigation container."
-                    },
-                    "title_from_answers": {
-                        "type": "array",
-                        "description": "Takes a list of answer ids. Title will be generated from answer values concatenated together with spaces."
-                    },
-                    "repeat": {
-                        "type": "object",
-                        "properties": {
-                            "for_list": {
-                                "type": "string"
-                            },
-                            "title": {
-                                "$ref": "https://eq.ons.gov.uk/string_interpolation/definitions.json#/string_with_placeholders"
-                            }
-                        },
-                        "additionalProperties": false,
-                        "required": [
-                            "for_list",
-                            "title"
-                        ]
-                    },
-                    "groups": {
-                        "type": "array",
-                        "items": {
-                            "type": "object",
-                            "properties": {
-                                "id": {
-                                    "$ref": "https://eq.ons.gov.uk/common_definitions.json#/idx"
-                                },
-                                "title": {
-                                    "type": "string"
-                                },
-                                "hide_in_navigation": {
-                                    "type": "boolean"
-                                },
-                                "skip_conditions": {
-                                    "$ref": "https://eq.ons.gov.uk/common_definitions.json#/skip_conditions"
-                                },
-                                "routing_rules": {
-                                    "$ref": "https://eq.ons.gov.uk/common_definitions.json#/routing_rules"
-                                },
-                                "blocks": {
-                                    "type": "array",
-                                    "minItems": 1,
-                                    "items": {
-                                        "oneOf": [
-                                          {
-                                            "$ref": "blocks/answer_summary.json#/block"
-                                          },
-                                          {
-                                            "$ref": "blocks/calculated_summary.json#/block"
-                                          },
-                                          {
-                                            "$ref": "blocks/confirmation.json#/block"
-                                          },
-                                          {
-                                            "$ref": "blocks/confirmation_question.json#/block"
-                                          },
-                                          {
-                                            "$ref": "blocks/interstitial.json#/block"
-                                          },
-                                          {
-                                            "$ref": "blocks/introduction.json#/block"
-                                          },
-                                          {
-                                            "$ref": "blocks/list_collector.json#/block"
-                                          },
-                                          {
-                                            "$ref": "blocks/list_collector_driving_question.json#/block"
-                                          },
-                                          {
-                                            "$ref": "blocks/primary_person_list_collector.json#/block"
-                                          },
-                                          {
-                                            "$ref": "blocks/question.json#/block"
-                                          },
-                                          {
-                                            "$ref": "blocks/relationship_collector.json#/block"
-                                          },
-                                          {
-                                            "$ref": "blocks/summary.json#/block"
-                                          }
-                                        ]
-                                    }
-                                }
-                            },
-                            "additionalProperties": false,
-                            "required": [
-                                "id",
-                                "title",
-                                "blocks"
-                            ]
-                        }
-                    },
-                    "enabled": {
-                        "description": "When the value evaluates to false, this section will not be included in the questionnaire. When the enabled key is not present, the default value is true. By adding more than one `when` element it will evaluate as an or rule.",
-                        "type": "array",
-                        "minItems": 1,
-                        "uniqueItems": true,
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "when": {
-                              "$ref": "when_rule/definitions.json#/when"
-                            }
-                          },
-                          "additionalProperties": false
-                        },
-                        "required": ["when"]
-                    }
-                },
-                "required": [
-                    "id",
-                    "groups"
-                ]
-            }
-        }
+  "$id": "https://eq.ons.gov.uk/questionnaire_v1.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": [
+    "mime_type",
+    "schema_version",
+    "data_version",
+    "survey_id",
+    "title",
+    "sections",
+    "theme",
+    "metadata"
+  ],
+  "properties": {
+    "messages": {
+      "$ref": "https://eq.ons.gov.uk/common_definitions.json#/messages"
     },
-    "additionalProperties": false
+    "eq_id": {
+      "type": "string",
+      "description": "Used in combination with the form_type to uniquely identify a questionnaire."
+    },
+    "form_type": {
+      "type": "string",
+      "description": "Used in combination with the eq_id to uniquely identify a questionnaire."
+    },
+    "mime_type": {
+      "type": "string"
+    },
+    "schema_version": {
+      "type": "string"
+    },
+    "data_version": {
+      "enum": ["0.0.1", "0.0.3"]
+    },
+    "survey_id": {
+      "type": "string",
+      "description": "The ONS id of the survey derived from the inquiry code already in use for that survey.",
+      "pattern": "^[0-9a-z]+$"
+    },
+    "session_timeout_in_seconds": {
+      "description": "The amount of time in seconds before timing out a users session.",
+      "type": "integer"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "theme": {
+      "type": "string"
+    },
+    "legal_basis": {
+      "type": "string"
+    },
+    "metadata": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9-_]+$"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["boolean", "date", "string", "uuid", "url"]
+          },
+          "min_length": {
+            "type": "integer",
+            "description": "The minimum length of a string field",
+            "minimum": 1
+          },
+          "max_length": {
+            "type": "integer",
+            "description": "The maximum length of a string field",
+            "minimum": 1
+          },
+          "length": {
+            "type": "integer",
+            "description": "The length of a string field must be equal to this",
+            "minimum": 0
+          },
+          "optional": {
+            "description": "Whether an error should be raised if this field is not provided.",
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false,
+        "required": ["name", "type"]
+      }
+    },
+    "view_submitted_response": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "description": "Whether or not answers are available after submission.",
+          "type": "boolean"
+        },
+        "duration": {
+          "description": "The amount of time in seconds submitted answers are available for.",
+          "type": "integer"
+        }
+      },
+      "required": ["enabled", "duration"],
+      "additionalProperties": false
+    },
+    "variables": {
+      "type": "object",
+      "properties": {
+        "period": {
+          "type": "string"
+        }
+      }
+    },
+    "navigation": {
+      "type": "object",
+      "description": "Used in conjunction with routing to take user through a survey. ",
+      "properties": {
+        "visible": {
+          "type": "boolean"
+        }
+      }
+    },
+    "hub": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "description": "Whether or not the hub and spoke pattern is enabled for this questionnaire.",
+          "type": "boolean"
+        },
+        "required_completed_sections": {
+          "description": "The sections that need to be complete prior to the hub displaying",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": ["enabled"],
+      "additionalProperties": false
+    },
+    "sections": {
+      "type": "array",
+      "items": {
+        "additionalProperties": false,
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "https://eq.ons.gov.uk/common_definitions.json#/idx"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title used for the navigation container."
+          },
+          "title_from_answers": {
+            "type": "array",
+            "description": "Takes a list of answer ids. Title will be generated from answer values concatenated together with spaces."
+          },
+          "repeat": {
+            "type": "object",
+            "properties": {
+              "for_list": {
+                "type": "string"
+              },
+              "title": {
+                "$ref": "https://eq.ons.gov.uk/string_interpolation/definitions.json#/string_with_placeholders"
+              }
+            },
+            "additionalProperties": false,
+            "required": ["for_list", "title"]
+          },
+          "groups": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "$ref": "https://eq.ons.gov.uk/common_definitions.json#/idx"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "hide_in_navigation": {
+                  "type": "boolean"
+                },
+                "skip_conditions": {
+                  "$ref": "https://eq.ons.gov.uk/common_definitions.json#/skip_conditions"
+                },
+                "routing_rules": {
+                  "$ref": "https://eq.ons.gov.uk/common_definitions.json#/routing_rules"
+                },
+                "blocks": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "oneOf": [
+                      {
+                        "$ref": "blocks/answer_summary.json#/block"
+                      },
+                      {
+                        "$ref": "blocks/calculated_summary.json#/block"
+                      },
+                      {
+                        "$ref": "blocks/confirmation.json#/block"
+                      },
+                      {
+                        "$ref": "blocks/confirmation_question.json#/block"
+                      },
+                      {
+                        "$ref": "blocks/interstitial.json#/block"
+                      },
+                      {
+                        "$ref": "blocks/introduction.json#/block"
+                      },
+                      {
+                        "$ref": "blocks/list_collector.json#/block"
+                      },
+                      {
+                        "$ref": "blocks/list_collector_driving_question.json#/block"
+                      },
+                      {
+                        "$ref": "blocks/primary_person_list_collector.json#/block"
+                      },
+                      {
+                        "$ref": "blocks/question.json#/block"
+                      },
+                      {
+                        "$ref": "blocks/relationship_collector.json#/block"
+                      },
+                      {
+                        "$ref": "blocks/summary.json#/block"
+                      }
+                    ]
+                  }
+                }
+              },
+              "additionalProperties": false,
+              "required": ["id", "title", "blocks"]
+            }
+          },
+          "enabled": {
+            "description": "When the value evaluates to false, this section will not be included in the questionnaire. When the enabled key is not present, the default value is true. By adding more than one `when` element it will evaluate as an or rule.",
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "object",
+              "properties": {
+                "when": {
+                  "$ref": "when_rule/definitions.json#/when"
+                }
+              },
+              "additionalProperties": false
+            },
+            "required": ["when"]
+          }
+        },
+        "required": ["id", "groups"]
+      }
+    }
+  },
+  "additionalProperties": false
 }

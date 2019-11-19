@@ -81,9 +81,6 @@
       }
     },
     "additionalProperties": false,
-    "required": [
-      "id",
-      "type"
-    ]
+    "required": ["id", "type"]
   }
 }

@@ -33,7 +33,7 @@
         "enum": ["General"]
       },
       "show_on_section_summary": {
-          "type": "boolean"
+        "type": "boolean"
       },
       "answers": {
         "type": "array",
@@ -87,11 +87,6 @@
       }
     },
     "additionalProperties": false,
-    "required": [
-      "id",
-      "type",
-      "answers",
-      "title"
-    ]
+    "required": ["id", "type", "answers", "title"]
   }
 }

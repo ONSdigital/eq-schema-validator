@@ -12,10 +12,16 @@
       },
       "type": {
         "type": "string",
-        "enum": ["Question", "ListAddQuestion", "ListEditQuestion", "ListRemoveQuestion", "PrimaryPersonListAddOrEditQuestion"]
+        "enum": [
+          "Question",
+          "ListAddQuestion",
+          "ListEditQuestion",
+          "ListRemoveQuestion",
+          "PrimaryPersonListAddOrEditQuestion"
+        ]
       },
       "show_on_section_summary": {
-          "type": "boolean"
+        "type": "boolean"
       },
       "question": {
         "$ref": "../questions/definitions.json#/question"
@@ -31,15 +37,13 @@
           },
           "summary": {
             "type": "object",
-            "properties":{
+            "properties": {
               "item_title": {
-                  "$ref": "../string_interpolation/definitions.json#/string_with_placeholders"
+                "$ref": "../string_interpolation/definitions.json#/string_with_placeholders"
               }
             },
             "additionalProperties": false,
-            "required": [
-                "item_title"
-            ]
+            "required": ["item_title"]
           }
         }
       },
@@ -51,20 +55,13 @@
       }
     },
     "additionalProperties": false,
-    "required": [
-      "id",
-      "type"
-    ],
+    "required": ["id", "type"],
     "oneOf": [
       {
-        "required": [
-          "question"
-        ]
+        "required": ["question"]
       },
       {
-        "required": [
-          "question_variants"
-        ]
+        "required": ["question_variants"]
       }
     ]
   }

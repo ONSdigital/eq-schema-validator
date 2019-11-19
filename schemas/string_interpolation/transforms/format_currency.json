@@ -16,15 +16,10 @@
           }
         },
         "additionalProperties": false,
-        "required": [
-          "number"
-        ]
+        "required": ["number"]
       }
     },
     "additionalProperties": false,
-    "required": [
-      "transform",
-      "arguments"
-    ]
+    "required": ["transform", "arguments"]
   }
 }

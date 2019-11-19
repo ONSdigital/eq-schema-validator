@@ -9,9 +9,7 @@
       },
       "type": {
         "type": "string",
-        "enum": [
-          "CalculatedSummary"
-        ]
+        "enum": ["CalculatedSummary"]
       },
       "title": {
         "$ref": "../string_interpolation/definitions.json#/string_with_placeholders"
@@ -27,9 +25,7 @@
         "properties": {
           "calculation_type": {
             "type": "string",
-            "enum": [
-              "sum"
-            ]
+            "enum": ["sum"]
           },
           "answers_to_calculate": {
             "type": "array",
@@ -44,19 +40,10 @@
           }
         },
         "additionalProperties": false,
-        "required": [
-          "calculation_type",
-          "answers_to_calculate",
-          "title"
-        ]
+        "required": ["calculation_type", "answers_to_calculate", "title"]
       }
     },
     "additionalProperties": false,
-    "required": [
-      "id",
-      "type",
-      "title",
-      "calculation"
-    ]
+    "required": ["id", "type", "title", "calculation"]
   }
 }

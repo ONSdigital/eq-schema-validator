@@ -79,11 +79,6 @@
       }
     },
     "additionalProperties": false,
-    "required": [
-      "id",
-      "type",
-      "mandatory",
-      "label"
-    ]
+    "required": ["id", "type", "mandatory", "label"]
   }
 }

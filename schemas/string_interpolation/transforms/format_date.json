@@ -14,7 +14,7 @@
           "date_to_format": {
             "oneOf": [
               {
-                "$ref": "../definitions.json#/value_sources" 
+                "$ref": "../definitions.json#/value_sources"
               },
               {
                 "$ref": "../../common_definitions.json#/date_value"
@@ -24,23 +24,14 @@
           "date_format": {
             "type": "string",
             "description": "See https://unicode.org/reports/tr35/tr35-dates.html#Date_Format_Patterns",
-            "enum": [
-              "EEEE d MMMM",
-              "EEEE d MMMM yyyy",
-              "d MMMM yyyy"
-            ]
+            "enum": ["EEEE d MMMM", "EEEE d MMMM yyyy", "d MMMM yyyy"]
           }
         },
         "additionalProperties": false,
-        "required": [
-          "date_to_format"
-        ]
+        "required": ["date_to_format"]
       }
     },
     "additionalProperties": false,
-    "required": [
-      "transform",
-      "arguments"
-    ]
+    "required": ["transform", "arguments"]
   }
 }

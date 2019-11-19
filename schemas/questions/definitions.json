@@ -9,7 +9,8 @@
     }
   },
   "question": {
-    "oneOf": [{
+    "oneOf": [
+      {
         "$ref": "types/general.json#/question"
       },
       {

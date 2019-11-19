@@ -11,12 +11,7 @@
       "$ref": "definitions.json#/metadata_identifier"
     },
     "condition": {
-      "enum": [
-        "contains all",
-        "contains any",
-        "equals any",
-        "not equals any"
-      ]
+      "enum": ["contains all", "contains any", "equals any", "not equals any"]
     },
     "values": {
       "$ref": "definitions.json#/comparison_values"
@@ -25,35 +20,25 @@
       "$ref": "definitions.json#/answer_comparison_object"
     }
   },
-  "required": [
-    "condition"
-  ],
+  "required": ["condition"],
   "allOf": [
     {
       "oneOf": [
         {
-          "required": [
-            "id"
-          ]
+          "required": ["id"]
         },
         {
-          "required": [
-            "meta"
-          ]
+          "required": ["meta"]
         }
       ]
     },
     {
       "oneOf": [
         {
-          "required": [
-            "values"
-          ]
+          "required": ["values"]
         },
         {
-          "required": [
-            "comparison"
-          ]
+          "required": ["comparison"]
         }
       ]
     }

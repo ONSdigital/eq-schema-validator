@@ -21,9 +21,7 @@
       },
       "type": {
         "type": "string",
-        "enum": [
-          "TextField"
-        ]
+        "enum": ["TextField"]
       },
       "mandatory": {
         "type": "boolean"
@@ -43,11 +41,6 @@
       }
     },
     "additionalProperties": false,
-    "required": [
-      "id",
-      "type",
-      "label",
-      "mandatory"
-    ]
+    "required": ["id", "type", "label", "mandatory"]
   }
 }

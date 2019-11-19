@@ -14,19 +14,14 @@
         "properties": {
           "items": {
             "description": "This should be set to something that produces a list e.g. an answer that repeats, or provide multiple answer ids.",
-            "$ref": "../definitions.json#/value_sources" 
+            "$ref": "../definitions.json#/value_sources"
           }
         },
         "additionalProperties": false,
-        "required": [
-          "items"
-        ]    
+        "required": ["items"]
       }
     },
     "additionalProperties": false,
-    "required": [
-      "transform",
-      "arguments"
-    ]
+    "required": ["transform", "arguments"]
   }
 }
