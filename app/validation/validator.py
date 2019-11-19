@@ -9,7 +9,7 @@ from json import load
 from dateutil.relativedelta import relativedelta
 from eq_translations.survey_schema import SurveySchema
 from jsonpointer import resolve_pointer
-from jsonschema import SchemaError, RefResolver, ValidationError, Draft6Validator
+from jsonschema import SchemaError, RefResolver, ValidationError, Draft7Validator
 from jsonschema.exceptions import best_match
 
 MAX_NUMBER = 9999999999
@@ -27,7 +27,7 @@ class Validator:  # pylint: disable=too-many-lines
         self._block_ids = []
         resolver = RefResolver(base_uri='https://eq.ons.gov.uk/', referrer=self.schema,
                                store=self.lookup_ref_store())
-        self.schema_validator = Draft6Validator(self.schema, resolver=resolver)
+        self.schema_validator = Draft7Validator(self.schema, resolver=resolver)
 
     @staticmethod
     def lookup_ref_store():
