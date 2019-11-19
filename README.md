@@ -69,4 +69,4 @@ node app.js
 
 This returns either an empty json response when the questionnaire is valid, or a response containing an "errors" key.
 The errors are ordered by their path length and with first error message being the deepest path into the schema and
-representing the best match or error message for the questionnaire which has been posted.
+should represent the best match for the questionnaire which has been posted.
