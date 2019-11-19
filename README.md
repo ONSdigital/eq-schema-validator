@@ -54,3 +54,19 @@ Run the following to format all json files in the schemas directory:
 ```
 gulp format
 ````
+
+## Validating with ajv
+
+Also included is a node based version of the json schema validation which may be used during development to assist with
+debugging errors. This returns more errors than we'd currently like due to the way polymorphism works for each of our
+blocks.
+
+Run the ajv based version of validator from within the ajv/ directory.
+
+```
+node app.js
+```
+
+This returns either an empty json response when the questionnaire is valid, or a response containing an "errors" key.
+The errors are ordered by their path length and with first error message being the deepest path into the schema and
+representing the best match or error message for the questionnaire which has been posted.
