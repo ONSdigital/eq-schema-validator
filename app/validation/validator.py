@@ -286,15 +286,14 @@ class Validator:  # pylint: disable=too-many-lines
         errors = []
         for option in answer.get('options', []):
             if isinstance(option['label'], str):
-                if option['label'] != option['value']:
-                    errors.append(
-                        (self._error_message(f'`Found mismatching answer value for label: {option["label"]} '
-                                             f'in answer id: {answer["id"]}`')))
+                label = option['label']
             else:
-                if option['label']['text'] != option['value']:
-                    errors.append(
-                        (self._error_message(f'`Found mismatching answer value for label: {option["label"]["text"]} '
-                                             f'in answer id: {answer["id"]}`')))
+                label = option['label']['text']
+
+            if label != option['value']:
+                errors.append(
+                    (self._error_message(f'`Found mismatching answer value for label: {label} '
+                                         f'in answer id: {answer["id"]}`')))
         return errors
 
     def _ensure_relevant_variant_fields_are_consistent(self, block, variants):
