@@ -41,6 +41,6 @@ def test_invalid_schema_names():
         json_to_validate = create_schema_with_id(schema_name)
         schema_errors = validator.validate_json_schema(json_to_validate)
 
-        message = schema_errors.get('predicted_cause')
+        expected_message = f"'{schema_name}' does not match '^[a-z0-9][a-z0-9\\\\-]*[a-z0-9]$'"
 
-        assert f"'{schema_name}' does not match '^[a-z0-9][a-z0-9\\\\-]*[a-z0-9]$'" == message
+        assert expected_message == schema_errors.get('predicted_cause')

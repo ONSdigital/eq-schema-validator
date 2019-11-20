@@ -1,21 +1,21 @@
-const Ajv = require('ajv');
-const axios = require('axios');
-const fs = require('fs');
-const glob = require('glob');
+const Ajv = require("ajv");
+const axios = require("axios");
+const fs = require("fs");
+const glob = require("glob");
 const express = require("express");
 const app = express();
 
 let ajv = new Ajv({
   meta: false,
   extendRefs: true,
-  unknownFormats: 'ignore',
+  unknownFormats: "ignore",
   allErrors: false,
-  schemaId: 'auto'
+  schemaId: "auto"
 });
-ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-07.json'));
+ajv.addMetaSchema(require("ajv/lib/refs/json-schema-draft-07.json"));
 
 app.use(express.json({
-  'limit': '2Mb'
+  "limit": "2Mb"
 }));
 
 app.listen(5001, () => {
@@ -32,16 +32,16 @@ glob("../schemas/**/*.json", function (er, schemas) {
     ajv.addSchema(JSON.parse(data));
   });
 
-  var validate = ajv.compile(require('../schemas/questionnaire_v1.json'));
+  var validate = ajv.compile(require("../schemas/questionnaire_v1.json"));
 
   app.post("/validate", (req, res, next) => {
     let valid = validate(req.body);
-    console.log("Validating questionnaire: " + req.body['title']);
+    console.log("Validating questionnaire: " + req.body["title"]);
     if (!valid) {
-      return res.json({'success': false, 'errors': validate.errors.sort((a, b) => {
+      return res.json({"success": false, "errors": validate.errors.sort((a, b) => {
         return b.dataPath.length - a.dataPath.length;
-      })})
+      })});
     }
-    return res.json({})
+    return res.json({});
   });
 });
