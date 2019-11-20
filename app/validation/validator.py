@@ -537,10 +537,9 @@ class Validator:  # pylint: disable=too-many-lines
         errors = []
         if isinstance(rule_value, int) is not True:
             for block in answer_ids_with_parent_id:
-                if 'options' in answer_ids_with_parent_id[block]['answer']:
-                    for answer_block in answer_ids_with_parent_id[block]['answer'].get('options'):
-                        if rule_value == answer_block.get('value'):
-                            amount_matched += 1
+                for answer_block in answer_ids_with_parent_id[block]['answer'].get('options', {}):
+                    if rule_value == answer_block.get('value'):
+                        amount_matched += 1
             if amount_matched == 0:
                 errors.append(Validator._error_message(
                     f'Answer option and routing rule values mismatch, missing answer value: '
