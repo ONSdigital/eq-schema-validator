@@ -529,8 +529,7 @@ class Validator:  # pylint: disable=too-many-lines
 
         return errors
 
-    @staticmethod
-    def _validate_routing_when_dict_value(when_dict, answer_ids_with_parent_id, amount_matched):
+    def _validate_routing_when_dict_value(self, when_dict, answer_ids_with_parent_id, amount_matched):
         errors = []
         if isinstance(when_dict.get('value'), int) is not True:
             for block in answer_ids_with_parent_id:
@@ -539,13 +538,13 @@ class Validator:  # pylint: disable=too-many-lines
                         if when_dict.get('value') == answer_block.get('value'):
                             amount_matched += 1
             if amount_matched == 0:
+                rule_value = when_dict.get('value')
                 errors.append(Validator._error_message(
                     f'Answer option and routing rule values mismatch, missing answer value: '
-                    '{rule_value}'.format(rule_value=when_dict.get('value'))))
+                    f'{rule_value}'))
         return errors
 
-    @staticmethod
-    def _validate_routing_when_dict_values(when_dict, answer_ids_with_parent_id, amount_matched):
+    def _validate_routing_when_dict_values(self, when_dict, answer_ids_with_parent_id, amount_matched):
         errors = []
         for rule_value in when_dict.get('values'):
             if isinstance(rule_value, int) is not True:
