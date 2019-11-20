@@ -1496,8 +1496,8 @@ class Validator:  # pylint: disable=too-many-lines
 
         return answers
 
-    def _get_questions_with_context(self, json):
-        for section in json.get('sections'):
+    def _get_questions_with_context(self, questionnaire_json):
+        for section in questionnaire_json.get('sections'):
             for group in section.get('groups'):
                 for block in group.get('blocks'):
                     for question in self._get_all_questions_for_block(block):
