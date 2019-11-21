@@ -92,6 +92,22 @@ def test_invalid_schema_block():
     check_validation_errors(filename, expected_error_messages)
 
 
+def test_invalid_routing_answer_mismatch():
+    filename = 'schemas/invalid/test_invalid_routing_answer_mismatch.json'
+
+    expected_error_messages = [
+        'Schema Integrity Error. Answer option and routing rule values mismatch, missing answer value: France',
+
+        'Schema Integrity Error. Answer option and routing rule values mismatch, missing answer value: France',
+
+        'Schema Integrity Error. Answer option and routing rule values mismatch, missing answer value: France',
+
+        'Schema Integrity Error. Answer option and routing rule values mismatch, missing answer value: Austria',
+    ]
+
+    check_validation_errors(filename, expected_error_messages)
+
+
 def test_invalid_numeric_answers():
     filename = 'schemas/invalid/test_invalid_numeric_answers.json'
 
