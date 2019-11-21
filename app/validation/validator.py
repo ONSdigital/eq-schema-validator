@@ -535,8 +535,8 @@ class Validator:  # pylint: disable=too-many-lines
             valid_rule = self.is_rule_value_valid(answer_ids_with_parent_id, rule_value)
 
             if not valid_rule:
-                errors.append(f'Schema Integrity Error. '
-                              f'Answer option and routing rule values mismatch, missing answer value: {rule_value}')
+                errors.append(Validator._error_message(f'Answer option and routing rule values mismatch, '
+                                                       f'missing answer value: {rule_value}'))
 
         return errors
 
