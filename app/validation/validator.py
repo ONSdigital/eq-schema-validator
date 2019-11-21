@@ -1063,7 +1063,7 @@ class Validator:  # pylint: disable=too-many-lines
 
     @staticmethod
     def _error_message(message, ref=None):
-        error = {'message': f'Schema Integrity Error. {message}'}
+        error = {'message': message}
         if isinstance(ref, str):
             error['id'] = ref
         return error
