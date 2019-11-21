@@ -29,7 +29,7 @@ app.get("/status", (req, res, next) => {
 
 glob("../schemas/**/*.json", function (er, schemas) {
   schemas.forEach((currentSchema) => {
-    let data = fs.readFileSync(currentSchema);
+    let data = fs.readFileSync(currentSchema);  // eslint-disable-line detect-non-literal-fs-filename
     ajv.addSchema(JSON.parse(data));
   });
 
