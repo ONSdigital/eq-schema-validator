@@ -27,7 +27,7 @@ app.get("/status", (req, res, next) => {
 });
 
 glob("../schemas/**/*.json", function (er, schemas) {
-  schemas.forEach((currentSchema) => {
+  schemas.forEach(currentSchema => {
     let data = fs.readFileSync(currentSchema);
     ajv.addSchema(JSON.parse(data));
   });
