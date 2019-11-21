@@ -5,10 +5,10 @@ from app.validation.validator import Validator
 validator = Validator()
 
 
-def create_schema_with_id(schema_id):
+def create_schema_with_answer_id(answer_id):
     """
     Utility method that loads a JSON schema file and swaps out an answer Id.
-    :param schema_id: The Id to use for the answer.
+    :param answer_id: The Id to use for the answer.
     :return: The JSON file with the Id swapped for schema_id
     """
     schema_path = 'tests/schemas/valid/test_schema_id_regex.json'
@@ -16,31 +16,31 @@ def create_schema_with_id(schema_id):
     with open(schema_path, encoding='utf8') as json_data:
         json_content = json.load(json_data)
 
-        json_content['sections'][0]['groups'][0]['blocks'][0]['question']['answers'][0]['id'] = schema_id
+        json_content['sections'][0]['groups'][0]['blocks'][0]['question']['answers'][0]['id'] = answer_id
         return json_content
 
 
-def test_valid_schema_names():
-    schema_names = [
+def test_valid_answer_ids():
+    answer_ids = [
         'star-wars', 'name-with-hyphens', 'this-is-a-valid-id-0', 'answer'
     ]
 
-    for schema_name in schema_names:
-        json_to_validate = create_schema_with_id(schema_name)
+    for answer_id in answer_ids:
+        json_to_validate = create_schema_with_answer_id(answer_id)
         schema_errors = validator.validate_json_schema(json_to_validate)
 
         assert schema_errors == {}
 
 
-def test_invalid_schema_names():
-    schema_names = [
+def test_invalid_answer_ids():
+    answer_ids = [
         '!n0t-@-valid-id', 'NOT-A-VALID-ID', 'not_a_valid_id', 'not a valid id'
     ]
 
-    for schema_name in schema_names:
-        json_to_validate = create_schema_with_id(schema_name)
+    for answer_id in answer_ids:
+        json_to_validate = create_schema_with_answer_id(answer_id)
         schema_errors = validator.validate_json_schema(json_to_validate)
 
-        expected_message = f"'{schema_name}' does not match \'^[a-z0-9][a-z0-9\\\\-]*[a-z0-9]$\'"
+        expected_message = f"'{answer_id}' does not match \'^[a-z0-9][a-z0-9\\\\-]*[a-z0-9]$\'"
 
         assert expected_message == schema_errors.get('predicted_cause')
