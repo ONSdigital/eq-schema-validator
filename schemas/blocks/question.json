@@ -5,7 +5,7 @@
     "type": "object",
     "properties": {
       "id": {
-        "$ref": "../common_definitions.json#/idx"
+        "$ref": "https://eq.ons.gov.uk/common_definitions.json#/idx"
       },
       "number": {
         "type": "string"
@@ -39,7 +39,7 @@
             "type": "object",
             "properties": {
               "item_title": {
-                "$ref": "../string_interpolation/definitions.json#/string_with_placeholders"
+                "$ref": "https://eq.ons.gov.uk/string_interpolation/definitions.json#/string_with_placeholders"
               }
             },
             "additionalProperties": false,
@@ -48,10 +48,10 @@
         }
       },
       "routing_rules": {
-        "$ref": "../common_definitions.json#/routing_rules"
+        "$ref": "https://eq.ons.gov.uk/common_definitions.json#/routing_rules"
       },
       "skip_conditions": {
-        "$ref": "../common_definitions.json#/skip_conditions"
+        "$ref": "https://eq.ons.gov.uk/common_definitions.json#/skip_conditions"
       }
     },
     "additionalProperties": false,

@@ -5,7 +5,7 @@
     "type": "object",
     "properties": {
       "id": {
-        "$ref": "../common_definitions.json#/idx"
+        "$ref": "https://eq.ons.gov.uk/common_definitions.json#/idx"
       },
       "number": {
         "type": "string"
@@ -15,16 +15,16 @@
         "enum": ["Interstitial"]
       },
       "content_variants": {
-        "$ref": "definitions.json#/content_variants"
+        "$ref": "https://eq.ons.gov.uk/blocks/definitions.json#/content_variants"
       },
       "content": {
-        "$ref": "definitions.json#/content"
+        "$ref": "https://eq.ons.gov.uk/blocks/definitions.json#/content"
       },
       "routing_rules": {
-        "ref": "../common_definitions.json#/routing_rules"
+        "ref": "https://eq.ons.gov.uk/common_definitions.json#/routing_rules"
       },
       "skip_conditions": {
-        "$ref": "../common_definitions.json#/skip_conditions"
+        "$ref": "https://eq.ons.gov.uk/common_definitions.json#/skip_conditions"
       }
     },
     "additionalProperties": false,

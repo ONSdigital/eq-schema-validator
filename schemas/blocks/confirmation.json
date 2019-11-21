@@ -5,7 +5,7 @@
     "type": "object",
     "properties": {
       "id": {
-        "$ref": "../common_definitions.json#/idx"
+        "$ref": "https://eq.ons.gov.uk/common_definitions.json#/idx"
       },
       "number": {
         "type": "string"
@@ -15,10 +15,10 @@
         "enum": ["Confirmation"]
       },
       "content": {
-        "$ref": "definitions.json#/content"
+        "$ref": "https://eq.ons.gov.uk/blocks/definitions.json#/content"
       },
       "content_variants": {
-        "$ref": "definitions.json#/content_variants"
+        "$ref": "https://eq.ons.gov.uk/blocks/definitions.json#/content_variants"
       }
     },
     "additionalProperties": false,

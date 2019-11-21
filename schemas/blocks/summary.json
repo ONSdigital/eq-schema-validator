@@ -5,7 +5,7 @@
     "type": "object",
     "properties": {
       "id": {
-        "$ref": "../common_definitions.json#/idx"
+        "$ref": "https://eq.ons.gov.uk/common_definitions.json#/idx"
       },
       "type": {
         "type": "string",

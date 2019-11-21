@@ -5,7 +5,7 @@
     "type": "object",
     "properties": {
       "id": {
-        "$ref": "../common_definitions.json#/idx"
+        "$ref": "https://eq.ons.gov.uk/common_definitions.json#/idx"
       },
       "label": {
         "type": "string"
@@ -14,7 +14,7 @@
         "$ref": "https://eq.ons.gov.uk/answers/definitions.json#/answer_guidance"
       },
       "description": {
-        "$ref": "../string_interpolation/definitions.json#/string_with_placeholders"
+        "$ref": "https://eq.ons.gov.uk/string_interpolation/definitions.json#/string_with_placeholders"
       },
       "type": {
         "type": "string",
@@ -33,13 +33,13 @@
               "type": "string"
             },
             "title": {
-              "$ref": "../string_interpolation/definitions.json#/string_with_placeholders"
+              "$ref": "https://eq.ons.gov.uk/string_interpolation/definitions.json#/string_with_placeholders"
             },
             "playback": {
-              "$ref": "../string_interpolation/definitions.json#/string_with_placeholders"
+              "$ref": "https://eq.ons.gov.uk/string_interpolation/definitions.json#/string_with_placeholders"
             },
             "description": {
-              "$ref": "../string_interpolation/definitions.json#/string_with_placeholders",
+              "$ref": "https://eq.ons.gov.uk/string_interpolation/definitions.json#/string_with_placeholders",
               "description": "Descriptive text that appears below the option label"
             }
           },
@@ -51,7 +51,7 @@
         "type": "boolean"
       },
       "playback": {
-        "$ref": "../string_interpolation/definitions.json#/string_with_placeholders"
+        "$ref": "https://eq.ons.gov.uk/string_interpolation/definitions.json#/string_with_placeholders"
       }
     },
     "additionalProperties": false,

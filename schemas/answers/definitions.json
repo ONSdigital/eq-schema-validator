@@ -12,13 +12,13 @@
       "type": "object",
       "properties": {
         "label": {
-          "$ref": "../string_interpolation/definitions.json#/string_with_placeholders"
+          "$ref": "https://eq.ons.gov.uk/string_interpolation/definitions.json#/string_with_placeholders"
         },
         "value": {
           "type": "string"
         },
         "q_code": {
-          "$ref": "../common_definitions.json#/q_code"
+          "$ref": "https://eq.ons.gov.uk/common_definitions.json#/q_code"
         },
         "detail_answer": {
           "oneOf": [
@@ -31,7 +31,7 @@
           ]
         },
         "description": {
-          "$ref": "../string_interpolation/definitions.json#/string_with_placeholders",
+          "$ref": "https://eq.ons.gov.uk/string_interpolation/definitions.json#/string_with_placeholders",
           "description": "Descriptive text that appears below the option label"
         },
         "action": {
@@ -112,7 +112,7 @@
         "description": "The text that is used for the 'Hide guidance' link."
       },
       "contents": {
-        "$ref": "../common_definitions.json#/contents"
+        "$ref": "https://eq.ons.gov.uk/common_definitions.json#/contents"
       }
     },
     "additionalProperties": false

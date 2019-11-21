@@ -12,10 +12,10 @@
         "type": "object",
         "properties": {
           "start_date": {
-            "$ref": "../definitions.json#/value_sources"
+            "$ref": "https://eq.ons.gov.uk/string_interpolation/definitions.json#/value_sources"
           },
           "end_date": {
-            "$ref": "../definitions.json#/value_sources"
+            "$ref": "https://eq.ons.gov.uk/string_interpolation/definitions.json#/value_sources"
           }
         },
         "additionalProperties": false,

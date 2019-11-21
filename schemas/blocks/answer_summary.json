@@ -5,10 +5,10 @@
     "type": "object",
     "properties": {
       "id": {
-        "$ref": "../common_definitions.json#/idx"
+        "$ref": "https://eq.ons.gov.uk/common_definitions.json#/idx"
       },
       "title": {
-        "$ref": "../string_interpolation/definitions.json#/string_with_placeholders"
+        "$ref": "https://eq.ons.gov.uk/string_interpolation/definitions.json#/string_with_placeholders"
       },
       "type": {
         "type": "string",
@@ -18,10 +18,10 @@
         "type": "string"
       },
       "routing_rules": {
-        "$ref": "../common_definitions.json#/routing_rules"
+        "$ref": "https://eq.ons.gov.uk/common_definitions.json#/routing_rules"
       },
       "skip_conditions": {
-        "$ref": "../common_definitions.json#/skip_conditions"
+        "$ref": "https://eq.ons.gov.uk/common_definitions.json#/skip_conditions"
       },
       "answer_ids": {
         "type": "array",

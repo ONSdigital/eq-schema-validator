@@ -5,7 +5,7 @@
   "description": "Comparison against a list count",
   "properties": {
     "list": {
-      "$ref": "definitions.json#/list"
+      "$ref": "https://eq.ons.gov.uk/when_rule/definitions.json#/list"
     },
     "condition": {
       "enum": [

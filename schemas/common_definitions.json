@@ -23,7 +23,7 @@
           "type": "string"
         },
         "contents": {
-          "$ref": "common_definitions.json#/contents"
+          "$ref": "https://eq.ons.gov.uk/common_definitions.json#/contents"
         }
       },
       "additionalProperties": false
@@ -48,15 +48,15 @@
       ],
       "properties": {
         "title": {
-          "$ref": "string_interpolation/definitions.json#/string_with_placeholders"
+          "$ref": "https://eq.ons.gov.uk/string_interpolation/definitions.json#/string_with_placeholders"
         },
         "description": {
-          "$ref": "string_interpolation/definitions.json#/string_with_placeholders"
+          "$ref": "https://eq.ons.gov.uk/string_interpolation/definitions.json#/string_with_placeholders"
         },
         "list": {
           "type": "array",
           "items": {
-            "$ref": "string_interpolation/definitions.json#/string_with_placeholders"
+            "$ref": "https://eq.ons.gov.uk/string_interpolation/definitions.json#/string_with_placeholders"
           }
         }
       },
@@ -72,7 +72,7 @@
       "type": "object",
       "properties": {
         "when": {
-          "$ref": "when_rule/definitions.json#/when"
+          "$ref": "https://eq.ons.gov.uk/when_rule/definitions.json#/when"
         }
       },
       "additionalProperties": false
@@ -227,7 +227,7 @@
               "description": "The id of another group. The first block in that group will be routed to."
             },
             "when": {
-              "$ref": "when_rule/definitions.json#/when"
+              "$ref": "https://eq.ons.gov.uk/when_rule/definitions.json#/when"
             }
           },
           "oneOf": [

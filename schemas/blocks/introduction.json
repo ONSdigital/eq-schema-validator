@@ -5,10 +5,10 @@
     "type": "object",
     "properties": {
       "id": {
-        "$ref": "../common_definitions.json#/idx"
+        "$ref": "https://eq.ons.gov.uk/common_definitions.json#/idx"
       },
       "title": {
-        "$ref": "../string_interpolation/definitions.json#/string_with_placeholders"
+        "$ref": "https://eq.ons.gov.uk/string_interpolation/definitions.json#/string_with_placeholders"
       },
       "type": {
         "type": "string",
@@ -20,13 +20,13 @@
           "type": "object",
           "properties": {
             "id": {
-              "$ref": "../common_definitions.json#/idx"
+              "$ref": "https://eq.ons.gov.uk/common_definitions.json#/idx"
             },
             "title": {
-              "$ref": "../string_interpolation/definitions.json#/string_with_placeholders"
+              "$ref": "https://eq.ons.gov.uk/string_interpolation/definitions.json#/string_with_placeholders"
             },
             "contents": {
-              "$ref": "../common_definitions.json#/contents"
+              "$ref": "https://eq.ons.gov.uk/common_definitions.json#/contents"
             }
           },
           "additionalProperties": false
@@ -36,10 +36,10 @@
         "type": "object",
         "properties": {
           "id": {
-            "$ref": "../common_definitions.json#/idx"
+            "$ref": "https://eq.ons.gov.uk/common_definitions.json#/idx"
           },
           "title": {
-            "$ref": "../string_interpolation/definitions.json#/string_with_placeholders"
+            "$ref": "https://eq.ons.gov.uk/string_interpolation/definitions.json#/string_with_placeholders"
           },
           "questions": {
             "type": "array",
@@ -47,19 +47,19 @@
               "type": "object",
               "properties": {
                 "id": {
-                  "$ref": "../common_definitions.json#/idx"
+                  "$ref": "https://eq.ons.gov.uk/common_definitions.json#/idx"
                 },
                 "question": {
-                  "$ref": "../string_interpolation/definitions.json#/string_with_placeholders"
+                  "$ref": "https://eq.ons.gov.uk/string_interpolation/definitions.json#/string_with_placeholders"
                 },
                 "contents": {
-                  "$ref": "../common_definitions.json#/contents"
+                  "$ref": "https://eq.ons.gov.uk/common_definitions.json#/contents"
                 }
               }
             }
           },
           "contents": {
-            "$ref": "../common_definitions.json#/contents"
+            "$ref": "https://eq.ons.gov.uk/common_definitions.json#/contents"
           }
         },
         "additionalProperties": false
@@ -70,10 +70,10 @@
           "type": "object",
           "properties": {
             "id": {
-              "$ref": "../common_definitions.json#/idx"
+              "$ref": "https://eq.ons.gov.uk/common_definitions.json#/idx"
             },
             "contents": {
-              "$ref": "../common_definitions.json#/contents"
+              "$ref": "https://eq.ons.gov.uk/common_definitions.json#/contents"
             }
           },
           "additionalProperties": false

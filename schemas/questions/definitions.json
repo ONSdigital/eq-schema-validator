@@ -11,16 +11,16 @@
   "question": {
     "oneOf": [
       {
-        "$ref": "types/general.json#/question"
+        "$ref": "https://eq.ons.gov.uk/questions/types/general.json#/question"
       },
       {
-        "$ref": "types/calculated.json#/question"
+        "$ref": "https://eq.ons.gov.uk/questions/types/calculated.json#/question"
       },
       {
-        "$ref": "types/date_range.json#/question"
+        "$ref": "https://eq.ons.gov.uk/questions/types/date_range.json#/question"
       },
       {
-        "$ref": "types/mutually_exclusive.json#/question"
+        "$ref": "https://eq.ons.gov.uk/questions/types/mutually_exclusive.json#/question"
       }
     ]
   },
@@ -29,7 +29,7 @@
     "type": "object",
     "properties": {
       "contents": {
-        "$ref": "../common_definitions.json#/contents"
+        "$ref": "https://eq.ons.gov.uk/common_definitions.json#/contents"
       }
     }
   }

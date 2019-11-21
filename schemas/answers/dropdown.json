@@ -5,10 +5,10 @@
     "type": "object",
     "properties": {
       "id": {
-        "$ref": "../common_definitions.json#/idx"
+        "$ref": "https://eq.ons.gov.uk/common_definitions.json#/idx"
       },
       "q_code": {
-        "$ref": "../common_definitions.json#/q_code"
+        "$ref": "https://eq.ons.gov.uk/common_definitions.json#/q_code"
       },
       "guidance": {
         "$ref": "https://eq.ons.gov.uk/answers/definitions.json#/answer_guidance"
@@ -24,7 +24,7 @@
         "type": "string"
       },
       "description": {
-        "$ref": "../string_interpolation/definitions.json#/string_with_placeholders"
+        "$ref": "https://eq.ons.gov.uk/string_interpolation/definitions.json#/string_with_placeholders"
       },
       "options": {
         "allOf": [

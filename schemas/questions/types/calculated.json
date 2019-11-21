@@ -5,25 +5,25 @@
     "type": "object",
     "properties": {
       "id": {
-        "$ref": "../../common_definitions.json#/idx"
+        "$ref": "https://eq.ons.gov.uk/common_definitions.json#/idx"
       },
       "title": {
-        "$ref": "../../string_interpolation/definitions.json#/string_with_placeholders"
+        "$ref": "https://eq.ons.gov.uk/string_interpolation/definitions.json#/string_with_placeholders"
       },
       "number": {
         "type": "string"
       },
       "description": {
-        "$ref": "../../string_interpolation/definitions.json#/string_with_placeholders"
+        "$ref": "https://eq.ons.gov.uk/string_interpolation/definitions.json#/string_with_placeholders"
       },
       "definitions": {
-        "$ref": "../../common_definitions.json#/question_definitions"
+        "$ref": "https://eq.ons.gov.uk/common_definitions.json#/question_definitions"
       },
       "guidance": {
-        "$ref": "../definitions.json#/question_guidance"
+        "$ref": "https://eq.ons.gov.uk/questions/definitions.json#/question_guidance"
       },
       "skip_conditions": {
-        "$ref": "../../common_definitions.json#/skip_conditions"
+        "$ref": "https://eq.ons.gov.uk/common_definitions.json#/skip_conditions"
       },
       "type": {
         "type": "string",
@@ -53,7 +53,7 @@
               "type": "array",
               "minItems": 2,
               "items": {
-                "$ref": "../../common_definitions.json#/idx"
+                "$ref": "https://eq.ons.gov.uk/common_definitions.json#/idx"
               },
               "description": "The id of the answers from which to do calculated_type to"
             },
@@ -95,16 +95,16 @@
         "items": {
           "oneOf": [
             {
-              "$ref": "../../answers/currency.json#/answer"
+              "$ref": "https://eq.ons.gov.uk/answers/currency.json#/answer"
             },
             {
-              "$ref": "../../answers/number.json#/answer"
+              "$ref": "https://eq.ons.gov.uk/answers/number.json#/answer"
             },
             {
-              "$ref": "../../answers/percentage.json#/answer"
+              "$ref": "https://eq.ons.gov.uk/answers/percentage.json#/answer"
             },
             {
-              "$ref": "../../answers/unit.json#/answer"
+              "$ref": "https://eq.ons.gov.uk/answers/unit.json#/answer"
             }
           ]
         }
