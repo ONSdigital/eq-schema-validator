@@ -169,7 +169,6 @@ class Validator:  # pylint: disable=too-many-lines
                 errors.extend(self._validate_schema_routing_rule_routes_to_valid_target(all_groups, 'group', rule))
 
                 errors.extend(self._validate_routing_rule(rule, answers_with_parent_ids, block))
-                errors.extend(self._validate_answer_routing_value(rule, answers_with_parent_ids))
 
             for skip_condition in block.get('skip_conditions', []):
                 errors.extend(self._validate_skip_condition(skip_condition, answers_with_parent_ids, block))
@@ -519,47 +518,36 @@ class Validator:  # pylint: disable=too-many-lines
         rule = rule.get('goto')
         if 'when' in rule:
             errors.extend(self._validate_when_rule(rule['when'], answer_ids_with_group_id, block_or_group['id']))
+            for when_dict in rule.get('when'):
+                errors.extend(self._validate_routing_when_dict(when_dict, answer_ids_with_group_id))
 
         return errors
 
-    def _validate_answer_routing_value(self, rule, answer_ids_with_parent_id):
+    def _validate_routing_when_dict(self, when_dict, answer_ids_with_parent_id):
         errors = []
+        when_values = when_dict.get('values', [])
+        when_value = when_dict.get('value')
 
-        when_rule = rule.get('goto').get('when')
-        if when_rule:
-            for when_dict in when_rule:
-                amount_matched = 0
-                errors.extend(self._validate_routing_when_dict(when_dict, answer_ids_with_parent_id, amount_matched))
+        if when_value:
+            when_values.append(when_value)
 
-        return errors
+        for rule_value in when_values:
+            valid_rule = self.is_rule_value_valid(answer_ids_with_parent_id, rule_value)
 
-    def _validate_routing_when_dict(self, when_dict, answer_ids_with_parent_id, amount_matched):
-        errors = []
-
-        if when_dict.get('value'):
-            rule_value = when_dict.get('value')
-            errors.extend(self._validate_routing_when_dict_value(answer_ids_with_parent_id, amount_matched, rule_value))
-
-        elif when_dict.get('values'):
-            for rule_value in when_dict.get('values'):
-                errors.extend(self._validate_routing_when_dict_value(
-                    answer_ids_with_parent_id, amount_matched, rule_value))
+            if not valid_rule:
+                errors.append(f'Answer option and routing rule values mismatch, missing answer value: {rule_value}')
 
         return errors
 
     @staticmethod
-    def _validate_routing_when_dict_value(answer_ids_with_parent_id, amount_matched, rule_value):
-        errors = []
+    def is_rule_value_valid(answer_ids_with_parent_id, rule_value):
         if isinstance(rule_value, int) is not True:
             for block in answer_ids_with_parent_id:
                 for answer_block in answer_ids_with_parent_id[block]['answer'].get('options', {}):
                     if rule_value == answer_block.get('value'):
-                        amount_matched += 1
-            if amount_matched == 0:
-                errors.append(Validator._error_message(
-                    f'Answer option and routing rule values mismatch, missing answer value: '
-                    f'{rule_value}'))
-        return errors
+                        return True
+            return False
+        return True
 
     def _validate_skip_condition(self, skip_condition, answer_ids_with_group_id, block_or_group):
         """
