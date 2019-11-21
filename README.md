@@ -70,7 +70,7 @@ yarn
 Run the ajv based version of validator from within the ajv/ directory.
 
 ```
-node app.js
+DEBUG=validator node app.js
 ```
 
 This returns either an empty json response when the questionnaire is valid, or a response containing an "errors" key.

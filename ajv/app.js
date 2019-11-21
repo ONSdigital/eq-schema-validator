@@ -4,6 +4,7 @@ const fs = require("fs");
 const glob = require("glob");
 const express = require("express");
 const app = express();
+const debug = require("debug")("validator");
 
 let ajv = new Ajv({
   meta: false,
@@ -19,7 +20,7 @@ app.use(express.json({
 }));
 
 app.listen(5001, () => {
-  console.log("Server running on port 5001");
+  debug("Server running on port 5001");
 });
 
 app.get("/status", (req, res, next) => {
@@ -36,7 +37,7 @@ glob("../schemas/**/*.json", function (er, schemas) {
 
   app.post("/validate", (req, res, next) => {
     let valid = validate(req.body);
-    console.log("Validating questionnaire: " + req.body["title"]);
+    debug("Validating questionnaire: " + req.body["title"]);
     if (!valid) {
       return res.json({"success": false, "errors": validate.errors.sort((a, b) => {
         return b.dataPath.length - a.dataPath.length;
