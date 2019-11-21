@@ -81,6 +81,8 @@ def test_invalid_schema_block():
         'Schema Integrity Error. The answer id - fake-answer in the id key of the '
         '"when" clause for conditional-routing-block does not exist',
 
+        'Schema Integrity Error. Answer option and routing rule values mismatch, missing answer value: no',
+
         'Schema Integrity Error. Routing rule not defined for all answers or '
         'default not defined for answer [conditional-routing-answer] '
         "missing options ['No, I prefer tea']",
@@ -88,7 +90,6 @@ def test_invalid_schema_block():
         'Schema Integrity Error. The answer id - AnAnswerThatDoesNotExist in the id key of the '
         '"when" clause for response-yes does not exist',
 
-        'Schema Integrity Error. Answer option and routing rule values mismatch, missing answer value: no'
     ]
 
     check_validation_errors(filename, expected_error_messages)
