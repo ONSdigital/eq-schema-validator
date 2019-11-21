@@ -123,7 +123,7 @@
                 "title": "Condition: Contains Any",
                 "contents": [
                   {
-                    "description": "You chose France or Italy."
+                    "description": "This will be routed to only if you chose Italy."
                   }
                 ]
               }
@@ -135,7 +135,7 @@
                 "title": "Condition: Contains One",
                 "contents": [
                   {
-                    "description": "You chose France."
+                    "description": "This will never be routed to."
                   }
                 ]
               }
