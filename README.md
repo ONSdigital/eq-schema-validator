@@ -61,6 +61,12 @@ Also included is a node based version of the json schema validation which may be
 debugging errors. This returns more errors than we'd currently like due to the way polymorphism works for each of our
 blocks.
 
+The node implementation depends on yarn. Once installed install ajv using:
+
+```
+yarn
+```
+
 Run the ajv based version of validator from within the ajv/ directory.
 
 ```
