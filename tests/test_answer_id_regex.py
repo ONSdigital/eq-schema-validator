@@ -41,6 +41,6 @@ def test_invalid_answer_ids():
         json_to_validate = create_schema_with_answer_id(answer_id)
         schema_errors = validator.validate_json_schema(json_to_validate)
 
-        expected_message = f"'{answer_id}' does not match \'^[a-z0-9][a-z0-9\\\\-]*[a-z0-9]$\'"
+        expected_message = f"'{answer_id}' does not match"
 
-        assert expected_message == schema_errors.get('predicted_cause')
+        assert expected_message in schema_errors.get('predicted_cause')
