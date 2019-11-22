@@ -883,9 +883,7 @@ class Validator:  # pylint: disable=too-many-lines
         return errors
 
     # noqa: C901  pylint: disable=too-complex, too-many-locals
-    def _validate_primary_person_list_collector(
-        self, block
-    ):
+    def _validate_primary_person_list_collector(self, block):
         errors = []
         collector_questions = self._get_all_questions_for_block(block)
         errors.extend(self._validate_primary_person_list_answer_references(block))
@@ -1101,9 +1099,13 @@ class Validator:  # pylint: disable=too-many-lines
                 if "goto" in rule and "when" in rule["goto"].keys():
                     when_clause = rule["goto"]["when"]
                     for when in when_clause:
-                        if "id" in when and "value" in when:
-                            if when["id"] == answer["id"] and when["value"] in options:
-                                options.remove(when["value"])
+                        if (
+                            "id" in when
+                            and "value" in when
+                            and when["id"] == answer["id"]
+                            and when["value"] in options
+                        ):
+                            options.remove(when["value"])
                 else:
                     options = []
                     has_default_route = True
@@ -2117,23 +2119,28 @@ class Validator:  # pylint: disable=too-many-lines
                             "section": section["id"],
                         }
                         yield question, context
-                    for sub_block_type in (
-                        "add_block",
-                        "edit_block",
-                        "remove_block",
-                        "add_or_edit_block",
-                    ):
-                        sub_block = block.get(sub_block_type)
-                        if sub_block:
-                            for question in self._get_all_questions_for_block(
-                                sub_block
-                            ):
-                                context = {
-                                    "block": sub_block["id"],
-                                    "group_id": group["id"],
-                                    "section": section["id"],
-                                }
-                                yield question, context
+
+                        for sub_question, context in self._get_sub_block_context(
+                            section, group, block
+                        ):
+                            yield sub_question, context
+
+    def _get_sub_block_context(self, section, group, block):
+        for sub_block_type in (
+            "add_block",
+            "edit_block",
+            "remove_block",
+            "add_or_edit_block",
+        ):
+            sub_block = block.get(sub_block_type)
+            if sub_block:
+                for question in self._get_all_questions_for_block(sub_block):
+                    context = {
+                        "block": sub_block["id"],
+                        "group_id": group["id"],
+                        "section": section["id"],
+                    }
+                    yield question, context
 
     @staticmethod
     def _get_all_questions_for_block(block):

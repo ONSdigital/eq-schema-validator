@@ -73,7 +73,7 @@ def test_invalid_schema_block():
         "The routing rules for group or block: "
         "conditional-routing-block must contain a default routing rule "
         "without a when rule",
-        "Routing rule routes to invalid block " "[invalid-location]",
+        "Routing rule routes to invalid block [invalid-location]",
         "The answer id - fake-answer in the id key of the "
         '"when" clause for conditional-routing-block does not exist',
         "Routing rule not defined for all answers or "

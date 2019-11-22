@@ -29,6 +29,7 @@ pylint --reports=n --output-format=colorized --rcfile=.pylintrc -j 0 ./app ./tes
 display_result $? 2 "Pylint linting check"
 
 black --check . --exclude node_modules
+
 display_result $? 1 "Python code formatting check"
 
 yarn run lint

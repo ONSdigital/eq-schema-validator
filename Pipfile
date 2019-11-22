@@ -17,7 +17,7 @@ pytest = "*"
 "flake8" = "*"
 pylint = "*"
 pylint-quotes = "*"
-black = "==19.10b0"
+black = "==19.3b0"
 
 [requires]
 python_version = "3.8"
