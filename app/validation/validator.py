@@ -802,9 +802,9 @@ class Validator:  # pylint: disable=too-many-lines
             ]
         return []
 
-    def _validate_list_collector(
+    def _validate_list_collector(  # noqa: C901  pylint: disable=too-complex, too-many-locals
         self, block
-    ):  # noqa: C901  pylint: disable=too-complex, too-many-locals
+    ):
         errors = []
         collector_questions = self._get_all_questions_for_block(block)
         errors.extend(self._validate_list_answer_references(block))
@@ -882,9 +882,10 @@ class Validator:  # pylint: disable=too-many-lines
 
         return errors
 
+    # noqa: C901  pylint: disable=too-complex, too-many-locals
     def _validate_primary_person_list_collector(
         self, block
-    ):  # noqa: C901  pylint: disable=too-complex, too-many-locals
+    ):
         errors = []
         collector_questions = self._get_all_questions_for_block(block)
         errors.extend(self._validate_primary_person_list_answer_references(block))
