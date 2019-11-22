@@ -6,7 +6,7 @@
     "description": "A question code used by downstream systems to identify answers.",
     "pattern": "^[0-9a-z]+$"
   },
-  "idx": {
+  "identifier": {
     "type": "string",
     "description": "Used to identify groups, blocks, questions and answers.",
     "pattern": "^[a-z0-9][a-z0-9\\-]*[a-z0-9]$"

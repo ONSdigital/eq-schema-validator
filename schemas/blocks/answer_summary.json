@@ -5,7 +5,7 @@
     "type": "object",
     "properties": {
       "id": {
-        "$ref": "https://eq.ons.gov.uk/common_definitions.json#/idx"
+        "$ref": "https://eq.ons.gov.uk/common_definitions.json#/identifier"
       },
       "title": {
         "$ref": "https://eq.ons.gov.uk/string_interpolation/definitions.json#/string_with_placeholders"

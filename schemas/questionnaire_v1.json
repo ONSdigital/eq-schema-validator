@@ -148,7 +148,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "$ref": "https://eq.ons.gov.uk/common_definitions.json#/idx"
+            "$ref": "https://eq.ons.gov.uk/common_definitions.json#/identifier"
           },
           "title": {
             "type": "string",
@@ -177,7 +177,7 @@
               "type": "object",
               "properties": {
                 "id": {
-                  "$ref": "https://eq.ons.gov.uk/common_definitions.json#/idx"
+                  "$ref": "https://eq.ons.gov.uk/common_definitions.json#/identifier"
                 },
                 "title": {
                   "type": "string"
