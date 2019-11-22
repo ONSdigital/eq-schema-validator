@@ -2120,10 +2120,10 @@ class Validator:  # pylint: disable=too-many-lines
                         }
                         yield question, context
 
-                        for sub_question, context in self._get_sub_block_context(
+                        for sub_block, context in self._get_sub_block_context(
                             section, group, block
                         ):
-                            yield sub_question, context
+                            yield sub_block, context
 
     def _get_sub_block_context(self, section, group, block):
         for sub_block_type in (
