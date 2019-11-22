@@ -24,10 +24,10 @@
         "type": "boolean"
       },
       "question": {
-        "$ref": "../questions/definitions.json#/question"
+        "$ref": "https://eq.ons.gov.uk/questions/definitions.json#/question"
       },
       "question_variants": {
-        "$ref": "definitions.json#/question_variants"
+        "$ref": "https://eq.ons.gov.uk/blocks/definitions.json#/question_variants"
       },
       "list_summary": {
         "type": "object",

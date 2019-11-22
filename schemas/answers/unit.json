@@ -44,7 +44,7 @@
         "$ref": "definitions.json#/min_value"
       },
       "unit": {
-        "$ref": "../lists/units.json#/unit"
+        "$ref": "https://eq.ons.gov.uk/lists/units.json#/unit"
       },
       "unit_length": {
         "type": "string",

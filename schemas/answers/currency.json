@@ -44,7 +44,7 @@
         "$ref": "definitions.json#/min_value"
       },
       "currency": {
-        "$ref": "../lists/currencies.json#/currency"
+        "$ref": "https://eq.ons.gov.uk/lists/currencies.json#/currency"
       },
       "validation": {
         "type": "object",

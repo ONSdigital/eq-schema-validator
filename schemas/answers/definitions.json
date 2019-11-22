@@ -23,10 +23,10 @@
         "detail_answer": {
           "oneOf": [
             {
-              "$ref": "./text_field.json#/answer"
+              "$ref": "https://eq.ons.gov.uk/answers/text_field.json#/answer"
             },
             {
-              "$ref": "./number.json#/answer"
+              "$ref": "https://eq.ons.gov.uk/answers/number.json#/answer"
             }
           ]
         },
@@ -38,7 +38,7 @@
           "type": "object",
           "oneOf": [
             {
-              "$ref": "../answer_actions/redirect_to_list_add_question.json"
+              "$ref": "https://eq.ons.gov.uk/answer_actions/redirect_to_list_add_question.json"
             }
           ]
         }
