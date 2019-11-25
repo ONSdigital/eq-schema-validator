@@ -41,7 +41,7 @@ pipenv run ./scripts/test_schemas.sh --local
 
 # Installing node dependencies
 
-In the eq-schema-validator directory, install nvm and node using the following commands:
+In the eq-schema-validator directory, install node version manager (nvm) and node using the following commands:
 
 ```
 brew install nvm
