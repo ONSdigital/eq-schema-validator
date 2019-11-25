@@ -40,8 +40,8 @@ glob('../schemas/**/*.json', function(er, schemas) {
     if (!valid) {
       return res.json({
         success: false,
-        errors: validate.errors.sort((a, b) => {
-          return b.dataPath.length - a.dataPath.length
+        errors: validate.errors.sort((error_a, error_b) => {
+          return error_b.dataPath.length - error_a.dataPath.length
         })
       })
     }
