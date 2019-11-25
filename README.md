@@ -39,20 +39,28 @@ Then, in another terminal window/tab, navigate to a checked out copy of eq-surve
 pipenv run ./scripts/test_schemas.sh --local
 ```
 
+# Installing node dependencies
+
+In the eq-schema-validator directory, install nvm and node using the following commands:
+
+```
+brew install nvm
+nvm install
+```
+
+Install yarn and node dependencies:
+
+```
+npm i -g yarn
+yarn 
+```
 
 ## Formatting json
-
-In the eq-schema-validator directory, ensure you are using a recent version of node (>10):
-
-```
-npm install 
-npm i -g gulp-cli
-```
 
 Run the following to format all json files in the schemas directory:
 
 ```
-gulp format
+yarn gulp format
 ````
 
 ## Validating with ajv
