@@ -1575,7 +1575,9 @@ class Validator:  # pylint: disable=too-many-lines
         elif "answer_id" in defined_value:
             referred_answer = answer_ranges.get(defined_value["answer_id"])
             if referred_answer is None:
-                values = None  # Referred answer is not  valid (picked up by _validate_referred_numeric_answer)
+                values = (
+                    None
+                )  # Referred answer is not  valid (picked up by _validate_referred_numeric_answer)
             elif referred_answer.get("default") is not None:
                 values = [system_default]
             else:

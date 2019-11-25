@@ -197,9 +197,7 @@ def test_invalid_calculated_summary():
         "Invalid answer id 'seventh-number-answer' in block total-playback-answer-error's answers_to_calculate",
     ]
 
-    expected_fuzzy_error_messages = [
-        "Duplicate answers",
-    ]
+    expected_fuzzy_error_messages = ["Duplicate answers"]
 
     schema_errors = validator.validate_json_schema(json_to_validate)
     validation_errors = validator.validate_questionnaire(json_to_validate)
@@ -343,7 +341,7 @@ def test_invalid_list_collector_non_radio():
     filename = "schemas/invalid/test_invalid_list_collector_non_radio.json"
 
     expected_error_messages = [
-        "The list collector block list-collector does not contain a Radio answer type",
+        "The list collector block list-collector does not contain a Radio answer type"
     ]
 
     check_validation_errors(filename, expected_error_messages)
@@ -355,7 +353,7 @@ def test_primary_person_invalid_list_collector_non_radio():
     )
 
     expected_error_messages = [
-        "The primary person list collector block primary-person-list-collector does not contain a Radio answer type",
+        "The primary person list collector block primary-person-list-collector does not contain a Radio answer type"
     ]
 
     check_validation_errors(filename, expected_error_messages)
@@ -367,7 +365,7 @@ def test_invalid_list_collector_with_routing():
     )
 
     expected_error_messages = [
-        "The list collector block list-collector contains routing rules on the remove-person sub block",
+        "The list collector block list-collector contains routing rules on the remove-person sub block"
     ]
 
     check_validation_errors(filename, expected_error_messages)
@@ -378,7 +376,7 @@ def test_invalid_primary_person_list_collector_with_routing():
 
     expected_error_messages = [
         "The primary person list collector block primary-person-list-collector contains routing rules on the "
-        "add-primary-person sub block",
+        "add-primary-person sub block"
     ]
 
     check_validation_errors(filename, expected_error_messages)
@@ -388,7 +386,7 @@ def test_invalid_list_collector_with_no_add_option():
     filename = "schemas/invalid/test_invalid_list_collector_with_no_add_option.json"
 
     expected_error_messages = [
-        "The list collector block list-collector has an add_answer_value that is not present in the answer values",
+        "The list collector block list-collector has an add_answer_value that is not present in the answer values"
     ]
 
     check_validation_errors(filename, expected_error_messages)
@@ -399,7 +397,7 @@ def test_invalid_primary_person_list_collector_with_no_add_option():
 
     expected_error_messages = [
         "The primary person list collector block primary-person-list-collector has an add_or_edit_answer value that is not "
-        "present in the answer values",
+        "present in the answer values"
     ]
 
     check_validation_errors(filename, expected_error_messages)
@@ -409,7 +407,7 @@ def test_invalid_list_collector_with_different_add_block_answer_ids():
     filename = "schemas/invalid/test_invalid_list_collector_with_different_add_block_answer_ids.json"
 
     expected_error_messages = [
-        "Multiple list collectors populate the list: people using different answer_ids in the add block",
+        "Multiple list collectors populate the list: people using different answer_ids in the add block"
     ]
 
     check_validation_errors(filename, expected_error_messages)
@@ -420,7 +418,7 @@ def test_invalid_primary_person_list_collector_with_different_add_block_answer_i
 
     expected_error_messages = [
         "Multiple primary person list collectors populate the list: people using different answer ids in the add_or_edit "
-        "block",
+        "block"
     ]
 
     check_validation_errors(filename, expected_error_messages)
@@ -430,7 +428,7 @@ def test_invalid_list_collector_with_different_answer_ids_in_add_and_edit():
     filename = "schemas/invalid/test_invalid_list_collector_with_different_answer_ids_in_add_and_edit.json"
 
     expected_error_messages = [
-        "The list collector block list-collector contains an add block and edit block with different answer ids",
+        "The list collector block list-collector contains an add block and edit block with different answer ids"
     ]
 
     check_validation_errors(filename, expected_error_messages)
@@ -553,7 +551,7 @@ def test_invalid_primary_person_list_collector_bad_answer_reference_ids():
         "schemas/invalid/test_invalid_primary_person_list_collector_bad_answer_id.json"
     )
     expected_error_messages = [
-        "add_or_edit_answer reference uses id not found in main block question: fake-answer-id",
+        "add_or_edit_answer reference uses id not found in main block question: fake-answer-id"
     ]
 
     check_validation_errors(filename, expected_error_messages)
@@ -632,7 +630,7 @@ def test_invalid_repeating_section_list_name():
 def test_invalid_repeating_section_title_placeholders():
     filename = "schemas/invalid/test_invalid_repeating_section_title_placeholders.json"
     expected_error_messages = [
-        "Placeholders in '{person}' don't match definitions. Missing '{'person'}'",
+        "Placeholders in '{person}' don't match definitions. Missing '{'person'}'"
     ]
 
     check_validation_errors(filename, expected_error_messages)
