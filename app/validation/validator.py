@@ -544,10 +544,11 @@ class Validator:  # pylint: disable=too-many-lines
     def is_rule_value_valid(answer_ids_with_parent_id, rule_value):
         if isinstance(rule_value, int):
             return True
-        for block in answer_ids_with_parent_id:
-            for answer_block in answer_ids_with_parent_id[block]['answer'].get('options', {}):
-                if rule_value == answer_block.get('value'):
-                    return True
+        for check_block in answer_ids_with_parent_id:
+            if answer_ids_with_parent_id[check_block]['answer'].get('options'):
+                for answer_block in answer_ids_with_parent_id[check_block]['answer'].get('options'):
+                    if rule_value == answer_block.get('value'):
+                        return True
         return False
 
     def _validate_skip_condition(self, skip_condition, answer_ids_with_group_id, block_or_group):
