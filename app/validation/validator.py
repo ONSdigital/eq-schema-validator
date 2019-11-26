@@ -542,7 +542,7 @@ class Validator:  # pylint: disable=too-many-lines
 
     @staticmethod
     def is_rule_value_valid(answer_ids_with_parent_id, rule_value):
-        if isinstance(rule_value, int) is True:
+        if isinstance(rule_value, int):
             return True
         for block in answer_ids_with_parent_id:
             for answer_block in answer_ids_with_parent_id[block]['answer'].get('options', {}):
