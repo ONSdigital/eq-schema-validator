@@ -548,6 +548,7 @@ class Validator:  # pylint: disable=too-many-lines
             for answer_block in answer_ids_with_parent_id[block]['answer'].get('options', {}):
                 if rule_value == answer_block.get('value'):
                     return True
+        return False
 
     def _validate_skip_condition(self, skip_condition, answer_ids_with_group_id, block_or_group):
         """
