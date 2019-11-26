@@ -1535,7 +1535,8 @@ class Validator:  # pylint: disable=too-many-lines
                     detail_answer = option.get('detail_answer')
                     if detail_answer:
                         answers[detail_answer['id']] = {
-                            'answer': detail_answer
+                            'answer': detail_answer,
+                            **context
                         }
 
         return answers
