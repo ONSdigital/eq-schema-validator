@@ -542,13 +542,12 @@ class Validator:  # pylint: disable=too-many-lines
 
     @staticmethod
     def is_rule_value_valid(answer_ids_with_parent_id, rule_value):
-        if isinstance(rule_value, int) is not True:
-            for block in answer_ids_with_parent_id:
-                for answer_block in answer_ids_with_parent_id[block]['answer'].get('options', {}):
-                    if rule_value == answer_block.get('value'):
-                        return True
-            return False
-        return True
+        if isinstance(rule_value, int) is True:
+            return True
+        for block in answer_ids_with_parent_id:
+            for answer_block in answer_ids_with_parent_id[block]['answer'].get('options', {}):
+                if rule_value == answer_block.get('value'):
+                    return True
 
     def _validate_skip_condition(self, skip_condition, answer_ids_with_group_id, block_or_group):
         """
@@ -1528,16 +1527,15 @@ class Validator:  # pylint: disable=too-many-lines
                     }
 
                 for option in answer.get('options', []):
-                    answer_options = answers[answer['id']]['answer']['options']
-
-                    if answer_options and option['value'] not in [option['value'] for option in answer_options]:
-                        answer_options.append(option)
+                    if answers[answer['id']]['answer']['options'] \
+                            and option['value'] not in [option['value']
+                                                        for option in answers[answer['id']]['answer']['options']]:
+                        answers[answer['id']]['answer']['options'].append(option)
 
                     detail_answer = option.get('detail_answer')
                     if detail_answer:
                         answers[detail_answer['id']] = {
-                            'answer': detail_answer,
-                            **context
+                            'answer': detail_answer
                         }
 
         return answers
