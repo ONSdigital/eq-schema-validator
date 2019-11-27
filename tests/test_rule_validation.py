@@ -31,7 +31,7 @@ multiple_answer_map = {
             "options": [
                 {
                     "description": "For example, student hall of residence, boarding school, "
-                    "armed forces base, hospital, care home, prison",
+                                   "armed forces base, hospital, care home, prison",
                     "label": "A communal establishment",
                     "value": "A communal establishment",
                 },
