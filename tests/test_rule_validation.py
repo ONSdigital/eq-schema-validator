@@ -31,7 +31,7 @@ multiple_answer_map = {
             "options": [
                 {
                     "description": "For example, student hall of residence, boarding school, "
-                                   "armed forces base, hospital, care home, prison",
+                    "armed forces base, hospital, care home, prison",
                     "label": "A communal establishment",
                     "value": "A communal establishment",
                 },
@@ -72,7 +72,9 @@ class TestRule(unittest.TestCase):
     def test_search_values_in_options():
 
         rule_list = ["Yes this is correct", "No I need to change this"]
-        comparison = [Validator.is_rule_value_valid(single_answer_map, rule) for rule in rule_list]
+        comparison = [
+            Validator.is_rule_value_valid(single_answer_map, rule) for rule in rule_list
+        ]
         assert all(comparison)
 
     @staticmethod
