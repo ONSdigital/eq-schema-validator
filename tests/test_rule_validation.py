@@ -1,8 +1,8 @@
 import unittest
 
-import app.validation.validator as validation
+from app.validation.validator import Validator
 
-single_answer_id = {
+single_answer_map = {
     "confirm-zero-employees-answer": {
         "answer": {
             "type": "Radio",
@@ -23,7 +23,7 @@ single_answer_id = {
     }
 }
 
-multiple_answer_ids = {
+multiple_answer_map = {
     "accommodation-type-answer": {
         "answer": {
             "id": "accommodation-type-answer",
@@ -69,35 +69,33 @@ multiple_answer_ids = {
 
 class TestRule(unittest.TestCase):
     @staticmethod
-    def test_search_first_value_in_options():
+    def test_search_values_in_options():
 
-        comparison = validation.Validator().is_rule_value_valid(
-            single_answer_id, "Yes this is correct"
-        )
-
-        assert comparison is True
+        rule_list = ["Yes this is correct", "No I need to change this"]
+        comparison = [Validator.is_rule_value_valid(single_answer_map, rule) for rule in rule_list]
+        assert all(comparison)
 
     @staticmethod
     def test_search_second_value_in_options():
 
-        comparison = validation.Validator().is_rule_value_valid(
-            single_answer_id, "No I need to change this"
+        comparison = Validator.is_rule_value_valid(
+            single_answer_map, "No I need to change this"
         )
 
         assert comparison is True
 
     @staticmethod
-    def test_number_rule_ignored():
+    def test_number_rule_skipped():
 
-        comparison = validation.Validator().is_rule_value_valid(single_answer_id, 123)
+        comparison = Validator.is_rule_value_valid(single_answer_map, 123)
 
         assert comparison is True
 
     @staticmethod
     def test_search_second_answer_id():
 
-        comparison = validation.Validator().is_rule_value_valid(
-            multiple_answer_ids, "No, I’m answering for myself"
+        comparison = Validator.is_rule_value_valid(
+            multiple_answer_map, "No, I’m answering for myself"
         )
 
         assert comparison is True
@@ -120,6 +118,6 @@ class TestRule(unittest.TestCase):
                 "section": "default-section",
             }
         }
-        comparison = validation.Validator().is_rule_value_valid(answer_id, "Ignored")
+        comparison = Validator.is_rule_value_valid(answer_id, "Ignored")
 
         assert comparison is False
