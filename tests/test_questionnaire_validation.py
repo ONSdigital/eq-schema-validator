@@ -81,7 +81,7 @@ def test_invalid_schema_block():
         "missing options ['No, I prefer tea']",
         "The answer id - AnAnswerThatDoesNotExist in the id key of the "
         '"when" clause for response-yes does not exist',
-        'Answer option and routing rule values mismatch, missing answer value: no',
+        "Answer option and routing rule values mismatch, missing answer value: no",
     ]
 
     check_validation_errors(filename, expected_error_messages)
