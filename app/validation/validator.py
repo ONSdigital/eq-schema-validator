@@ -750,7 +750,9 @@ class Validator:  # pylint: disable=too-many-lines
             if isinstance(rule_value, int):
                 valid_rule = True
             else:
-                valid_rule = self.is_rule_value_valid(answer_ids_with_parent_id, rule_value)
+                valid_rule = self.is_rule_value_valid(
+                    answer_ids_with_parent_id, rule_value
+                )
 
             if not valid_rule:
                 errors.append(
