@@ -87,11 +87,11 @@ class TestRule(unittest.TestCase):
         assert comparison is True
 
     @staticmethod
-    def test_number_rule_skipped():
+    def test_number_rule_missing():
 
         comparison = Validator.is_rule_value_valid(single_answer_map, 123)
 
-        assert comparison is True
+        assert comparison is False
 
     @staticmethod
     def test_search_second_answer_id():

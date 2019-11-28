@@ -747,7 +747,10 @@ class Validator:  # pylint: disable=too-many-lines
             when_values.append(when_value)
 
         for rule_value in when_values:
-            valid_rule = self.is_rule_value_valid(answer_ids_with_parent_id, rule_value)
+            if isinstance(rule_value, int):
+                valid_rule = True
+            else:
+                valid_rule = self.is_rule_value_valid(answer_ids_with_parent_id, rule_value)
 
             if not valid_rule:
                 errors.append(
@@ -761,8 +764,6 @@ class Validator:  # pylint: disable=too-many-lines
 
     @staticmethod
     def is_rule_value_valid(answer_ids_with_parent_id, rule_value):
-        if isinstance(rule_value, int):
-            return True
         for check_block in answer_ids_with_parent_id:
             if answer_ids_with_parent_id[check_block]["answer"].get("options"):
                 for answer_block in answer_ids_with_parent_id[check_block][
