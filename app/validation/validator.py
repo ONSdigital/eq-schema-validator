@@ -748,7 +748,6 @@ class Validator:  # pylint: disable=too-many-lines
             when_values.append(when_value)
 
         for rule_value in when_values:
-            valid_rule = False
 
             if answer_id is None:
                 return errors
@@ -757,28 +756,25 @@ class Validator:  # pylint: disable=too-many-lines
                 "Radio",
                 "Checkbox",
             ):
-                valid_rule = self.is_rule_value_valid(
+                if not self.is_rule_value_valid(
                     answer_ids_with_parent_id, rule_value, answer_id
-                )
-
-            if not valid_rule:
-                errors.append(
-                    Validator._error_message(
-                        f"Answer option and routing rule values mismatch, "
-                        f"missing answer value: {rule_value}"
+                ):
+                    errors.append(
+                        Validator._error_message(
+                            f"Answer option and routing rule values mismatch, "
+                            f"missing answer value: {rule_value}"
+                        )
                     )
-                )
 
         return errors
 
     @staticmethod
     def is_rule_value_valid(answer_ids_with_parent_id, rule_value, answer_id):
-        if answer_ids_with_parent_id[answer_id]["answer"].get("options"):
-            for answer_block in answer_ids_with_parent_id[answer_id]["answer"].get(
-                "options"
-            ):
-                if rule_value == answer_block.get("value"):
-                    return True
+        for answer_block in (
+            answer_ids_with_parent_id[answer_id].get("answer", {}).get("options", [])
+        ):
+            if rule_value == answer_block.get("value"):
+                return True
         return False
 
     def _validate_skip_condition(
