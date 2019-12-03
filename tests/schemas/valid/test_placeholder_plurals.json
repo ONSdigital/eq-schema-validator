@@ -92,7 +92,6 @@
                   {
                     "id": "answer2",
                     "mandatory": false,
-                    "type": "Number",
                     "type": "Radio",
                     "options": [
                       {
