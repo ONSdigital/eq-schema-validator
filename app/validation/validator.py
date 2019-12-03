@@ -742,16 +742,23 @@ class Validator:  # pylint: disable=too-many-lines
         errors = []
         when_values = when_dict.get("values", [])
         when_value = when_dict.get("value")
+        answer_id = when_dict.get("id", None)
 
         if when_value:
             when_values.append(when_value)
 
         for rule_value in when_values:
-            if isinstance(rule_value, int):
-                valid_rule = True
-            else:
+            valid_rule = False
+
+            if answer_id is None:
+                return errors
+
+            if answer_ids_with_parent_id[answer_id]["answer"].get("type") in (
+                "Radio",
+                "Checkbox",
+            ):
                 valid_rule = self.is_rule_value_valid(
-                    answer_ids_with_parent_id, rule_value
+                    answer_ids_with_parent_id, rule_value, answer_id
                 )
 
             if not valid_rule:
@@ -765,14 +772,13 @@ class Validator:  # pylint: disable=too-many-lines
         return errors
 
     @staticmethod
-    def is_rule_value_valid(answer_ids_with_parent_id, rule_value):
-        for check_block in answer_ids_with_parent_id:
-            if answer_ids_with_parent_id[check_block]["answer"].get("options"):
-                for answer_block in answer_ids_with_parent_id[check_block][
-                    "answer"
-                ].get("options"):
-                    if rule_value == answer_block.get("value"):
-                        return True
+    def is_rule_value_valid(answer_ids_with_parent_id, rule_value, answer_id):
+        if answer_ids_with_parent_id[answer_id]["answer"].get("options"):
+            for answer_block in answer_ids_with_parent_id[answer_id]["answer"].get(
+                "options"
+            ):
+                if rule_value == answer_block.get("value"):
+                    return True
         return False
 
     def _validate_skip_condition(

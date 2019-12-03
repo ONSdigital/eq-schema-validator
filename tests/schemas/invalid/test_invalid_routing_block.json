@@ -71,7 +71,7 @@
                     "when": [
                       {
                         "condition": "equals",
-                        "id": "fake-answer",
+                        "id": "conditional-routing-answer",
                         "value": "no"
                       }
                     ]
@@ -104,7 +104,7 @@
                     "when": [
                       {
                         "condition": "equals",
-                        "id": "AnAnswerThatDoesNotExist",
+                        "id": "conditional-routing-answer",
                         "value": 17
                       }
                     ]

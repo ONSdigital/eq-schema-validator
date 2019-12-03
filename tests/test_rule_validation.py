@@ -69,43 +69,43 @@ multiple_answer_map = {
 
 class TestRule(unittest.TestCase):
     @staticmethod
-    def test_search_values_in_options():
+    def test_search_values_in_options(answer_id="confirm-zero-employees-answer"):
 
         rule_list = ["Yes this is correct", "No I need to change this"]
         comparison = [
-            Validator.is_rule_value_valid(single_answer_map, rule) for rule in rule_list
+            Validator.is_rule_value_valid(single_answer_map, rule, answer_id) for rule in rule_list
         ]
         assert all(comparison)
 
     @staticmethod
-    def test_search_second_value_in_options():
+    def test_search_second_value_in_options(answer_id="confirm-zero-employees-answer"):
 
         comparison = Validator.is_rule_value_valid(
-            single_answer_map, "No I need to change this"
+            single_answer_map, "No I need to change this", answer_id
         )
 
         assert comparison is True
 
     @staticmethod
-    def test_number_rule_missing():
+    def test_number_rule_missing(answer_id="confirm-zero-employees-answer"):
 
-        comparison = Validator.is_rule_value_valid(single_answer_map, 123)
+        comparison = Validator.is_rule_value_valid(single_answer_map, 123, answer_id)
 
         assert comparison is False
 
     @staticmethod
-    def test_search_second_answer_id():
+    def test_search_second_answer_id(answer_id="proxy-answer"):
 
         comparison = Validator.is_rule_value_valid(
-            multiple_answer_map, "No, I’m answering for myself"
+            multiple_answer_map, "No, I’m answering for myself", answer_id
         )
 
         assert comparison is True
 
     @staticmethod
-    def test_missing_answer_options():
+    def test_missing_answer_options(answer_id="number-of-employees-total"):
 
-        answer_id = {
+        missing_answer_map = {
             "number-of-employees-total": {
                 "answer": {
                     "id": "number-of-employees-total",
@@ -120,6 +120,6 @@ class TestRule(unittest.TestCase):
                 "section": "default-section",
             }
         }
-        comparison = Validator.is_rule_value_valid(answer_id, "Ignored")
+        comparison = Validator.is_rule_value_valid(missing_answer_map, "Ignored", answer_id)
 
         assert comparison is False

@@ -74,13 +74,10 @@ def test_invalid_schema_block():
         "conditional-routing-block must contain a default routing rule "
         "without a when rule",
         "Routing rule routes to invalid block [invalid-location]",
-        "The answer id - fake-answer in the id key of the "
-        '"when" clause for conditional-routing-block does not exist',
         "Routing rule not defined for all answers or "
         "default not defined for answer [conditional-routing-answer] "
         "missing options ['No, I prefer tea']",
-        "The answer id - AnAnswerThatDoesNotExist in the id key of the "
-        '"when" clause for response-yes does not exist',
+        "Answer option and routing rule values mismatch, missing answer value: 17",
         "Answer option and routing rule values mismatch, missing answer value: no",
     ]
 
@@ -622,7 +619,8 @@ def test_invalid_hub_and_spoke_and_summary_confirmation_non_existent():
 def test_invalid_repeating_section_list_name():
     filename = "schemas/invalid/test_invalid_repeating_section_list_name.json"
     expected_error_messages = [
-        "for_list 'non-existent-list' is not populated by any ListCollector blocks"
+        "for_list 'non-existent-list' is not populated by any ListCollector blocks",
+        "Answer option and routing rule values mismatch, missing answer value: No",
     ]
 
     check_validation_errors(filename, expected_error_messages)
@@ -631,7 +629,8 @@ def test_invalid_repeating_section_list_name():
 def test_invalid_repeating_section_title_placeholders():
     filename = "schemas/invalid/test_invalid_repeating_section_title_placeholders.json"
     expected_error_messages = [
-        "Placeholders in '{person}' don't match definitions. Missing '{'person'}'"
+        "Placeholders in '{person}' don't match definitions. Missing '{'person'}'",
+        "Answer option and routing rule values mismatch, missing answer value: No",
     ]
 
     check_validation_errors(filename, expected_error_messages)
