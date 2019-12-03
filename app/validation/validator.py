@@ -752,11 +752,11 @@ class Validator:  # pylint: disable=too-many-lines
 
         for rule_value in when_values:
 
-            if answer_ids_with_parent_id[answer_id]["answer"].get("type") in (
+            answer = answer_ids_with_parent_id[answer_id].get("answer", {})
+            if answer.get("type") in (
                 "Radio",
                 "Checkbox",
             ):
-                answer = answer_ids_with_parent_id[answer_id].get("answer", {})
                 if not self.is_rule_value_valid(answer, rule_value):
                     errors.append(
                         Validator._error_message(
@@ -769,10 +769,7 @@ class Validator:  # pylint: disable=too-many-lines
 
     @staticmethod
     def is_rule_value_valid(answer, rule_value):
-        for option in answer.get("options", []):
-            if rule_value == option.get("value"):
-                return True
-        return False
+        return rule_value in [option["value"] for option in answer.get("options", [])]
 
     def _validate_skip_condition(
         self, skip_condition, answer_ids_with_group_id, block_or_group
