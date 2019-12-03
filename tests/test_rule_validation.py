@@ -73,7 +73,8 @@ class TestRule(unittest.TestCase):
 
         rule_list = ["Yes this is correct", "No I need to change this"]
         comparison = [
-            Validator.is_rule_value_valid(single_answer_map, rule, answer_id) for rule in rule_list
+            Validator.is_rule_value_valid(single_answer_map, rule, answer_id)
+            for rule in rule_list
         ]
         assert all(comparison)
 
@@ -120,6 +121,8 @@ class TestRule(unittest.TestCase):
                 "section": "default-section",
             }
         }
-        comparison = Validator.is_rule_value_valid(missing_answer_map, "Ignored", answer_id)
+        comparison = Validator.is_rule_value_valid(
+            missing_answer_map, "Ignored", answer_id
+        )
 
         assert comparison is False
