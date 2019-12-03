@@ -757,9 +757,7 @@ class Validator:  # pylint: disable=too-many-lines
                 "Checkbox",
             ):
                 answer = answer_ids_with_parent_id[answer_id].get("answer", {})
-                if not self.is_rule_value_valid(
-                    answer, rule_value
-                ):
+                if not self.is_rule_value_valid(answer, rule_value):
                     errors.append(
                         Validator._error_message(
                             f"Answer option and routing rule values mismatch, "
@@ -771,9 +769,7 @@ class Validator:  # pylint: disable=too-many-lines
 
     @staticmethod
     def is_rule_value_valid(answer, rule_value):
-        for option in (
-            answer.get("options", [])
-        ):
+        for option in answer.get("options", []):
             if rule_value == option.get("value"):
                 return True
         return False
