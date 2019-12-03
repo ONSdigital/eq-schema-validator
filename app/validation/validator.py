@@ -744,20 +744,21 @@ class Validator:  # pylint: disable=too-many-lines
         when_value = when_dict.get("value")
         answer_id = when_dict.get("id", None)
 
+        if answer_id is None:
+            return errors
+
         if when_value:
             when_values.append(when_value)
 
         for rule_value in when_values:
 
-            if answer_id is None:
-                return errors
-
             if answer_ids_with_parent_id[answer_id]["answer"].get("type") in (
                 "Radio",
                 "Checkbox",
             ):
+                answer = answer_ids_with_parent_id[answer_id].get("answer", {})
                 if not self.is_rule_value_valid(
-                    answer_ids_with_parent_id, rule_value, answer_id
+                    answer, rule_value
                 ):
                     errors.append(
                         Validator._error_message(
@@ -769,11 +770,11 @@ class Validator:  # pylint: disable=too-many-lines
         return errors
 
     @staticmethod
-    def is_rule_value_valid(answer_ids_with_parent_id, rule_value, answer_id):
-        for answer_block in (
-            answer_ids_with_parent_id[answer_id].get("answer", {}).get("options", [])
+    def is_rule_value_valid(answer, rule_value):
+        for option in (
+            answer.get("options", [])
         ):
-            if rule_value == answer_block.get("value"):
+            if rule_value == option.get("value"):
                 return True
         return False
 
