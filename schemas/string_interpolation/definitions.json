@@ -192,10 +192,10 @@
           },
           "other": {
             "type": "string"
-          },
-          "additionalProperties": false,
-          "required": ["other"]
-        }
+          }
+        },
+        "additionalProperties": false,
+        "required": ["other"]
       },
       "count": {
         "description": "The source to use for the count. Must resolve to a number.",
