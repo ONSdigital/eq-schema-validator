@@ -103,12 +103,12 @@ Additional placeholders can also be defined:
                     }
                 ]
             },
-			{
-				"placeholder": "address",
+            {
+                "placeholder": "address",
                 "value": {
-					"source": "metadata",
-					"identifier": "display_address"
-				}
+                    "source": "metadata",
+                    "identifier": "display_address"
+                }
             }
         ],
         "text_plural": {
