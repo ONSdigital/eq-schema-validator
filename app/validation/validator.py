@@ -1817,15 +1817,14 @@ class Validator:  # pylint: disable=too-many-lines
                         f"Invalid answer reference '{identifier}' in block '{current_block_id}'"
                     )
                 )
-            else:
-                if answers_with_parent_ids[identifier]["block"] == current_block_id:
-                    errors.append(
-                        self._error_message(
-                            "Invalid answer reference '{}' in block '{}' (self-reference)".format(
-                                identifier, current_block_id
-                            )
+            elif answers_with_parent_ids[identifier]["block"] == current_block_id:
+                errors.append(
+                    self._error_message(
+                        "Invalid answer reference '{}' in block '{}' (self-reference)".format(
+                            identifier, current_block_id
                         )
                     )
+                )
         return errors
 
     def _validate_metadata_source_reference(
