@@ -1722,6 +1722,8 @@ class Validator:  # pylint: disable=too-many-lines
         elif isinstance(input_data, list):
             for item in input_data:
                 yield from self._get_dicts_with_key(item, key_name)
+        else:
+            yield from ()
 
     def _validate_placeholder_object(self, placeholder_object, current_block_id):
         """ Current block id may be None if called outside of a block
@@ -1766,7 +1768,7 @@ class Validator:  # pylint: disable=too-many-lines
     def _validate_placeholders(self, block_json):
         errors = []
         strings_with_placeholders = self._get_dicts_with_key(block_json, "placeholders")
-        for placeholder_object in strings_with_placeholders or []:
+        for placeholder_object in strings_with_placeholders:
             errors.extend(
                 self._validate_placeholder_object(placeholder_object, block_json["id"])
             )
@@ -1778,7 +1780,7 @@ class Validator:  # pylint: disable=too-many-lines
     ):
         errors = []
         source_references = self._get_dicts_with_key(block_json, "identifier")
-        for source_reference in source_references or []:
+        for source_reference in source_references:
             source = source_reference["source"]
             if isinstance(source_reference["identifier"], str):
                 identifiers = [source_reference["identifier"]]
