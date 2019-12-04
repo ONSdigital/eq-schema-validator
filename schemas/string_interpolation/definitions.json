@@ -200,8 +200,9 @@
       "count": {
         "description": "The source to use for the count. Must resolve to a number.",
         "$ref": "#/lookup_source"
-      },
-      "additionalProperties": false
-    }
+      }
+    },
+    "additionalProperties": false,
+    "required": ["forms", "count"]
   }
 }
