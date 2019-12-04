@@ -63,6 +63,7 @@ Example schema:
             }
         }
     }
+}
 ```
 
 Translated schemas can contain more forms than an English source schema, for example:
@@ -121,6 +122,7 @@ Additional placeholders can also be defined:
             }
         }
     }
+}
 ```
 
 ### Mapping the count to the CLDR plural forms
