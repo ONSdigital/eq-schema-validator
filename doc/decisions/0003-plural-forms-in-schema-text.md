@@ -40,15 +40,15 @@ Example schema:
             {
                 "placeholder": "number_of_people",
                 "transforms": [
-                {
-                    "arguments": {
-                        "number": {
-                            "source": "list",
-                            "identifier": "household"
-                        }
-                    },
-                    "transform": "number_to_words"
-                }
+                    {
+                        "arguments": {
+                            "number": {
+                                "source": "list",
+                                "identifier": "household"
+                            }
+                        },
+                        "transform": "number_to_words"
+                    }
                 ]
             }
         ],
@@ -80,6 +80,47 @@ Translated schemas can contain more forms than an English source schema, for exa
         }
     }
 }
+```
+
+Additional placeholders can also be defined:
+
+```json
+{
+    "summary_text": {
+        "placeholders": [
+            {
+                "placeholder": "number_of_people",
+                "transforms": [
+                    {
+                        "arguments": {
+                            "number": {
+                                "source": "list",
+                                "identifier": "household"
+                            }
+                        },
+                        "transform": "number_to_words"
+                    }
+                ]
+            },
+			{
+				"placeholder": "address",
+                "value": {
+					"source": "metadata",
+					"identifier": "display_address"
+				}
+            }
+        ],
+        "text_plural": {
+            "forms": {
+                "one": "Yes, {number_of_people} person live at {address}",
+                "other": "Yes, {number_of_people} people live at {address}"
+            },
+            "count": {
+                "source": "list",
+                "identifier": "household"
+            }
+        }
+    }
 ```
 
 ### Mapping the count to the CLDR plural forms
