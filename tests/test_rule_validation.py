@@ -2,16 +2,10 @@ import unittest
 
 from app.validation.validator import Validator
 
-answer = {
-    "type": "Radio",
-    "id": "confirm-zero-employees-answer",
-    "options": [
-        {"label": "Yes this is correct", "value": "Yes this is correct"},
-        {"label": "No I need to change this", "value": "No I need to change this"},
-    ],
-    "mandatory": True,
-    "q_code": "d50",
-}
+answer = [
+    {"label": "Yes this is correct", "value": "Yes this is correct"},
+    {"label": "No I need to change this", "value": "No I need to change this"},
+]
 
 
 class TestRule(unittest.TestCase):

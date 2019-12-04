@@ -84,6 +84,7 @@ class Validator:  # pylint: disable=too-many-lines
             answers_with_parent_ids = self._get_answers_with_parent_ids(
                 json_to_validate
             )
+            answers_with_options = self._get_answers_with_options(json_to_validate)
             self._list_names = self._get_list_names(json_to_validate)
             self._block_ids = self._get_block_ids(json_to_validate)
 
@@ -116,6 +117,7 @@ class Validator:  # pylint: disable=too-many-lines
                             all_groups,
                             answers_with_parent_ids,
                             numeric_answer_ranges,
+                            answers_with_options,
                         )
                     )
 
@@ -224,6 +226,7 @@ class Validator:  # pylint: disable=too-many-lines
         all_groups,
         answers_with_parent_ids,
         numeric_answer_ranges,
+        answers_with_options,
     ):
         errors = []
         for block in group.get("blocks"):
@@ -256,7 +259,9 @@ class Validator:  # pylint: disable=too-many-lines
                     )
                 )
                 errors.extend(
-                    self._validate_routing_rule(rule, answers_with_parent_ids, block)
+                    self._validate_routing_rule(
+                        rule, answers_with_parent_ids, block, answers_with_options
+                    )
                 )
 
             for skip_condition in block.get("skip_conditions", []):
@@ -719,7 +724,9 @@ class Validator:  # pylint: disable=too-many-lines
 
         return errors
 
-    def _validate_routing_rule(self, rule, answer_ids_with_group_id, block_or_group):
+    def _validate_routing_rule(
+        self, rule, answer_ids_with_group_id, block_or_group, answers_with_options
+    ):
         errors = []
 
         rule = rule.get("goto")
@@ -731,14 +738,12 @@ class Validator:  # pylint: disable=too-many-lines
             )
             for when_dict in rule.get("when"):
                 errors.extend(
-                    self._validate_routing_when_dict(
-                        when_dict, answer_ids_with_group_id
-                    )
+                    self._validate_routing_when_dict(when_dict, answers_with_options)
                 )
 
         return errors
 
-    def _validate_routing_when_dict(self, when_dict, answer_ids_with_parent_id):
+    def _validate_routing_when_dict(self, when_dict, answers_with_options):
         errors = []
         when_values = when_dict.get("values", [])
         when_value = when_dict.get("value")
@@ -751,9 +756,8 @@ class Validator:  # pylint: disable=too-many-lines
             when_values.append(when_value)
 
         for rule_value in when_values:
-
-            answer = answer_ids_with_parent_id[answer_id].get("answer", {})
-            if answer.get("type") in ("Radio", "Checkbox"):
+            if answers_with_options:
+                answer = answers_with_options[answer_id]
                 if not self.is_rule_value_valid(answer, rule_value):
                     errors.append(
                         Validator._error_message(
@@ -766,7 +770,7 @@ class Validator:  # pylint: disable=too-many-lines
 
     @staticmethod
     def is_rule_value_valid(answer, rule_value):
-        return rule_value in [option["value"] for option in answer.get("options", [])]
+        return rule_value in [option["value"] for option in answer]
 
     def _validate_skip_condition(
         self, skip_condition, answer_ids_with_group_id, block_or_group
@@ -2135,25 +2139,31 @@ class Validator:  # pylint: disable=too-many-lines
         answers = {}
         for question, context in self._get_questions_with_context(json_to_validate):
             for answer in question.get("answers", []):
-
-                if not answer["id"] in answers:
-                    answers[answer["id"]] = {"answer": answer, **context}
-
+                answers[answer["id"]] = {"answer": answer, **context}
                 for option in answer.get("options", []):
-                    if answers[answer["id"]]["answer"]["options"] and option[
-                        "value"
-                    ] not in [
-                        option["value"]
-                        for option in answers[answer["id"]]["answer"]["options"]
-                    ]:
-                        answers[answer["id"]]["answer"]["options"].append(option)
-
                     detail_answer = option.get("detail_answer")
                     if detail_answer:
                         answers[detail_answer["id"]] = {
                             "answer": detail_answer,
                             **context,
                         }
+
+        return answers
+
+    def _get_answers_with_options(self, json_to_validate):
+        answers = {}
+        for question in self._get_questions_with_context(json_to_validate):
+            for answer in question[0]["answers"]:
+
+                if answer.get("type") in ("Radio", "Checkbox"):
+                    if answer["id"] not in answers:
+                        answers[answer["id"]] = answer["options"]
+                    else:
+                        for option in answer.get("options", []):
+                            if answers[answer["id"]] and option["value"] not in [
+                                option["value"] for option in answers[answer["id"]]
+                            ]:
+                                answers[answer["id"]].append(option)
 
         return answers
 
