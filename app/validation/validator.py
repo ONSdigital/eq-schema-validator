@@ -1733,7 +1733,7 @@ class Validator:  # pylint: disable=too-many-lines
             placeholders_in_string.update(
                 placeholder_regex.findall(placeholder_object.get("text"))
             )
-        if "text_plural" in placeholder_object:
+        elif "text_plural" in placeholder_object:
             for text in placeholder_object["text_plural"]["forms"].values():
                 placeholders_in_string.update(placeholder_regex.findall(text))
 
@@ -1791,13 +1791,13 @@ class Validator:  # pylint: disable=too-many-lines
                         identifiers, answers_with_parent_ids, block_json["id"]
                     )
                 )
-            if source == "metadata":
+            elif source == "metadata":
                 errors.extend(
                     self._validate_metadata_source_reference(
                         identifiers, valid_metadata_ids, block_json["id"]
                     )
                 )
-            if source == "list":
+            elif source == "list":
                 errors.extend(
                     self._validate_list_source_reference(identifiers, block_json["id"])
                 )
