@@ -11,20 +11,40 @@ answer = [
 class TestRule(unittest.TestCase):
     @staticmethod
     def test_value_in_options():
-        rule = "Yes this is correct"
-        comparison = Validator.is_rule_value_valid(answer, rule)
+        when_value = "Yes this is correct"
+        comparison = Validator.is_option_value_in_answer_options(when_value, answer)
 
         assert comparison is True
 
     @staticmethod
     def test_values_not_in_options():
 
-        rule_list = ["Yes", "No"]
-        comparison = [Validator.is_rule_value_valid(answer, rule) for rule in rule_list]
+        when_values = ["Yes", "No"]
+        comparison = [
+            Validator.is_option_value_in_answer_options(when_values, answer)
+            for rule in when_values
+        ]
         assert all(comparison) is False
 
     @staticmethod
     def test_values_in_options():
-        rule_list = ["Yes this is correct", "No I need to change this"]
-        comparison = [Validator.is_rule_value_valid(answer, rule) for rule in rule_list]
+        when_values = ["Yes this is correct", "No I need to change this"]
+        comparison = [
+            Validator.is_option_value_in_answer_options(when_value, answer)
+            for when_value in when_values
+        ]
         assert all(comparison) is True
+
+    @staticmethod
+    def test_are_all_values_in_answer_options():
+        when_values = ["Yes this is correct"]
+        comparison = Validator.are_all_values_in_answer_options(when_values, answer)
+
+        assert comparison is True
+
+    @staticmethod
+    def test_are_all_values_not_in_answer_options():
+
+        when_values = ["Yes this is correct", "No"]
+        comparison = [Validator.are_all_values_in_answer_options(when_values, answer)]
+        assert all(comparison) is False
