@@ -10,6 +10,17 @@
       "number": {
         "type": "string"
       },
+      "cancel_text": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string"
+          },
+          "action_text": {
+            "type": "string"
+          }
+        }
+      },
       "type": {
         "type": "string",
         "enum": [
