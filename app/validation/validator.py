@@ -98,7 +98,10 @@ class Validator:  # pylint: disable=too-many-lines
                 for group in section["groups"]:
                     validation_errors.extend(
                         self._validate_routing_rules(
-                            group, all_groups, answers_with_parent_ids
+                            group,
+                            all_groups,
+                            answers_with_parent_ids,
+                            answers_with_options,
                         )
                     )
 
@@ -193,7 +196,9 @@ class Validator:  # pylint: disable=too-many-lines
 
         return all_groups
 
-    def _validate_routing_rules(self, group, all_groups, answers_with_parent_ids):
+    def _validate_routing_rules(
+        self, group, all_groups, answers_with_parent_ids, answers_with_options
+    ):
         errors = []
 
         errors.extend(
@@ -212,7 +217,9 @@ class Validator:  # pylint: disable=too-many-lines
                 )
             )
             errors.extend(
-                self._validate_routing_rule(rule, answers_with_parent_ids, group)
+                self._validate_routing_rule(
+                    rule, answers_with_parent_ids, group, answers_with_options
+                )
             )
 
         return errors
@@ -747,7 +754,7 @@ class Validator:  # pylint: disable=too-many-lines
         errors = []
         when_values = when_dict.get("values", [])
         when_value = when_dict.get("value")
-        answer_id = when_dict.get("id", None)
+        answer_id = when_dict.get("id")
 
         if answer_id is None:
             return errors
@@ -2155,15 +2162,17 @@ class Validator:  # pylint: disable=too-many-lines
         for question in self._get_questions_with_context(json_to_validate):
             for answer in question[0]["answers"]:
 
-                if answer.get("type") in ("Radio", "Checkbox"):
-                    if answer["id"] not in answers:
-                        answers[answer["id"]] = answer["options"]
-                    else:
-                        for option in answer.get("options", []):
-                            if answers[answer["id"]] and option["value"] not in [
-                                option["value"] for option in answers[answer["id"]]
-                            ]:
-                                answers[answer["id"]].append(option)
+                if (
+                    answer.get("type") in ("Radio", "Checkbox")
+                    and answer["id"] not in answers
+                ):
+                    answers[answer["id"]] = answer["options"]
+                elif answer.get("type") in ("Radio", "Checkbox"):
+                    for option in answer.get("options", []):
+                        if option["value"] not in [
+                            option["value"] for option in answers[answer["id"]]
+                        ]:
+                            answers[answer["id"]].append(option)
 
         return answers
 
