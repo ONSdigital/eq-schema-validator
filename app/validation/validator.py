@@ -2092,32 +2092,26 @@ class Validator:  # pylint: disable=too-many-lines
 
     @classmethod
     def _get_answer_id_to_option_values_map(cls, json_to_validate):
-        answer_id_to_option_values_map = {}
-        questions = (
-            question
-            for question, _ in cls._get_questions_with_context(json_to_validate)
-        )
-        radio_and_checkbox_answers = cls._get_answers_by_type_from_questions(
-            questions=questions, answer_types={"Radio", "Checkbox"}
-        )
+        answer_id_to_option_values_map = defaultdict(set)
+        answers = cls._get_answers(json_to_validate)
 
-        for answer in radio_and_checkbox_answers:
+        for answer in answers:
+            if "options" not in answer:
+                continue
+
             answer_id = answer["id"]
             option_values = [option["value"] for option in answer["options"]]
 
-            if answer_id in answer_id_to_option_values_map:
-                answer_id_to_option_values_map[answer_id].update(option_values)
-            else:
-                answer_id_to_option_values_map[answer_id] = set(option_values)
+            answer_id_to_option_values_map[answer_id].update(option_values)
 
         return answer_id_to_option_values_map
 
-    @staticmethod
-    def _get_answers_by_type_from_questions(questions, answer_types):
-        for question in questions:
+    @classmethod
+    def _get_answers(cls, json_to_validate):
+        questions = cls._get_questions_with_context(json_to_validate)
+        for question, _ in questions:
             for answer in question["answers"]:
-                if answer["type"] in answer_types:
-                    yield answer
+                yield answer
 
     @classmethod
     def _get_questions_with_context(cls, questionnaire_json):
