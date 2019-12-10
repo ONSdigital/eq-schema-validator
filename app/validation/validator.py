@@ -83,7 +83,7 @@ class Validator:  # pylint: disable=too-many-lines
             answers_with_parent_ids = self._get_answers_with_parent_ids(
                 json_to_validate
             )
-            option_value_to_answer_id_map = self._get_option_value_to_answer_id_map(
+            answer_id_to_option_values_map = self._get_answer_id_to_option_values_map(
                 json_to_validate
             )
             self._list_names = self._get_list_names(json_to_validate)
@@ -98,7 +98,7 @@ class Validator:  # pylint: disable=too-many-lines
                             group,
                             all_groups,
                             answers_with_parent_ids,
-                            option_value_to_answer_id_map,
+                            answer_id_to_option_values_map,
                         )
                     )
 
@@ -107,7 +107,7 @@ class Validator:  # pylint: disable=too-many-lines
                             self._validate_skip_condition(
                                 skip_condition,
                                 answers_with_parent_ids,
-                                option_value_to_answer_id_map,
+                                answer_id_to_option_values_map,
                                 group,
                             )
                         )
@@ -120,7 +120,7 @@ class Validator:  # pylint: disable=too-many-lines
                             all_groups,
                             answers_with_parent_ids,
                             numeric_answer_ranges,
-                            option_value_to_answer_id_map,
+                            answer_id_to_option_values_map,
                         )
                     )
 
@@ -2161,8 +2161,8 @@ class Validator:  # pylint: disable=too-many-lines
         return answers
 
     @classmethod
-    def _get_option_value_to_answer_id_map(cls, json_to_validate):
-        option_value_to_answer_id_map = {}
+    def _get_answer_id_to_option_values_map(cls, json_to_validate):
+        answer_id_to_option_values_map = {}
         questions = (
             question
             for question, _ in cls._get_questions_with_context(json_to_validate)
@@ -2175,12 +2175,12 @@ class Validator:  # pylint: disable=too-many-lines
             answer_id = answer["id"]
             option_values = [option["value"] for option in answer["options"]]
 
-            if answer_id in option_value_to_answer_id_map:
-                option_value_to_answer_id_map[answer_id].update(option_values)
+            if answer_id in answer_id_to_option_values_map:
+                answer_id_to_option_values_map[answer_id].update(option_values)
             else:
-                option_value_to_answer_id_map[answer_id] = set(option_values)
+                answer_id_to_option_values_map[answer_id] = set(option_values)
 
-        return option_value_to_answer_id_map
+        return answer_id_to_option_values_map
 
     @staticmethod
     def _get_answers_by_type_from_questions(questions, answer_types):
