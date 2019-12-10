@@ -731,7 +731,7 @@ class Validator:  # pylint: disable=too-many-lines
         if when_value:
             when_values.append(when_value)
 
-        option_values = self.answer_id_to_option_values_map.get(when_rule["id"], {})
+        option_values = self.answer_id_to_option_values_map.get(when_rule["id"])
         if not option_values:
             return []
 
