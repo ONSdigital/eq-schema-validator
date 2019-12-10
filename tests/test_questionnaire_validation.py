@@ -696,6 +696,20 @@ def test_invalid_mismatching_answer_label_and_value():
     check_validation_errors(filename, expected_error_messages)
 
 
+def test_invalid_answer_value_in_when_rule():
+    filename = "schemas/invalid/test_invalid_answer_value_in_when_rule.json"
+    expected_error_messages = [
+        "Answer value in when rule with answer id `country-checkbox-answer` has an invalid value of `['France']`",
+        "Answer value in when rule with answer id `country-checkbox-answer` has an invalid value of `['France', 'Italy']`",
+        "Answer value in when rule with answer id `country-checkbox-answer` has an invalid value of `['France', 'Austria']`",
+        "Answer value in when rule with answer id `country-checkbox-answer` has an invalid value of `[7]`",
+        "Answer value in when rule with answer id `country-checkbox-answer` has an invalid value of `['French']`",
+        "Answer value in when rule with answer id `country-checkbox-answer` has an invalid value of `['Italian']`",
+    ]
+
+    check_validation_errors(filename, expected_error_messages)
+
+
 def test_invalid_quotes_in_schema():
     filename = "schemas/invalid/test_invalid_quotes_in_schema_text.json"
 

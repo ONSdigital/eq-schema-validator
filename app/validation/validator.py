@@ -743,36 +743,38 @@ class Validator:  # pylint: disable=too-many-lines
 
         return errors
 
-    def _validate_answer_value_in_when_rule(self, when_rule, option_value_map):
+    @staticmethod
+    def validate_answer_value_in_when_rule(when_rule, option_value_map):
         errors = []
         when_values = when_rule.get("values", [])
         when_value = when_rule.get("value")
         if when_value:
             when_values.append(when_value)
 
-        if when_values and option_value_map:
-            answer_options = option_value_map.get(when_rule["id"])
-
-            if answer_options and not self.are_all_values_in_answer_options(
-                when_values, answer_options
-            ):
-                errors.append(
-                    Validator._error_message(
-                        f"Answer option and when rule values mismatch, "
-                        f"missing answer value: {when_values}"
-                    )
+        if not Validator._is_when_rule_answer_value_valid(
+            answer_id=when_rule["id"],
+            when_values=when_values,
+            option_value_map=option_value_map,
+        ):
+            errors.append(
+                Validator._error_message(
+                    f"Answer value in when rule with answer id `{when_rule['id']}` has an invalid value of `{when_values}`"
                 )
+            )
 
         return errors
 
     @staticmethod
-    def is_option_value_in_answer_options(answer_value, answer_options):
-        return answer_value in [option["value"] for option in answer_options]
+    def _is_when_rule_answer_value_valid(answer_id, when_values, option_value_map):
+        if when_values and option_value_map:
+            option_values = option_value_map.get(answer_id)
 
-    @staticmethod
-    def are_all_values_in_answer_options(values, answer_options):
-        answer_option_values = [option["value"] for option in answer_options]
-        return all(value in answer_option_values for value in values)
+            if option_values and any(
+                value not in option_values for value in when_values
+            ):
+                return False
+
+        return True
 
     def _validate_skip_condition(
         self, skip_condition, answer_ids_with_group_id, option_value_map, block_or_group
@@ -1206,7 +1208,7 @@ class Validator:  # pylint: disable=too-many-lines
 
             if "id" in when:
                 errors.extend(
-                    self._validate_answer_value_in_when_rule(when, option_value_map)
+                    self.validate_answer_value_in_when_rule(when, option_value_map)
                 )
 
         return errors
@@ -2124,40 +2126,41 @@ class Validator:  # pylint: disable=too-many-lines
 
         return answers
 
-    def _get_option_value_map(self, json_to_validate):
-        answers = {}
+    @classmethod
+    def _get_option_value_map(cls, json_to_validate):
+        option_value_map = {}
         questions = (
             question
-            for question, _ in self._get_questions_with_context(json_to_validate)
+            for question, _ in cls._get_questions_with_context(json_to_validate)
         )
-        radio_and_checkbox_answers = self._get_answers_by_type(
+        radio_and_checkbox_answers = cls._get_answers_by_type_from_questions(
             questions=questions, answer_types={"Radio", "Checkbox"}
         )
 
         for answer in radio_and_checkbox_answers:
-            if answer["id"] in answers:
-                for option in answer.get("options", []):
-                    if not self.is_option_value_in_answer_options(
-                        option["value"], answers[answer["id"]]
-                    ):
-                        answers[answer["id"]].append(option)
-            else:
-                answers[answer["id"]] = answer["options"]
+            answer_id = answer["id"]
+            option_values = [option["value"] for option in answer["options"]]
 
-        return answers
+            if answer_id in option_value_map:
+                option_value_map[answer_id].update(option_values)
+            else:
+                option_value_map[answer_id] = set(option_values)
+
+        return option_value_map
 
     @staticmethod
-    def _get_answers_by_type(questions, answer_types):
+    def _get_answers_by_type_from_questions(questions, answer_types):
         for question in questions:
             for answer in question["answers"]:
                 if answer["type"] in answer_types:
                     yield answer
 
-    def _get_questions_with_context(self, questionnaire_json):
+    @classmethod
+    def _get_questions_with_context(cls, questionnaire_json):
         for section in questionnaire_json.get("sections"):
             for group in section.get("groups"):
                 for block in group.get("blocks"):
-                    for question in self._get_all_questions_for_block(block):
+                    for question in cls._get_all_questions_for_block(block):
                         context = {
                             "block": block["id"],
                             "group_id": group["id"],
@@ -2165,12 +2168,13 @@ class Validator:  # pylint: disable=too-many-lines
                         }
                         yield question, context
 
-                        for sub_block, context in self._get_sub_block_context(
+                        for sub_block, context in cls._get_sub_block_context(
                             section, group, block
                         ):
                             yield sub_block, context
 
-    def _get_sub_block_context(self, section, group, block):
+    @classmethod
+    def _get_sub_block_context(cls, section, group, block):
         for sub_block_type in (
             "add_block",
             "edit_block",
@@ -2179,7 +2183,7 @@ class Validator:  # pylint: disable=too-many-lines
         ):
             sub_block = block.get(sub_block_type)
             if sub_block:
-                for question in self._get_all_questions_for_block(sub_block):
+                for question in cls._get_all_questions_for_block(sub_block):
                     context = {
                         "block": sub_block["id"],
                         "group_id": group["id"],

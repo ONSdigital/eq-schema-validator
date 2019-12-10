@@ -3,9 +3,9 @@
   "schema_version": "0.0.2",
   "data_version": "0.0.3",
   "survey_id": "0",
-  "title": "Other input fields",
+  "title": "Test invalid answer value in when rule",
   "theme": "default",
-  "description": "A questionnaire to check missing answer values in routing",
+  "description": "A questionnaire to check invalid answer values in when rules",
   "metadata": [
     {
       "name": "user_id",
@@ -119,14 +119,43 @@
             {
               "id": "country-interstitial-any",
               "type": "Interstitial",
-              "content": {
-                "title": "Condition: Contains Any",
-                "contents": [
-                  {
-                    "description": "This will be routed to only if you chose Italy."
-                  }
-                ]
-              }
+              "skip_conditions": [
+                {
+                  "when": [
+                    {
+                      "id": "country-checkbox-answer",
+                      "condition": "contains",
+                      "value": "French"
+                    }
+                  ]
+                }
+              ],
+              "content_variants": [
+                {
+                  "content": {
+                    "title": "This will be shown only if you chose Italy"
+                  },
+                  "when": [
+                    {
+                      "id": "country-checkbox-answer",
+                      "condition": "contains",
+                      "value": "Italy"
+                    }
+                  ]
+                },
+                {
+                  "content": {
+                    "title": "This will be shown only if you don’t chose Italy."
+                  },
+                  "when": [
+                    {
+                      "id": "country-checkbox-answer",
+                      "condition": "not contains",
+                      "value": "Italian"
+                    }
+                  ]
+                }
+              ]
             },
             {
               "id": "country-interstitial-one",
