@@ -24,6 +24,7 @@ class Validator:  # pylint: disable=too-many-lines
         self._list_collector_answer_ids = {}
         self._list_names = []
         self._block_ids = []
+        self.answer_id_to_option_values_map = {}
         resolver = RefResolver(
             base_uri="https://eq.ons.gov.uk/",
             referrer=self.schema,
@@ -83,11 +84,12 @@ class Validator:  # pylint: disable=too-many-lines
             answers_with_parent_ids = self._get_answers_with_parent_ids(
                 json_to_validate
             )
-            answer_id_to_option_values_map = self._get_answer_id_to_option_values_map(
-                json_to_validate
-            )
+
             self._list_names = self._get_list_names(json_to_validate)
             self._block_ids = self._get_block_ids(json_to_validate)
+            self.answer_id_to_option_values_map = self._get_answer_id_to_option_values_map(
+                json_to_validate
+            )
 
             for section in json_to_validate["sections"]:
                 validation_errors.extend(self._validate_section(section))
@@ -95,20 +97,14 @@ class Validator:  # pylint: disable=too-many-lines
                 for group in section["groups"]:
                     validation_errors.extend(
                         self._validate_routing_rules(
-                            group,
-                            all_groups,
-                            answers_with_parent_ids,
-                            answer_id_to_option_values_map,
+                            group, all_groups, answers_with_parent_ids
                         )
                     )
 
                     for skip_condition in group.get("skip_conditions", []):
                         validation_errors.extend(
                             self._validate_skip_condition(
-                                skip_condition,
-                                answers_with_parent_ids,
-                                answer_id_to_option_values_map,
-                                group,
+                                skip_condition, answers_with_parent_ids, group
                             )
                         )
 
@@ -120,7 +116,6 @@ class Validator:  # pylint: disable=too-many-lines
                             all_groups,
                             answers_with_parent_ids,
                             numeric_answer_ranges,
-                            answer_id_to_option_values_map,
                         )
                     )
 
@@ -187,9 +182,7 @@ class Validator:  # pylint: disable=too-many-lines
 
         return all_groups
 
-    def _validate_routing_rules(
-        self, group, all_groups, answers_with_parent_ids, option_value_to_answer_id_map
-    ):
+    def _validate_routing_rules(self, group, all_groups, answers_with_parent_ids):
         errors = []
 
         errors.extend(
@@ -208,9 +201,7 @@ class Validator:  # pylint: disable=too-many-lines
                 )
             )
             errors.extend(
-                self._validate_routing_rule(
-                    rule, answers_with_parent_ids, group, option_value_to_answer_id_map
-                )
+                self._validate_routing_rule(rule, answers_with_parent_ids, group)
             )
 
         return errors
@@ -224,7 +215,6 @@ class Validator:  # pylint: disable=too-many-lines
         all_groups,
         answers_with_parent_ids,
         numeric_answer_ranges,
-        option_value_to_answer_id_map,
     ):
         errors = []
         for block in group.get("blocks"):
@@ -257,21 +247,13 @@ class Validator:  # pylint: disable=too-many-lines
                     )
                 )
                 errors.extend(
-                    self._validate_routing_rule(
-                        rule,
-                        answers_with_parent_ids,
-                        block,
-                        option_value_to_answer_id_map,
-                    )
+                    self._validate_routing_rule(rule, answers_with_parent_ids, block)
                 )
 
             for skip_condition in block.get("skip_conditions", []):
                 errors.extend(
                     self._validate_skip_condition(
-                        skip_condition,
-                        answers_with_parent_ids,
-                        option_value_to_answer_id_map,
-                        block,
+                        skip_condition, answers_with_parent_ids, block
                     )
                 )
 
@@ -344,10 +326,7 @@ class Validator:  # pylint: disable=too-many-lines
 
             errors.extend(
                 self._validate_variants(
-                    block,
-                    answers_with_parent_ids,
-                    option_value_to_answer_id_map,
-                    numeric_answer_ranges,
+                    block, answers_with_parent_ids, numeric_answer_ranges
                 )
             )
 
@@ -568,11 +547,7 @@ class Validator:  # pylint: disable=too-many-lines
         return results
 
     def _validate_variants(
-        self,
-        block,
-        answer_ids_with_group_id,
-        option_value_to_answer_id_map,
-        numeric_answer_ranges,
+        self, block, answer_ids_with_group_id, numeric_answer_ranges
     ):
         errors = []
 
@@ -597,10 +572,7 @@ class Validator:  # pylint: disable=too-many-lines
         for variant in all_variants:
             errors.extend(
                 self._validate_when_rule(
-                    variant.get("when", []),
-                    answer_ids_with_group_id,
-                    option_value_to_answer_id_map,
-                    block["id"],
+                    variant.get("when", []), answer_ids_with_group_id, block["id"]
                 )
             )
 
@@ -740,69 +712,40 @@ class Validator:  # pylint: disable=too-many-lines
 
         return errors
 
-    def _validate_routing_rule(
-        self,
-        rule,
-        answer_ids_with_group_id,
-        block_or_group,
-        option_value_to_answer_id_map,
-    ):
+    def _validate_routing_rule(self, rule, answer_ids_with_group_id, block_or_group):
         errors = []
 
         rule = rule.get("goto")
         if "when" in rule:
             errors.extend(
                 self._validate_when_rule(
-                    rule["when"],
-                    answer_ids_with_group_id,
-                    option_value_to_answer_id_map,
-                    block_or_group["id"],
+                    rule["when"], answer_ids_with_group_id, block_or_group["id"]
                 )
             )
 
         return errors
 
-    @staticmethod
-    def validate_answer_value_in_when_rule(when_rule, option_value_to_answer_id_map):
+    def validate_answer_value_in_when_rule(self, when_rule):
         errors = []
         when_values = when_rule.get("values", [])
         when_value = when_rule.get("value")
         if when_value:
             when_values.append(when_value)
 
-        if not Validator._is_when_rule_answer_value_valid(
-            answer_id=when_rule["id"],
-            when_values=when_values,
-            option_value_to_answer_id_map=option_value_to_answer_id_map,
-        ):
-            errors.append(
-                Validator._error_message(
-                    f"Answer value in when rule with answer id `{when_rule['id']}` has an invalid value of `{when_values}`"
+        option_values = self.answer_id_to_option_values_map.get(when_rule["id"])
+
+        for value in when_values:
+            if option_values and value not in option_values:
+                errors.append(
+                    Validator._error_message(
+                        f"Answer value in when rule with answer id `{when_rule['id']}` has an invalid value of `{value}`"
+                    )
                 )
-            )
 
         return errors
 
-    @staticmethod
-    def _is_when_rule_answer_value_valid(
-        answer_id, when_values, option_value_to_answer_id_map
-    ):
-        if when_values and option_value_to_answer_id_map:
-            option_values = option_value_to_answer_id_map.get(answer_id)
-
-            if option_values and any(
-                value not in option_values for value in when_values
-            ):
-                return False
-
-        return True
-
     def _validate_skip_condition(
-        self,
-        skip_condition,
-        answer_ids_with_group_id,
-        option_value_to_answer_id_map,
-        block_or_group,
+        self, skip_condition, answer_ids_with_group_id, block_or_group
     ):
         """
         Validate skip condition is valid
@@ -812,10 +755,7 @@ class Validator:  # pylint: disable=too-many-lines
         when = skip_condition.get("when")
         errors.extend(
             self._validate_when_rule(
-                when,
-                answer_ids_with_group_id,
-                option_value_to_answer_id_map,
-                block_or_group["id"],
+                when, answer_ids_with_group_id, block_or_group["id"]
             )
         )
         return errors
@@ -1199,13 +1139,7 @@ class Validator:  # pylint: disable=too-many-lines
                 answer_errors.append(self._error_message(unrouted_error))
         return answer_errors
 
-    def _validate_when_rule(
-        self,
-        when_clause,
-        answer_ids_with_group_id,
-        option_value_to_answer_id_map,
-        referenced_id,
-    ):
+    def _validate_when_rule(self, when_clause, answer_ids_with_group_id, referenced_id):
         """
         Validates any answer id in a when clause exists within the schema
         Will also check that comparison exists
@@ -1239,11 +1173,7 @@ class Validator:  # pylint: disable=too-many-lines
                 )
 
             if "id" in when:
-                errors.extend(
-                    self.validate_answer_value_in_when_rule(
-                        when, option_value_to_answer_id_map
-                    )
-                )
+                errors.extend(self.validate_answer_value_in_when_rule(when))
 
         return errors
 
