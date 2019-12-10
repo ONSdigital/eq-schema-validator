@@ -726,16 +726,18 @@ class Validator:  # pylint: disable=too-many-lines
         return errors
 
     def validate_answer_value_in_when_rule(self, when_rule):
-        errors = []
         when_values = when_rule.get("values", [])
         when_value = when_rule.get("value")
         if when_value:
             when_values.append(when_value)
 
-        option_values = self.answer_id_to_option_values_map.get(when_rule["id"])
+        option_values = self.answer_id_to_option_values_map.get(when_rule["id"], {})
+        if not option_values:
+            return []
 
+        errors = []
         for value in when_values:
-            if option_values and value not in option_values:
+            if value not in option_values:
                 errors.append(
                     Validator._error_message(
                         f"Answer value in when rule with answer id `{when_rule['id']}` has an invalid value of `{value}`"
