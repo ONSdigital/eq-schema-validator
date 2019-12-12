@@ -12,10 +12,7 @@
       },
       "type": {
         "type": "string",
-        "enum": [
-          "Question",
-          "PrimaryPersonListAddOrEditQuestion"
-        ]
+        "enum": ["Question", "PrimaryPersonListAddOrEditQuestion"]
       },
       "show_on_section_summary": {
         "type": "boolean"
