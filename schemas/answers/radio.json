@@ -58,10 +58,10 @@
     "additionalProperties": false,
     "required": ["id", "type", "mandatory", "options"],
     "if": {
-      "properties": { "mandatory": {"const": true}}
+      "properties": { "mandatory": { "const": true } }
     },
     "then": {
-      "properties": { "voluntary": { "not": {"const": true }}}
+      "properties": { "voluntary": { "not": { "const": true } } }
     }
   }
 }
