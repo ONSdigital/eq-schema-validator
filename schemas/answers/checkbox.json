@@ -30,9 +30,6 @@
           { "minItems": 1 }
         ]
       },
-      "open": {
-        "type": "boolean"
-      },
       "mandatory": {
         "type": "boolean"
       },

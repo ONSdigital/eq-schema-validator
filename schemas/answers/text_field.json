@@ -18,6 +18,9 @@
       "description": {
         "type": "string"
       },
+      "open": {
+        "type": "boolean"
+      },
       "type": {
         "type": "string",
         "enum": [
