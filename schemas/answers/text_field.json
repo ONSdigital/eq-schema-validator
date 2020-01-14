@@ -26,7 +26,7 @@
       "mandatory": {
         "type": "boolean"
       },
-      "open": {
+      "visible": {
         "type": "boolean"
       },
       "validation": {
