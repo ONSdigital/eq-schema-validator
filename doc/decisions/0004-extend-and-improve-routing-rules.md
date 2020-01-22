@@ -53,7 +53,7 @@ The rule definition is:
 
 ```json
 {
-	"and": [
+    "and": [
         {
             "or": [
                 {
@@ -95,7 +95,7 @@ The rule definition is:
                     "identifier": "answer3"
                 }
             ]
-        },
+        }
 	]
 }
 ```
