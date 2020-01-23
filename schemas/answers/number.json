@@ -29,6 +29,10 @@
       "visible": {
         "type": "boolean"
       },
+      "voluntary": {
+        "description": "If set to true, and an option is selected then there will be an option to unselect",
+        "type": "boolean"
+      },
       "max_length": {
         "type": "integer"
       },
@@ -82,6 +86,12 @@
       }
     },
     "additionalProperties": false,
-    "required": ["id", "type", "mandatory", "label"]
+    "required": ["id", "type", "mandatory", "label"],
+    "if": {
+      "properties": { "mandatory": { "const": true } }
+    },
+    "then": {
+      "properties": { "voluntary": { "not": { "const": true } } }
+    }
   }
 }

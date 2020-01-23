@@ -29,6 +29,10 @@
       "visible": {
         "type": "boolean"
       },
+      "voluntary": {
+        "description": "If set to true, and an option is selected then there will be an option to unselect",
+        "type": "boolean"
+      },
       "validation": {
         "type": "object",
         "properties": {
@@ -44,6 +48,12 @@
       }
     },
     "additionalProperties": false,
-    "required": ["id", "type", "label", "mandatory"]
+    "required": ["id", "type", "label", "mandatory"],
+    "if": {
+      "properties": { "mandatory": { "const": true } }
+    },
+    "then": {
+      "properties": { "voluntary": { "not": { "const": true } } }
+    }
   }
 }
